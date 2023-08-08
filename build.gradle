@@ -28,6 +28,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     // spring 프로젝트에서 jsp 파일 작성할 수 있게됨
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.69'
 
@@ -39,7 +40,7 @@ dependencies {
     implementation 'org.json:json:20230227'
 
     // Database
-    implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'mysql:mysql-connector-java:8.0.25'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.5'
 }
 
