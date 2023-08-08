@@ -40,8 +40,11 @@ dependencies {
     implementation 'org.json:json:20230227'
 
     // Database
-    implementation 'mysql:mysql-connector-java:8.0.25'
+    implementation 'mysql:mysql-connector-java:8.0.28'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.5'
+
+    // uploadcare Api
+    implementation 'com.uploadcare:uploadcare:3.5.1'
 }
 
 tasks.named('test') {
