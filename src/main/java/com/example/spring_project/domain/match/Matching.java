@@ -14,14 +14,15 @@ import javax.persistence.*;
 public class Matching {
 
     @Id
-    private int matchNo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int matchingNo;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="match_no", referencedColumnName = "no")
-    private Match match;
+    private int squadNo;
+
+
+    private int matchNo;
 
     public Matching(Match match){
         this.match = match;
     }
-
 }

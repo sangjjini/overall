@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 @Getter
 @NoArgsConstructor
-@Table(name="match")
+@Table(name="squad_match")
 @Entity
 public class Match{
 
@@ -36,7 +36,17 @@ public class Match{
 
     private int squad_b;
 
-    private int produce_squad;
+    private int making;
+
+//    private String startAt;
+//
+//    private String endAt;
+//
+//    private int squadA;
+//
+//    private int squadB;
+//
+//    private int produceSquad;
 
     public Match(MatchRequestDto dto){
         this.title = dto.getTitle();
@@ -51,8 +61,23 @@ public class Match{
         }
         this.squad_a = dto.getSquad_a();
         this.squad_b = dto.getSquad_b();
-        this.produce_squad = dto.getProduce_squad();
+        this.making = dto.getMaking();
     }
+//    public Match(MatchRequestDto dto){
+//        this.title = dto.getTitle();
+//        this.contents = dto.getContents();
+//        this.author = dto.getAuthor();
+//        this.deadline = dto.getDeadline();
+//        if(dto.getStartAt() != null) {
+//            this.startAt = dto.getStartAt();
+//        }
+//        if(dto.getEndAt() != null) {
+//            this.endAt = dto.getEndAt();
+//        }
+//        this.squadA = dto.getSquadA();
+//        this.squadB = dto.getSquadB();
+//        this.produceSquad = dto.getProduceSquad();
+//    }
 
     public void update(MatchRequestDto dto){
         if(dto.getTitle() != null)

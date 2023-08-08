@@ -19,5 +19,10 @@ public class MatchRequestDto {
     private String end_at;
     private int squad_a;
     private int squad_b;
-    private int produce_squad;
+    private int making;
+//    private String startAt;
+//    private String endAt;
+//    private int squadA;
+//    private int squadB;
+//    private int produceSquad;
 }

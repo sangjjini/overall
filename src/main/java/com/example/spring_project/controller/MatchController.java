@@ -11,8 +11,11 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -24,40 +27,49 @@ public class MatchController {
     private final MatchRepository matchRepository;
     private final MatchingRepository matchingRepository;
 
-    @PostMapping("test")
-    public void test(@RequestBody MatchRequestDto dto){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-        try{
-            Date st = sdf.parse(dto.getStart_at());
-            Date et = sdf.parse(dto.getEnd_at());
-
-            Timestamp tst = new Timestamp(st.getTime());
-            Timestamp tet = new Timestamp(et.getTime());
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        System.out.println("1. " + dto.getTitle());
-        System.out.println("2. " + dto.getContents());
-        System.out.println("3. " + dto.getAuthor());
-        System.out.println("4. " + dto.getSquad_a());
-        System.out.println("5. " + dto.getSquad_b());
-        System.out.println("6. " + dto.getProduce_squad());
-        System.out.println("7. " + dto.getDeadline());
-        System.out.println("8. " + dto.getStart_at());
-        System.out.println("9. " + dto.getEnd_at());
-    }
+//    @PostMapping("test")
+//    public void test(@RequestBody MatchRequestDto dto){
+//        System.out.println("1. " + dto.getTitle());
+//        System.out.println("2. " + dto.getContents());
+//        System.out.println("3. " + dto.getAuthor());
+//        System.out.println("4. " + dto.getSquad_a());
+//        System.out.println("5. " + dto.getSquad_b());
+//        System.out.println("6. " + dto.getProduce_squad());
+//        System.out.println("7. " + dto.getDeadline());
+//        System.out.println("8. " + dto.getStart_at());
+//        System.out.println("9. " + dto.getEnd_at());
+//    }
 
 
     @PostMapping(value="write")
     public Map write(@RequestBody MatchRequestDto dto){
-
         JSONObject response = new JSONObject();
+        Date st = null;
+        Date et = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try{
+            st = sdf.parse(dto.getStart_at());
+            et = sdf.parse(dto.getEnd_at());
+
+            Timestamp tst = new Timestamp(st.getTime());
+            Timestamp tet = new Timestamp(et.getTime());
+
+            System.out.println("tst : " + tst);
+            System.out.println("tet : " + tet);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         try {
+            dto.setStart_at(String.valueOf(st));
+            dto.setEnd_at(String.valueOf(et));
+
             Match match = new Match(dto);
             matchRepository.save(match);
+
+//            Matching matching = new Matching(match);
+//            matchingRepository.save(matching);
+
             response.put("write","success");
         }catch (Exception e){
             e.printStackTrace();
