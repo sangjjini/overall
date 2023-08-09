@@ -22,4 +22,6 @@ public class Mypage {
     private int rightfoot;
 
 
+
+
 }
