@@ -1,9 +1,9 @@
 package com.example.spring_project.service;
 
-import com.example.spring_project.domain.join.Joining;
-import com.example.spring_project.domain.join.JoiningId;
-import com.example.spring_project.domain.join.JoiningRepository;
-import com.example.spring_project.domain.join.JoiningRequestDto;
+import com.example.spring_project.domain.joining.Joining;
+import com.example.spring_project.domain.joining.JoiningId;
+import com.example.spring_project.domain.joining.JoiningRepository;
+import com.example.spring_project.domain.joining.JoiningRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

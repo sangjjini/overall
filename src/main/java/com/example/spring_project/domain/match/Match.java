@@ -28,13 +28,6 @@ public class Match{
     @Column(nullable = false)
     private char deadline;
 
-//    private String start_at;
-//
-//    private String end_at;
-//
-//    private String squad_a;
-//
-//    private String squad_b;
     @Column(name="start_at")
     private String startAt;
     @Column(name="end_at")
@@ -45,24 +38,6 @@ public class Match{
     private String squadB;
     @Column(name="making")
     private String making;
-//
-//    private String making;
-
-//    public Match(MatchRequestDto dto){
-//        this.title = dto.getTitle();
-//        this.contents = dto.getContents();
-//        this.author = dto.getAuthor();
-//        this.deadline = dto.getDeadline();
-//        if(dto.getStart_at() != null) {
-//            this.start_at = dto.getStart_at();
-//        }
-//        if(dto.getEnd_at() != null) {
-//            this.end_at = dto.getEnd_at();
-//        }
-//        this.squad_a = dto.getSquad_a();
-//        this.squad_b = dto.getSquad_b();
-//        this.making = dto.getMaking();
-//    }
 
   public Match(MatchRequestDto dto){
         this.title = dto.getTitle();

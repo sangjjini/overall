@@ -1,4 +1,4 @@
-package com.example.spring_project.domain.join;
+package com.example.spring_project.domain.joining;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
