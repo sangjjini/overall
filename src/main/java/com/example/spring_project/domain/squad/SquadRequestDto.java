@@ -11,12 +11,11 @@ import javax.persistence.Id;
 @Getter
 @Setter
 public class SquadRequestDto {
-    @Id
     private long no;
     private String host;
     private String name;
     private String contents;
-    private String loaded_file;
-    private String image_url;
+    private String loadedFile;
+    private String imageUrl;
     private String making;
 }

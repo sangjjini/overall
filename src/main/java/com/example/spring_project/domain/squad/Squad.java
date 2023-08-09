@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @Entity
@@ -16,6 +13,7 @@ import javax.persistence.Table;
 @Getter
 public class Squad {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long no;
     @Column(nullable = false, length = 320)
     private String host;
@@ -24,26 +22,26 @@ public class Squad {
     @Column(nullable = false, length = 1000)
     private String contents;
     @Column(length = 100)
-    private String loaded_file;
+    private String loadedFile;
     @Column(length = 200)
-    private String image_url;
-    @Column(length = 320)
+    private String imageUrl;
+    @Column(length = 320, unique = true)
     private String making;
 
     public Squad(SquadRequestDto squadRequestDto) {
         this.host = squadRequestDto.getHost();
         this.name = squadRequestDto.getName();
         this.contents = squadRequestDto.getContents();
-        this.loaded_file = squadRequestDto.getLoaded_file();
-        this.image_url = squadRequestDto.getImage_url();
+        this.loadedFile = squadRequestDto.getLoadedFile();
+        this.imageUrl = squadRequestDto.getImageUrl();
         this.making = squadRequestDto.getMaking();
     }
 
     public void update(SquadRequestDto squadRequestDto) {
         this.name = squadRequestDto.getName();
         this.contents = squadRequestDto.getContents();
-        this.loaded_file = squadRequestDto.getLoaded_file();
-        this.image_url = squadRequestDto.getImage_url();
+        this.loadedFile = squadRequestDto.getLoadedFile();
+        this.imageUrl = squadRequestDto.getImageUrl();
         this.making = squadRequestDto.getMaking();
     }
 }

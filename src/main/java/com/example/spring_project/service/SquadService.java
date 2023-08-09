@@ -19,4 +19,9 @@ public class SquadService {
         Squad squad = squadRepository.findByNo(no);
         squad.update(squadRequestDto);
     }
+
+    @Transactional
+    public void deleteSquad(long no) {
+        squadRepository.deleteById(no);
+    }
 }
