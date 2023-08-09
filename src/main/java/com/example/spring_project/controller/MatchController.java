@@ -20,7 +20,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/match")
+@RequestMapping("match")
 public class MatchController {
 
     private final MatchService matchService;
@@ -29,6 +29,21 @@ public class MatchController {
 
 //    @PostMapping("test")
 //    public void test(@RequestBody MatchRequestDto dto){
+//        Date st = null;
+//            Date et = null;
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                try{
+//                st = sdf.parse(dto.getStart_at());
+//                et = sdf.parse(dto.getEnd_at());
+//
+//                Timestamp tst = new Timestamp(st.getTime());
+//                Timestamp tet = new Timestamp(et.getTime());
+//
+//                System.out.println("tst : " + tst);
+//                System.out.println("tet : " + tet);
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
 //        System.out.println("1. " + dto.getTitle());
 //        System.out.println("2. " + dto.getContents());
 //        System.out.println("3. " + dto.getAuthor());
@@ -44,25 +59,8 @@ public class MatchController {
     @PostMapping(value="write")
     public Map write(@RequestBody MatchRequestDto dto){
         JSONObject response = new JSONObject();
-        Date st = null;
-        Date et = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try{
-            st = sdf.parse(dto.getStart_at());
-            et = sdf.parse(dto.getEnd_at());
-
-            Timestamp tst = new Timestamp(st.getTime());
-            Timestamp tet = new Timestamp(et.getTime());
-
-            System.out.println("tst : " + tst);
-            System.out.println("tet : " + tet);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
         try {
-            dto.setStart_at(String.valueOf(st));
-            dto.setEnd_at(String.valueOf(et));
 
             Match match = new Match(dto);
             matchRepository.save(match);
@@ -85,7 +83,7 @@ public class MatchController {
         return json.toMap();
     }
 
-    @PutMapping(value = "update/{no}")
+    @PutMapping(value = "{no}/update")
     public Response update(@PathVariable int no, @RequestBody MatchRequestDto dto, WebRequest request){
         //String log = (String)request.getAttribute("log", WebRequest.SCOPE_SESSION);
         //if(log.equals(dto.getAuthor())){

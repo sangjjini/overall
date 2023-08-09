@@ -5,24 +5,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Getter
 @NoArgsConstructor
 @Table(name="matching")
 @Entity
-public class Matching {
+public class Matching{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int matchingNo;
+    private int matching_no;
 
     private int squadNo;
 
-
     private int matchNo;
 
-    public Matching(Match match){
-        this.match = match;
-    }
+
+
 }
