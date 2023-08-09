@@ -1,22 +1,23 @@
 package com.example.spring_project.controller;
 
 import com.example.spring_project.domain.match.*;
+import com.example.spring_project.domain.matching.Matching;
+import com.example.spring_project.domain.matching.MatchingRepository;
+import com.example.spring_project.domain.squad.Squad;
+import com.example.spring_project.domain.squad.SquadRepository;
 import com.example.spring_project.payload.Response;
 import com.example.spring_project.service.MatchService;
 import lombok.RequiredArgsConstructor;
 
 import org.json.JSONObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,61 +27,64 @@ public class MatchController {
     private final MatchService matchService;
     private final MatchRepository matchRepository;
     private final MatchingRepository matchingRepository;
+    private final SquadRepository squadRepository;
 
-//    @PostMapping("test")
-//    public void test(@RequestBody MatchRequestDto dto){
-//        Date st = null;
-//            Date et = null;
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                try{
-//                st = sdf.parse(dto.getStart_at());
-//                et = sdf.parse(dto.getEnd_at());
-//
-//                Timestamp tst = new Timestamp(st.getTime());
-//                Timestamp tet = new Timestamp(et.getTime());
-//
-//                System.out.println("tst : " + tst);
-//                System.out.println("tet : " + tet);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        System.out.println("1. " + dto.getTitle());
-//        System.out.println("2. " + dto.getContents());
-//        System.out.println("3. " + dto.getAuthor());
-//        System.out.println("4. " + dto.getSquad_a());
-//        System.out.println("5. " + dto.getSquad_b());
-//        System.out.println("6. " + dto.getProduce_squad());
-//        System.out.println("7. " + dto.getDeadline());
-//        System.out.println("8. " + dto.getStart_at());
-//        System.out.println("9. " + dto.getEnd_at());
-//    }
-
-
-    @PostMapping(value="write")
-    public Map write(@RequestBody MatchRequestDto dto){
+    @PostMapping(value="making")
+    public Map making(@RequestBody MatchRequestDto dto, WebRequest request){
         JSONObject response = new JSONObject();
+        Squad squadA = squadRepository.findByName(dto.getSquadA());
+        Squad squadB = squadRepository.findByName(dto.getSquadB());
+        //String log = (String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
+
+        if(squadA == null || squadB == null) {
+            response.put("making","fail");
+            return response.toMap();
+        }
 
         try {
+            //dto.setAuthor(log);
+            dto.setMaking(dto.getSquadA());
+            Squad squad = squadRepository.findByHost(dto.getAuthor());
 
+            // match 생성
             Match match = new Match(dto);
             matchRepository.save(match);
 
-//            Matching matching = new Matching(match);
-//            matchingRepository.save(matching);
+            // matching 생성
+            Matching matching = new Matching(squad, match);
+            matchingRepository.save(matching);
 
-            response.put("write","success");
+            response.put("making","success");
         }catch (Exception e){
             e.printStackTrace();
-            response.put("write","fail");
+            response.put("making","fail");
         }
         return response.toMap();
     }
 
-    @GetMapping("list")
-    public Map getMatchAll(){
-        JSONObject json = new JSONObject();
-        json.put("asd","qwewqe");
-        return json.toMap();
+    @GetMapping("list/{page}")
+    public List<Match> getMatchAll(@PathVariable int page, @RequestParam(required = false)String keyword, @PageableDefault(size=3)Pageable pageable){
+        if(keyword != null && !keyword.equals("")){
+            String pattern = "%" + keyword + "%";
+            return matchRepository.findAllByTitleLike(pattern, pageable.withPage(page - 1));
+        }else {
+            return matchRepository.findAll(pageable.withPage(page-1)).getContent();
+        }
+    }
+
+    @GetMapping("{no}")
+    public Map getMatchByNo(@PathVariable int no){
+        JSONObject response = new JSONObject();
+        try {
+            Match match = matchRepository.findById(no).orElseThrow(
+                    () -> new IllegalArgumentException("존재하지 않는 경기입니다.")
+            );
+            response.put("result",match);
+        }catch (Exception e){
+            e.printStackTrace();
+            response.put("result","fail");
+        }
+        return response.toMap();
     }
 
     @PutMapping(value = "{no}/update")
@@ -97,6 +101,39 @@ public class MatchController {
 //        }else{
 //            return new Response("update", "작성자만 수정할 수 있습니다.");
 //        }
+    }
 
+
+    @DeleteMapping("{no}/delete")
+    public Map deleteMatchByNo(@PathVariable int no, WebRequest request){
+        JSONObject response = new JSONObject();
+        //String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
+        try{
+            Match match = matchRepository.findById(no).orElseThrow(
+                    () -> new IllegalArgumentException("존재하지 않는 경기입니다.")
+            );
+            //if(match.getAuthor().equals(log)){
+                matchService.deleteMatch(no);
+                response.put("delete","success");
+            //}
+        }catch (Exception e){
+            e.printStackTrace();
+            response.put("delete","fail");
+        }
+        return response.toMap();
+    }
+
+    @GetMapping("test")
+    public Map test(@RequestParam(required = false)String startAt){
+        JSONObject response = new JSONObject();
+        String pattern = "%" + startAt + "%";
+        try{
+            List<Match> list = matchRepository.findAllByStartAtLike(pattern);
+            response.put("test",list);
+        }catch (Exception e){
+            e.printStackTrace();
+            response.put("test","fail");
+        }
+        return response.toMap();
     }
 }

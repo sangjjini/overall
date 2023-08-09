@@ -20,4 +20,9 @@ public class MatchService {
         );
         match.update(dto);
     }
+
+    @Transactional
+    public void deleteMatch(int no){
+        matchRepository.deleteById(no);
+    }
 }

@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Getter
 public class Squad {
     @Id
+    @Column(name = "no")
     private long no;
     @Column(nullable = false, length = 320)
     private String host;
