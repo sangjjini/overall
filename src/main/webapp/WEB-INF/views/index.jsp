@@ -10,12 +10,13 @@
 <head>
     <title>오버롤</title>
     <%-- 제이쿼리--%>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 <body>
-    나와라
-    <div id ="container">
+    <jsp:include page="header.jsp"></jsp:include>
+    <div id = container>
         <h1>index</h1>
     </div>
+    <jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
