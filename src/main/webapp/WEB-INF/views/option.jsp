@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>환경설정</title>
+    <%-- 제이쿼리--%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" />
 </head>
 <body>
     <div class="contents">
