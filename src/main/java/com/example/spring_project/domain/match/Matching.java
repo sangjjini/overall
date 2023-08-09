@@ -22,7 +22,4 @@ public class Matching {
 
     private int matchNo;
 
-    public Matching(Match match){
-        this.match = match;
-    }
 }
