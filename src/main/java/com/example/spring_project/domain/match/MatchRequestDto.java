@@ -15,14 +15,10 @@ public class MatchRequestDto {
     private String contents;
     private String author;
     private char deadline;
-    private String start_at;
-    private String end_at;
-    private int squad_a;
-    private int squad_b;
-    private int making;
-//    private String startAt;
-//    private String endAt;
-//    private int squadA;
-//    private int squadB;
-//    private int produceSquad;
+
+    private String making;
+    private String startAt;
+    private String endAt;
+    private String squadA;
+    private String squadB;
 }
