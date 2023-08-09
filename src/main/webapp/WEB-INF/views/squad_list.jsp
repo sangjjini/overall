@@ -13,8 +13,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 <body>
+<jsp:include page="header.jsp"></jsp:include>
     <div class="contents">
 
     </div>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
