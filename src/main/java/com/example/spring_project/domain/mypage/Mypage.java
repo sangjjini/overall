@@ -22,4 +22,15 @@ public class Mypage {
     private int rightfoot;
 
 
+    public Mypage(MypageRequestDto mypageDto) {
+        this.no = mypageDto.getNo();
+        this.overall = mypageDto.getOverall();
+        this.age = mypageDto.getAge();
+        this.height = mypageDto.getHeight();
+        this.weight = mypageDto.getWeight();
+        this.speed = mypageDto.getSpeed();
+        this.leftfoot = mypageDto.getLeftfoot();
+        this.rightfoot = mypageDto.getRightfoot();
+    }
+
 }

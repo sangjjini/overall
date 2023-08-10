@@ -32,6 +32,7 @@ public class SquadController {
         squadRequestDto.setMaking(log);
         // 스쿼드 생성
         Squad squad = new Squad(squadRequestDto);
+        // 이름 중복 검사 필요
         squadRepository.save(squad);
         Squad squadSave = squadRepository.findByMaking(log);
         // join 생성
@@ -65,4 +66,5 @@ public class SquadController {
         squadService.updateSquad(no, squadRequestDto);
         return response.put("update", "success").toMap();
     }
+
 }

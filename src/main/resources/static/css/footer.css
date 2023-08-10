@@ -10,7 +10,11 @@
     padding: 50px;
     gap:30px;
 }
-
+#footer .footer_left {
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+}
 #footer .footer_left .footer_logo a {
     display:inline-block;
     width:190px;
@@ -24,12 +28,16 @@
 
 #footer .footer_left .address p {
     width:190px;
+
+}
+#footer .footer_right {
+    display:flex;
+    gap:20px;
+}
+#footer .footer_left p {
     font-size:12px;
 }
 
-#footer .footer_right {
-    display:flex;
-}
 
 #footer .footer_right a {
     font-size:12px;

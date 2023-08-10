@@ -1,11 +1,12 @@
 package com.example.spring_project.controller;
 
-import com.example.spring_project.domain.joining.Joining;
 import com.example.spring_project.domain.match.*;
 import com.example.spring_project.domain.matching.Matching;
 import com.example.spring_project.domain.matching.MatchingRepository;
 import com.example.spring_project.domain.squad.Squad;
 import com.example.spring_project.domain.squad.SquadRepository;
+import com.example.spring_project.domain.member.MemberRepository;
+import com.example.spring_project.domain.member.MemberRequestDto;
 import com.example.spring_project.domain.squad.SquadRequestDto;
 import com.example.spring_project.domain.user.Member;
 import com.example.spring_project.domain.user.MemberRepository;
@@ -129,7 +130,7 @@ public class MatchController {
         }
         return response.toMap();
     }
-    
+
     // 매치 신청
     @PostMapping("apply")
     public Map applyMatch(@RequestBody SquadRequestDto dto){
@@ -153,4 +154,5 @@ public class MatchController {
         response.put("data",member);
         return response.toMap();
     }
+
 }

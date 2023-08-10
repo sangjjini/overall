@@ -1,4 +1,4 @@
-package com.example.spring_project.domain.user;
+package com.example.spring_project.domain.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,6 +37,7 @@ public class Member {
 
     // update 메서드 추가
     public void update(MemberRequestDto requestDto) {
+        this.email = requestDto.getEmail();
         this.password = requestDto.getPassword();
         this.name = requestDto.getName();
     }
