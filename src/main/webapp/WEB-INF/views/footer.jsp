@@ -20,6 +20,9 @@
                 <div class="address">
                     <p>오버롤 | 서울 특별시 강남구 테헤란로5길 24 장연빌딩 3~7층</p>
                 </div>
+                <div class="copyright">
+                    <p>Copyright OVERALL All rights reserved.</p>
+                </div>
             </div>
             <div class="footer_right">
                 <div class="footer_squad">
