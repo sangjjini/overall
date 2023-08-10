@@ -6,15 +6,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<head>
+    <link type="text/css" href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet" />
+</head>
 <body>
 <header id = "header">
-    <div class="logo">LOGO</div>
     <div class="main_nav">
-        <ul>
-            <li><a href="#">오버롤소개</a></li>
-            <li><a href="#">스쿼드</a></li>
-            <li><a href="#">스쿼드매치</a></li>
-        </ul>
+        <div class="logo"><a href="#">LOGO</a></div>
+        <div class="nav_wrap">
+            <div class="nav_list"><a href="#">오버롤소개</a></div>
+            <div class="nav_list"><a href="#">스쿼드</a></div>
+            <div class="nav_list"><a href="#">스쿼드매치</a></div>
+        </div>
     </div>
     <div class="login_wrap">
         <div class="login"><a href="#">로그인</a></div>

@@ -12,6 +12,7 @@
     <title>오버롤</title>
     <%-- 제이쿼리--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link type="text/css" href="${pageContext.request.contextPath}/css/reset.css" rel="stylesheet" />
 </head>
 <body>
     <jsp:include page="header.jsp"></jsp:include>
