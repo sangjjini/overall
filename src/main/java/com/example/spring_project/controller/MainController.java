@@ -24,4 +24,7 @@ public class MainController {
 
     @GetMapping("/squad/match")
     public String squadMatch(){ return "squad_match"; }
+
+    @GetMapping("squad")
+    public String squad() { return "squad";}
 }
