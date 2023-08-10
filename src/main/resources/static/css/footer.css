@@ -1,0 +1,63 @@
+#footer {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #2b2b2b;
+    color:white;
+}
+
+#footer .footer_contents {
+    display:flex;
+    justify-content: center;
+    padding: 50px;
+    gap:30px;
+}
+
+#footer .footer_left .footer_logo a {
+    display:inline-block;
+    width:190px;
+    height:60px;
+    background: url("../images/logo_white.png") 0 no-repeat;
+    background-size: cover;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#footer .footer_left .address p {
+    width:190px;
+    font-size:12px;
+}
+
+#footer .footer_right {
+    display:flex;
+}
+
+#footer .footer_right a {
+    font-size:12px;
+    color:#8f9090;
+}
+#footer .footer_right h1 a {
+    display:inline-block;
+    width:80px;
+    font-size:16px;
+    color:#fff;
+}
+
+#footer .footer_right .footer_squad {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#footer .footer_right .footer_squad_match {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+#footer .footer_right .footer_introduce {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
