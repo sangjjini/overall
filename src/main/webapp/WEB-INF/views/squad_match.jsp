@@ -6,17 +6,35 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>스쿼드 매치</title>
-    <%-- 제이쿼리--%>
+    <%-- 제이쿼리 --%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/squad_match.css" type="text/css">
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
-    <div class="contents">
-
-    </div>
-<jsp:include page="footer.jsp"></jsp:include>
+<c:import url="header.jsp"/>
+    <section>
+        <div class="contents">
+            <form action="" method="post">
+                <input type="text" id="title" name="title" placeholder="제목을 입력해주세요.">
+                <input type="text" id="author" name="author" value="작성자 : ${log}" readonly>
+                <textarea id="contents" name="contents" placeholder="내용을 입력해주세요."></textarea>
+                <input type="hidden" id="deadline" name="deadline" value="0">
+                <div class="squad-input">
+                    <input type="text" id="squad-a" name="squad-a" placeholder="A팀명 입력">
+                    <input type="text" id="squad-b" name="squad-b" placeholder="B팀명 입력">
+                </div>
+            </form>
+        </div>
+        <div class="match-preview">
+            <span>Match-Preview</span>
+            <div id="match-logo-preview-area"></div>
+            <div id="match-squad-preview-area"></div>
+        </div>
+    </section>
+<c:import url="footer.jsp"/>
 </body>
 </html>

@@ -11,4 +11,7 @@ public class MainController {
     public String index(){
         return "index";
     }
+
+    @GetMapping("/squad/match")
+    public String squadMatch(){ return "squad_match"; }
 }

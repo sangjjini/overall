@@ -1,7 +1,9 @@
 package com.example.spring_project.controller;
 
 import com.example.spring_project.domain.match.*;
+import com.example.spring_project.domain.matching.Matching;
 import com.example.spring_project.domain.matching.MatchingRepository;
+import com.example.spring_project.domain.squad.Squad;
 import com.example.spring_project.domain.squad.SquadRepository;
 import com.example.spring_project.payload.Response;
 import com.example.spring_project.service.MatchService;
@@ -29,29 +31,30 @@ public class MatchController {
     @PostMapping(value="making")
     public Map making(@RequestBody MatchRequestDto dto, WebRequest request){
         JSONObject response = new JSONObject();
-//        Squad squadA = squadRepository.findByName(dto.getSquadA());
-//        Squad squadB = squadRepository.findByName(dto.getSquadB());
+        Squad squadA = squadRepository.findByName(dto.getSquadA());
+        Squad squadB = squadRepository.findByName(dto.getSquadB());
         //String log = (String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
 
-//        if(squadA == null || squadB == null) {
-//            response.put("making","fail");
-//            return response.toMap();
-//        }
+        if(squadA == null || squadB == null) {
+            response.put("making","fail");
+            return response.toMap();
+        }
 
         try {
             //dto.setAuthor(log);
-//            dto.setMaking(dto.getSquadA());
-//            Squad squad = squadRepository.findByHost(dto.getAuthor());
+            dto.setMaking(dto.getSquadA());
+            Squad squad = squadRepository.findByHost(dto.getAuthor());
 
             // match 생성
             Match match = new Match(dto);
             matchRepository.save(match);
 
-            // matching 생성
-//            Matching matching = new Matching(squad, match);
-//            matchingRepository.save(matching);
-
+            //matching 생성
+            Matching matching = new Matching(squad, match);
+            matchingRepository.save(matching);
+            dto.setMaking(null);
             response.put("making","success");
+
         }catch (Exception e){
             e.printStackTrace();
             response.put("making","fail");

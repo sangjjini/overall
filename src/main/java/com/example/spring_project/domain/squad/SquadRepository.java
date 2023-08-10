@@ -6,4 +6,8 @@ public interface SquadRepository extends JpaRepository<Squad, Long> {
 
     public Squad findByMaking(String email);
     public Squad findByNo(Long no);
+
+    public Squad findByHost(String author);
+
+    public Squad findByName(String name);
 }
