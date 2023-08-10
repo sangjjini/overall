@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface MatchRepository extends JpaRepository<Match, Integer> {
     public Match getMatchByNo(int no);
-
     public List<Match> findAllByTitleLike(String pattern, Pageable pageable);
-
     public List<Match> findAllByStartAtLike(String pattern);
+
+
 }

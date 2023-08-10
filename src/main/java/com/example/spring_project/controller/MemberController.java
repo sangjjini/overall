@@ -1,5 +1,6 @@
 package com.example.spring_project.controller;
 
+import com.example.spring_project.domain.user.MemberRepository;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 
@@ -29,7 +30,6 @@ public class MemberController {
             modelAndView.setViewName("login"); // 로그인 페이지로 다시 리다이렉트
             modelAndView.addObject("error", "존재하지 않는 아이디입니다.");
         }
-
         return modelAndView; // "index" 뷰 반환
     }
 

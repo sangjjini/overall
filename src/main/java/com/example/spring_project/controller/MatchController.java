@@ -5,6 +5,8 @@ import com.example.spring_project.domain.matching.Matching;
 import com.example.spring_project.domain.matching.MatchingRepository;
 import com.example.spring_project.domain.squad.Squad;
 import com.example.spring_project.domain.squad.SquadRepository;
+import com.example.spring_project.domain.user.MemberRepository;
+import com.example.spring_project.domain.user.MemberRequestDto;
 import com.example.spring_project.payload.Response;
 import com.example.spring_project.service.MatchService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class MatchController {
     private final MatchRepository matchRepository;
     private final MatchingRepository matchingRepository;
     private final SquadRepository squadRepository;
+    private final MemberRepository memberRepository;
 
     @PostMapping(value="making")
     public Map making(@RequestBody MatchRequestDto dto, WebRequest request){
@@ -124,16 +127,12 @@ public class MatchController {
     }
 
     @GetMapping("test")
-    public Map test(@RequestParam(required = false)String startAt){
+    public Map test(@RequestBody MemberRequestDto dto){
         JSONObject response = new JSONObject();
-        String pattern = "%" + startAt + "%";
-        try{
-            List<Match> list = matchRepository.findAllByStartAtLike(pattern);
-            response.put("test",list);
-        }catch (Exception e){
-            e.printStackTrace();
-            response.put("test","fail");
-        }
+
+
+
         return response.toMap();
     }
+
 }

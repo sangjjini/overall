@@ -11,13 +11,11 @@ section{
     width: 100%;
     padding-top: 20px;
 }
-
 .contents > form{
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
-
 .contents input {
     width: 100%;
     min-height: 40px;
@@ -65,4 +63,18 @@ textarea{
 #match-logo-preview-area > img{
     width: 50%;
     height: 100%;
+}
+.squad-logo-container{
+    display: flex;
+}
+.squadA-logo > img, .squadB-logo > img{
+    width: 200px;
+    height: 200px;
+}
+/*.squadA-logo, .squadB-logo{*/
+/*    background: beige;*/
+/*}*/
+.vs > h1{
+    font-size: 50pt;
+    margin: 55px;
 }
