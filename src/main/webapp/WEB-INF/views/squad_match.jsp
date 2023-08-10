@@ -16,25 +16,13 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
-    <section>
-        <div class="contents">
-            <form action="" method="post">
-                <input type="text" id="title" name="title" placeholder="제목을 입력해주세요.">
-                <input type="text" id="author" name="author" value="작성자 : ${log}" readonly>
-                <textarea id="contents" name="contents" placeholder="내용을 입력해주세요."></textarea>
-                <input type="hidden" id="deadline" name="deadline" value="0">
-                <div class="squad-input">
-                    <input type="text" id="squad-a" name="squad-a" placeholder="A팀명 입력">
-                    <input type="text" id="squad-b" name="squad-b" placeholder="B팀명 입력">
-                </div>
-            </form>
+    <div class="contents">
+        <div>
+            <img src="${squadA_logo}">
+
+            
         </div>
-        <div class="match-preview">
-            <span>Match-Preview</span>
-            <div id="match-logo-preview-area"></div>
-            <div id="match-squad-preview-area"></div>
-        </div>
-    </section>
+    </div>
 <c:import url="footer.jsp"/>
 </body>
 </html>
