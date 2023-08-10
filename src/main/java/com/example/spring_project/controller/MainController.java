@@ -27,4 +27,9 @@ public class MainController {
 
     @GetMapping("squad")
     public String squad() { return "squad";}
+
+    @GetMapping("mypage")
+    public String mypage(){
+        return "mypage";
+    }
 }
