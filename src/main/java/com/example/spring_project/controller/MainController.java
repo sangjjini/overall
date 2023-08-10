@@ -11,4 +11,9 @@ public class MainController {
     public String index(){
         return "index";
     }
+
+    @GetMapping("mypage")
+    public String mypage(){
+        return "mypage";
+    }
 }

@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
-    <link type="text/css" href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet" />
+    <link type="text/css" href="/css/header.css" rel="stylesheet" />
 </head>
 <body>
 <header id = "header">
