@@ -1,4 +1,4 @@
-package com.example.spring_project.domain.user;
+package com.example.spring_project.domain.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor // 기본생성자 - 파라미터X
 @AllArgsConstructor // 기본생성자 - 파라미터O
-@Table(name="users")
+@Table(name="member")
 @Entity
 public class Member {
     @Id
@@ -37,6 +37,7 @@ public class Member {
 
     // update 메서드 추가
     public void update(MemberRequestDto requestDto) {
+        this.email = requestDto.getEmail();
         this.password = requestDto.getPassword();
         this.name = requestDto.getName();
     }
