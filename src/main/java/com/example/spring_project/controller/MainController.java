@@ -12,6 +12,24 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping("/join")
+    public String join(){
+        return "join";
+    }
+
     @GetMapping("/squad/match")
     public String squadMatch(){ return "squad_match"; }
+
+    @GetMapping("squad")
+    public String squad() { return "squad";}
+
+    @GetMapping("mypage")
+    public String mypage(){
+        return "mypage";
+    }
 }

@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
-    <link type="text/css" href="${pageContext.request.contextPath}/css/footer.css" rel="stylesheet" />
+    <link type="text/css" href="/css/footer.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -19,6 +19,9 @@
                 </div>
                 <div class="address">
                     <p>오버롤 | 서울 특별시 강남구 테헤란로5길 24 장연빌딩 3~7층</p>
+                </div>
+                <div class="copyright">
+                    <p>Copyright OVERALL All rights reserved.</p>
                 </div>
             </div>
             <div class="footer_right">

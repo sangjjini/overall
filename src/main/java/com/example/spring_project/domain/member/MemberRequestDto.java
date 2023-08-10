@@ -1,10 +1,8 @@
-package com.example.spring_project.domain.user;
+package com.example.spring_project.domain.member;
 // VO = 데이터 저장소..
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.Id;
 
 @Getter
 @Setter
