@@ -21,4 +21,7 @@ public class MainController {
     public String join(){
         return "join";
     }
+
+    @GetMapping("/squad/match")
+    public String squadMatch(){ return "squad_match"; }
 }
