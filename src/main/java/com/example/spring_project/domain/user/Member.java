@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor // 기본생성자 - 파라미터X
 @AllArgsConstructor // 기본생성자 - 파라미터O
-@Table(name="users")
+@Table(name="member")
 @Entity
 public class Member {
     @Id

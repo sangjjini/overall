@@ -1,10 +1,13 @@
 package com.example.spring_project.controller;
 
+import com.example.spring_project.domain.joining.Joining;
 import com.example.spring_project.domain.match.*;
 import com.example.spring_project.domain.matching.Matching;
 import com.example.spring_project.domain.matching.MatchingRepository;
 import com.example.spring_project.domain.squad.Squad;
 import com.example.spring_project.domain.squad.SquadRepository;
+import com.example.spring_project.domain.squad.SquadRequestDto;
+import com.example.spring_project.domain.user.Member;
 import com.example.spring_project.domain.user.MemberRepository;
 import com.example.spring_project.domain.user.MemberRequestDto;
 import com.example.spring_project.payload.Response;
@@ -17,6 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -125,14 +129,28 @@ public class MatchController {
         }
         return response.toMap();
     }
-
-    @GetMapping("test")
-    public Map test(@RequestBody MemberRequestDto dto){
+    
+    // 매치 신청
+    @PostMapping("apply")
+    public Map applyMatch(@RequestBody SquadRequestDto dto){
         JSONObject response = new JSONObject();
+        try {
+            Squad squad = squadRepository.findByName(dto.getName());
 
-
-
+        }catch (Exception e){
+            e.printStackTrace();
+            response.put("apply","fail");
+        }
         return response.toMap();
     }
 
+
+    @PostMapping ("test")
+    public Map test(@RequestBody MemberRequestDto dto){
+        JSONObject response = new JSONObject();
+        Member member = memberRepository.findByEmail(dto.getEmail());
+        System.out.println("member : " + member);
+        response.put("data",member);
+        return response.toMap();
+    }
 }
