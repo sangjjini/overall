@@ -4,6 +4,8 @@ import com.example.spring_project.domain.joining.Joining;
 import com.example.spring_project.domain.joining.JoiningId;
 import com.example.spring_project.domain.joining.JoiningRepository;
 import com.example.spring_project.domain.joining.JoiningRequestDto;
+import com.example.spring_project.domain.member.Member;
+import com.example.spring_project.domain.member.MemberRepository;
 import com.example.spring_project.domain.squad.Squad;
 import com.example.spring_project.domain.squad.SquadRepository;
 import com.example.spring_project.domain.squad.SquadRequestDto;
