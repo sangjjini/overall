@@ -25,4 +25,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 //    void updateMember(String email, MemberRequestDto memberDto);
 
     //모든 회원 정보를 조회하여 리스트로 반환(모든 회원 정보를 조회하는 역할)
+
+    // 내가 추가함
+    Member findByCode(long code);
 }
