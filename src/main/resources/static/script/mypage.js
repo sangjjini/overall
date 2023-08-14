@@ -7,7 +7,8 @@ $(window).on('load', function() {
             type: "get"
         }).done(function(response){
             response.forEach(over =>{
-                $('.contents').append(`<div id="overall">${over.overall}</div>`);
+                $('.contents_menu').append(`<div id="overall">${over.overall}</div>
+                    <div id="speed">${over.speed}</div>`);
             })
 
         });
