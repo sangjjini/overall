@@ -19,7 +19,4 @@ public class MypageController {
         List<Mypage> list = mypageRepository.findAll();
         return list;
     }
-
-
-
 }
