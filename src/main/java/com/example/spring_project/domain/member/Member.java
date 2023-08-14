@@ -38,6 +38,10 @@ public class Member {
         this.email = memberDto.getEmail();
         this.password = memberDto.getPassword();
         this.name = memberDto.getName();
+        this.nickname = memberDto.getNickname();
+        this.phone = memberDto.getPhone();
+        this.province = memberDto.getProvince();
+        this.city = memberDto.getCity();
     }
 
     // update 메서드 추가

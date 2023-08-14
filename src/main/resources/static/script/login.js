@@ -28,7 +28,6 @@ function loginChk() {
     }
 
     // 유효성 검사 통과
-
     $.ajax({
         type: 'POST',
         url: 'MemberController',

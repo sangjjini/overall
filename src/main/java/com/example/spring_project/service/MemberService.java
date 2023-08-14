@@ -39,21 +39,12 @@ public class MemberService {
 
         // 비밀번호 암호화 등의 보안 처리
         Member member = new Member(memberDto);
-//        member.setEmail(memberDto.getEmail());
-//        member.setPassword(memberDto.getPassword());
-//        member.setName(memberDto.getName());
-//        member.setNickname(memberDto.getNickname());
-//        member.setPhone(memberDto.getPhone());
-//        member.setProvince(memberDto.getProvince());
-//        member.setCity(memberDto.getCity());
-        memberRepository.save(member);
-
+//        memberRepository.save(member);
+//
         return memberRepository.save(member);
     }
 
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
     }
-
-    // 다른 메서드들도 유사하게 작성 가능
 }

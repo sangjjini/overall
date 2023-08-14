@@ -24,5 +24,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     //주어진 이메일에 해당하는 회원 정보를 주어진 MemberRequestDto 객체의 정보로 업데이트(회원 정보를 수정하는 역할)
 //    void updateMember(String email, MemberRequestDto memberDto);
 
-    //모든 회원 정보를 조회하여 리스트로 반환(모든 회원 정보를 조회하는 역할)
 }
