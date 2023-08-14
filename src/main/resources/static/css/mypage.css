@@ -1,7 +1,108 @@
 .contents {
+    display:flex;
+    justify-content: center;
     padding:100px;
+    gap:50px;
+}
+
+.contents_menu {
     display:flex;
     flex-direction: column;
+}
+
+.contents_menu a {
+    display:inline-block;
+    width:100%;
+    padding:20px;
+    border:1px solid black;
+    border-bottom:none;
+}
+
+.contents_menu .menu:last-child a {
+    border-bottom: 1px solid black;
+}
+
+.contents_menu .menu {
+    display:flex;
+    width:100%;
+}
+
+.contents_menu .menu a h1 {
+    white-space: nowrap;
+    text-align: center;
+}
+
+
+.mypage_contents {
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    border:1px solid black;
+    padding:20px;
+
+}
+.mypage_contents .overall {
+    display:flex;
+    gap:40px;
+
+}
+
+.overall .overall_left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    gap:30px;
+}
+
+.overall .overall_left .nickname {
+    font-size:24px;
+}
+
+.mypage_contents .overall_param {
+    display:flex;
     align-items: center;
 }
+
+
+
+.mypage_contents #param h1 {
+    font-size:72px;
+}
+
+.stats_wrap {
+    display:flex;
+    width:100%;
+    flex-direction: column;
+}
+
+.stats_wrap #stat {
+    padding:20px;
+    border:1px solid black;
+    border-bottom:none;
+}
+
+.stats_wrap #stat:last-child {
+    border-bottom:1px solid black;
+}
+
+.style_wrap {
+    display:flex;
+    flex-direction: column;
+}
+
+.style_wrap #style {
+    border:1px solid black;
+    border-radius:60px;
+    padding:20px;
+}
+
+.history_contents {
+    margin-top:50px;
+    padding:20px;
+    display:flex;
+    border:1px solid black;
+    justify-content: center;
+    gap:10px;
+}
+

@@ -14,9 +14,10 @@ import java.util.List;
 @RestController
 public class MypageController {
     private final MypageRepository mypageRepository;
-    @GetMapping("mypage/list")
+    @GetMapping("mypage/overallList")
     public List<Mypage> getMypageAll() {
         List<Mypage> list = mypageRepository.findAll();
         return list;
     }
+
 }
