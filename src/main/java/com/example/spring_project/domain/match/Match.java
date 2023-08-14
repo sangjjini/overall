@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 public class Match{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int no;
+    private long no;
 
     @Column(length = 200, nullable = false)
     private String title;
@@ -64,5 +64,9 @@ public class Match{
 
         if(dto.getDeadline() >= '0' && dto.getDeadline() <= '2')
             this.deadline = dto.getDeadline();
+
+
+        this.squadB = dto.getSquadB();
+
     }
 }
