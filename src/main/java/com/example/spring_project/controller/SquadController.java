@@ -26,7 +26,7 @@ public class SquadController {
     public Map makeSquad(WebRequest request, @RequestBody SquadRequestDto squadRequestDto) {
         JSONObject response = new JSONObject();
 //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "email";
+        String log = "kevin@gmail.com";
 
         squadRequestDto.setHost(log);
         squadRequestDto.setMaking(log);

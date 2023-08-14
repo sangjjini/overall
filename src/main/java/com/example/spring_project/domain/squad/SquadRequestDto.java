@@ -18,4 +18,13 @@ public class SquadRequestDto {
     private String loadedFile;
     private String imageUrl;
     private String making;
+
+    public SquadRequestDto(Squad squad) {
+        this.no = squad.getNo();
+        this.host = squad.getHost();
+        this.name = squad.getName();
+        this.contents = squad.getContents();
+        this.loadedFile = squad.getLoadedFile();
+        this.imageUrl = squad.getImageUrl();
+    }
 }
