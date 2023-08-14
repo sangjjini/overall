@@ -19,7 +19,7 @@ public class Matching{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="matching_no")
-    private int matchingNo;
+    private long matchingNo;
 
     @ManyToOne
     @JoinColumn(name="squad_no")

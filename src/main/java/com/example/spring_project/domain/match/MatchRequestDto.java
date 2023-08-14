@@ -10,15 +10,15 @@ import java.sql.Timestamp;
 @Getter
 @NoArgsConstructor
 public class MatchRequestDto {
-    private int no;
+    private long no;
     private String title;
     private String contents;
     private String author;
-    private char deadline;
 
-    private String making;
     private String startAt;
     private String endAt;
+    private char deadline;
     private String squadA;
     private String squadB;
+    private String making;
 }
