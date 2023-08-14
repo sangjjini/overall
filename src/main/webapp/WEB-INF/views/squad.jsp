@@ -18,10 +18,20 @@
             position: absolute;
             background-color: aqua;
         }
-        #new_squad{
-            display: none;
-            position: absolute;
-            background-color: aqua;
+        #chat{
+            width: 500px;
+            height: 300px;
+            background-color: antiquewhite;
+        }
+        .myChat{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .otherChat{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
     </style>
 </head>
@@ -30,10 +40,11 @@
     <div class="contents" style="background-color: aquamarine">
         <div>
             <label for="name">스쿼드 이름</label>
-            <input type="text" id="name" readonly>
+            <input type="text" id="name">
             <label for="contents">스쿼드 소개</label>
-            <input type="text" id="contents" readonly>
+            <input type="text" id="contents">
             <input type="hidden" id="host">
+            <button onclick="update()">정보 변경</button>
         </div>
         <br>
 
@@ -58,15 +69,14 @@
         </div>
         <br>
 
-        <button onclick="show_edit()">정보 변경</button>
-        <div id="new_squad">
-            <label for="new_name">변경 이름</label>
-            <input type="text" id="new_name">
-            <label for="new_contents">변경 소개</label>
-            <input type="text" id="new_contents">
-            <button onclick="update()">변경하기</button>
-        </div>
         <button onclick="leave()">스쿼드 탈퇴</button>
+        <br>
+
+        <div id="chat"></div>
+        <div>
+            <input type="text" id="chatting" placeholder="내용">
+            <button onclick="send()">전송</button>
+        </div>
     </div>
 <c:import url="footer.jsp" />
 </body>
