@@ -24,7 +24,12 @@ public class MainController {
     }
 
     @GetMapping("/squad/match")
-    public String squadMatch(){ return "squad_match"; }
+    public String squadMatch(){ return "squad_match_form"; }
+    @GetMapping("/squad/matchRead")
+    public String squadMatchRead(){ return "squad_match_read"; }
+
+    @GetMapping("/squad/matchList")
+    public String squadMatchAll(){ return "squad_match_list"; }
 
     @GetMapping("squad")
     public String squad(@RequestParam(required = false) long no) { return "squad";}
