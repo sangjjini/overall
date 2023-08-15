@@ -19,6 +19,13 @@
 <jsp:include page="header.jsp"></jsp:include>
  <div class="wrap">
     <div class="contents">
+        <div class="contents_menu">
+
+
+        </div>
+        <div class="mypage_contents">
+
+        </div>
 
     </div>
  </div>

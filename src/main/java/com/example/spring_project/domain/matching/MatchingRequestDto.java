@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 public class MatchingRequestDto {
-    private int matchingNo;
+    private long matchingNo;
     private Squad squad;
     private Match match;
 }

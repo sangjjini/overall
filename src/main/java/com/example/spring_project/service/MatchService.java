@@ -14,7 +14,7 @@ public class MatchService {
     private final MatchRepository matchRepository;
 
     @Transactional
-    public void updateMatch(int no, MatchRequestDto dto){
+    public void updateMatch(long no, MatchRequestDto dto){
         Match match = matchRepository.findById(no).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 경기입니다.")
         );
@@ -22,7 +22,7 @@ public class MatchService {
     }
 
     @Transactional
-    public void deleteMatch(int no){
+    public void deleteMatch(long no){
         matchRepository.deleteById(no);
     }
 }

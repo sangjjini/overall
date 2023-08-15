@@ -53,4 +53,6 @@ public class MemberController {
 //        Member member = new Member(memberDto);
 //        memberRepository.save(member); // 엔티티 저장
 //    }
+
+
 }

@@ -38,6 +38,7 @@ public class Squad {
     }
 
     public void update(SquadRequestDto squadRequestDto) {
+        this.host = squadRequestDto.getHost();
         this.name = squadRequestDto.getName();
         this.contents = squadRequestDto.getContents();
         this.loadedFile = squadRequestDto.getLoadedFile();

@@ -6,17 +6,19 @@ import com.example.spring_project.domain.joining.JoiningRepository;
 import com.example.spring_project.domain.joining.JoiningRequestDto;
 import com.example.spring_project.domain.member.Member;
 import com.example.spring_project.domain.member.MemberRepository;
-import com.example.spring_project.payload.Response;
+import com.example.spring_project.domain.squad.Squad;
+import com.example.spring_project.domain.squad.SquadRepository;
+import com.example.spring_project.domain.squad.SquadRequestDto;
 import com.example.spring_project.service.JoiningService;
 import com.example.spring_project.service.SquadService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,22 +28,32 @@ public class JoiningController {
     private final JoiningService joiningService;
     private final SquadService squadService;
     private final MemberRepository memberRepository;
+    private final SquadRepository squadRepository;
 
-    @DeleteMapping("squad/{no}/leave")
-    public Map leaveJoining(@PathVariable long no) {
-        JSONObject response = new JSONObject();
+    @DeleteMapping("joining/{no}/leave")
+    public void leaveJoining(WebRequest request, @PathVariable long no) {
 //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "email";
+        String log = "kevin@gmail.com";
+
         JoiningId joiningId = new JoiningId(log, no);
         joiningService.deleteJoining(joiningId);
-        if(joiningRepository.countBySquadNo(no) == 0) {
-            squadService.deleteSquad(no);
+        Squad squad = squadRepository.findByNo(no);
+        // 스쿼드의 방장이 나갔을 경우
+        if(squad.getHost().equals(log)) {
+            // 스쿼드에 아무도 없을 경우
+            if(joiningRepository.countBySquadNo(no) == 0) {
+                squadService.deleteSquad(no);
+            } else {
+                SquadRequestDto squadRequestDto = new SquadRequestDto(squad);
+                String host = joiningRepository.findAllBySquadNoAndState(no, "Y").get(0).getEmail();
+                squadRequestDto.setHost(host);
+                squadService.updateSquad(no, squadRequestDto);
+            }
         }
-        return response.put("leave", "success").toMap();
     }
 
     // 매핑 : squad/8/invite?email=test
-    @PostMapping("squad/{no}/invite")
+    @PostMapping("joining/{no}/invite")
     public Map inviteJoining(@PathVariable long no, @RequestParam String email) {
         JSONObject response = new JSONObject();
         JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
@@ -54,7 +66,7 @@ public class JoiningController {
         return response.put("invite", "success").toMap();
     }
 
-    @PostMapping("squad/{no}/accept")
+    @PostMapping("joining/{no}/accept")
     public Map acceptJoining(@PathVariable long no, @RequestParam String email) {
         JSONObject response = new JSONObject();
         Joining joining = joiningRepository.findByEmailAndSquadNo(email, no);
@@ -64,14 +76,13 @@ public class JoiningController {
         return response.put("accept", "success").toMap();
     }
 
-    @DeleteMapping("squad/{no}/refuse")
-    public Response refuseJoining(@PathVariable long no, @RequestParam String email) {
+    @DeleteMapping("joining/{no}/refuse")
+    public void refuseJoining(@PathVariable long no, @RequestParam String email) {
         JoiningId joiningId = new JoiningId(email, no);
         joiningService.deleteJoining(joiningId);
-        return new Response("refuse", "success");
     }
 
-    @GetMapping("squad/{no}/inviting")
+    @GetMapping("joining/{no}/inviting")
     public List<Member> getUserAllInviting(@PathVariable long no) {
         List<Member> members = new ArrayList<>();
         List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, "N");
@@ -83,7 +94,7 @@ public class JoiningController {
         return members;
     }
 
-    @GetMapping("squad/{no}/invited")
+    @GetMapping("joining/{no}/invited")
     public List<Member> getUserAllInvited(@PathVariable long no) {
         List<Member> members = new ArrayList<>();
         List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, "Y");
