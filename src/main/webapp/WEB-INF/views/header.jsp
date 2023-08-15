@@ -12,7 +12,7 @@
 <body>
 <header id = "header">
     <div class="main_nav">
-        <div class="logo"><a href="#">LOGO</a></div>
+        <div class="logo"><a href="/">LOGO</a></div>
         <div class="nav_wrap">
             <div class="nav_list"><a href="#">오버롤소개</a></div>
             <div class="nav_list"><a href="#">스쿼드</a></div>

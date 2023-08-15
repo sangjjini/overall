@@ -8,20 +8,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="/css/login.css">
+    <script src="/script/login.js"></script>
     <title>로그인</title>
 </head>
 <body>
+<jsp:include page="header.jsp"></jsp:include>
     <div id="wrap">
         <div id="root">
-            <jsp:include page="header.jsp"></jsp:include>
             <section id="main_section">
                 <div class="login_container">
                     <div class="logo">
-                        <a href="/index"><img src="#"></a>
+                        <a href="/"><img src="/images/logo_black.png"></a>
                     </div>
-                    <form id="lofin">
+                    <form id="login">
                         <div class="id_txt">아이디</div>
-                        <div class="login_box">
+                        <div class="login-box">
                             <ion-icon name="person-outline"></ion-icon>
                             <input type="text" name="id" id="id" maxlength="30"
                                    autocapitalize="off">
@@ -34,7 +37,7 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <form:checkbox path="rememberId"/>아이디 기억
+                                <form:checkbox path="rememberId"/>아이디 저장
                             </label>
                         </div>
                         <input type="button" id="submit_button" value="login"
@@ -46,8 +49,12 @@
                     </form>
                 </div>
             </section>
-            <jsp:include page="footer.jsp"></jsp:include>
+            <script type="module"
+                    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+            <script nomodule
+                    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
         </div>
     </div>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

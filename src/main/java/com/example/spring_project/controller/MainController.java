@@ -4,6 +4,7 @@ import com.example.spring_project.payload.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
@@ -26,7 +27,7 @@ public class MainController {
     public String squadMatch(){ return "squad_match"; }
 
     @GetMapping("squad")
-    public String squad() { return "squad";}
+    public String squad(@RequestParam(required = false) long no) { return "squad";}
 
     @GetMapping("mypage")
     public String mypage(){

@@ -4,10 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SquadRepository extends JpaRepository<Squad, Long> {
 
-    public Squad findByMaking(String email);
-    public Squad findByNo(Long no);
+    Squad findByMaking(String email);
+    Squad findByNo(Long no);
+    Squad findByHost(String author);
+    Squad findByName(String name);
 
-    public Squad findByHost(String author);
-
-    public Squad findByName(String name);
 }

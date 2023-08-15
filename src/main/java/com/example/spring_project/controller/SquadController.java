@@ -6,6 +6,7 @@ import com.example.spring_project.domain.joining.JoiningRequestDto;
 import com.example.spring_project.domain.squad.Squad;
 import com.example.spring_project.domain.squad.SquadRepository;
 import com.example.spring_project.domain.squad.SquadRequestDto;
+import com.example.spring_project.domain.squad.SquadResponseDto;
 import com.example.spring_project.service.SquadService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
@@ -27,44 +28,53 @@ public class SquadController {
         JSONObject response = new JSONObject();
 //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         String log = "kevin@gmail.com";
-
-        squadRequestDto.setHost(log);
-        squadRequestDto.setMaking(log);
-        // 스쿼드 생성
-        Squad squad = new Squad(squadRequestDto);
-        // 이름 중복 검사 필요
-        squadRepository.save(squad);
-        Squad squadSave = squadRepository.findByMaking(log);
-        // join 생성
-        JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
-        joiningRequestDto.setEmail(log);
-        joiningRequestDto.setSquadNo(squadSave.getNo());
-        joiningRequestDto.setState("Y");
-        Joining joining = new Joining(joiningRequestDto);
-        joiningRepository.save(joining);
-        // making 제거
-        squadRequestDto.setMaking(null);
-        squadService.updateSquad(squadSave.getNo(), squadRequestDto);
-        return response.put("save", "success").toMap();
+        // 스쿼드 이름 중복 검사
+        if(squadRepository.findByName(squadRequestDto.getName()) == null){
+            squadRequestDto.setHost(log);
+            squadRequestDto.setMaking(log);
+            // 스쿼드 생성
+            Squad squad = new Squad(squadRequestDto);
+            // 이름 중복 검사 필요
+            squadRepository.save(squad);
+            Squad squadSave = squadRepository.findByMaking(log);
+            // join 생성
+            JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
+            joiningRequestDto.setEmail(log);
+            joiningRequestDto.setSquadNo(squadSave.getNo());
+            joiningRequestDto.setState("Y");
+            Joining joining = new Joining(joiningRequestDto);
+            joiningRepository.save(joining);
+            // making 제거
+            squadRequestDto.setMaking(null);
+            squadService.updateSquad(squadSave.getNo(), squadRequestDto);
+            response.put("save", "success");
+        } else {
+            response.put("save", "fail");
+        }
+        return response.toMap();
     }
 
     @GetMapping ("squad/{no}")
-    public Squad getSquadById(@PathVariable long no) {
-        return squadRepository.findByNo(no);
+    public SquadResponseDto getSquadById(@PathVariable long no){
+        return new SquadResponseDto(squadRepository.findByNo(no));
     }
 
     @DeleteMapping("squad/{no}/delete")
-    public Map deleteSquad(@PathVariable long no) {
-        JSONObject response = new JSONObject();
+    public void deleteSquad(@PathVariable long no) {
         squadService.deleteSquad(no);
-        return response.put("delete", "success").toMap();
     }
 
     @PostMapping("squad/{no}/update")
     public Map updateSquad(@PathVariable long no, @RequestBody SquadRequestDto squadRequestDto) {
         JSONObject response = new JSONObject();
-        squadService.updateSquad(no, squadRequestDto);
-        return response.put("update", "success").toMap();
+        // 스쿼드 이름 중복 검사
+        if(squadRepository.findByName(squadRequestDto.getName()) == null){
+            squadService.updateSquad(no, squadRequestDto);
+            response.put("update", "success");
+        } else{
+            response.put("update", "fail");
+        }
+        return response.toMap();
     }
 
 }
