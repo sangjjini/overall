@@ -21,16 +21,19 @@ public class Joining {
     private long squadNo;
     @Column(nullable = false)
     private String state;
+    private int alarm;
 
     public Joining(JoiningRequestDto joiningRequestDto) {
         this.email = joiningRequestDto.getEmail();
         this.squadNo = joiningRequestDto.getSquadNo();
         this.state = joiningRequestDto.getState();
+        this.alarm = joiningRequestDto.getAlarm();
     }
 
     public void update(JoiningRequestDto joiningRequestDto) {
         this.email = joiningRequestDto.getEmail();
         this.squadNo = joiningRequestDto.getSquadNo();
         this.state = joiningRequestDto.getState();
+        this.alarm = joiningRequestDto.getAlarm();
     }
 }

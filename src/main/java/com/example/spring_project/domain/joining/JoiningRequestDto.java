@@ -11,10 +11,12 @@ public class JoiningRequestDto {
     private String email;
     private Long squadNo;
     private String state;
+    private int alarm;
 
     public JoiningRequestDto(Joining joining) {
         this.email = joining.getEmail();
         this.squadNo = joining.getSquadNo();
         this.state = joining.getState();
+        this.alarm = joining.getAlarm();
     }
 }
