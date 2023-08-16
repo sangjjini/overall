@@ -1,0 +1,120 @@
+button{
+    padding: 0;
+}
+.contents_top{
+    display: flex;
+}
+
+/*스쿼드 정보*/
+.contents_left{
+    display: flex;
+    flex-direction: column;
+    padding: 5px 5%;
+    width: 300px;
+    background-color: aquamarine;
+}
+.contents_list>button{
+    width: 160px;
+    margin: 0 auto;
+}
+.contents_list{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.small_title{
+    font-weight: 700;
+    color: #3f3f3f;
+}
+.small_title_btn{
+    display: flex;
+    justify-content: space-between;
+}
+.contents_list>input{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    height: 34px;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+.contents_list>textarea{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    height: 68px;
+    margin-top: 10px;
+    padding: 5px 10px;
+}
+.contents_member{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+.list_pos{
+    width: 80px;
+}
+.list_name{
+    width: 160px;
+}
+#invite_list{
+    display: none;
+    position: absolute;
+    background-color: aqua;
+}
+
+/*포지션*/
+.contents_right{
+    background: cornflowerblue;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.contents_right div{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.position_row{
+    display: flex;
+    flex-direction: row;
+}
+.position_add{
+    margin: 0 auto;
+    width: 75px;
+    height: 75px;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+}
+#select_box{
+    display: none;
+    width: 300px;
+    height: 300px;
+    background: chartreuse;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/*채팅*/
+.contents_bottom{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#chat{
+    width: 500px;
+    height: 300px;
+    background-color: antiquewhite;
+    overflow: auto;
+}
+.myChat{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.otherChat{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

@@ -5,7 +5,9 @@ $(window).on('load', function (){
     squadNo = urlParams.get('no');
     squad();
     invited();
+    // 실시간 적용 필요
     chat();
+    read();
 });
 
 function squad(){
@@ -29,17 +31,23 @@ function invited(){
             // 방장 탈퇴 버튼 제거 필요
             if(members.email === $('#host').val()){
                 $('#invited').append(
-                    `<div>
-                    <p>${members.nickname}(방장)</p>
-                    <button onclick="out(this.id)" id="${members.code}">방출</button>
-                </div>`
+                    `<div class="contents_member">
+                        <div class="list_pos"></div>
+                        <div class="list_name">${members.nickname}(방장)</div>
+                        <div>
+                            <button onclick="out(this.id)" id="${members.code}">방출</button>
+                        </div>
+                    </div>`
                 );
             } else {
                 $('#invited').append(
-                    `<div>
-                    <p>${members.nickname}</p>
-                    <button onclick="out(this.id)" id="${members.code}">방출</button>
-                </div>`
+                    `<div class="contents_member">
+                        <div class="list_pos"></div>
+                        <div class="list_name">${members.nickname}</div>
+                        <div>
+                            <button onclick="out(this.id)" id="${members.code}">방출</button>
+                        </div>
+                    </div>`
                 );
             }
         });
@@ -110,7 +118,7 @@ function refuse(id){
 }
 
 function out(id){
-    if(confirm("방출하겠습니까?")){
+    if(confirm("방출하시겠습니까?")){
         $.ajax({
             url: "joining/" + squadNo + "/refuse?code=" + id,
             type: "delete"
@@ -129,7 +137,7 @@ function update(){
     $.ajax({
         url: "squad/"+squadNo+"/update",
         type: "post",
-        dataType: 'json',
+        dataType: "json",
         contentType : "application/json",
         data: JSON.stringify(data)
     }).done(function (response){
@@ -155,29 +163,92 @@ function chat(){
                     `<div class="myChat" id="${chat.no}">
                         <div>${chat.nickname}</div>
                         <div>${chat.contents}</div>
-                    </div>`
+                    </div><br>`
                 );
             } else {
                 $('#chat').append(
                     `<div class="otherChat" id="${chat.no}">
                         <div>${chat.nickname}</div>
                         <div>${chat.contents}</div>
-                    </div>`
+                    </div><br>`
                 );
             }
-        })
-    })
+        });
+        $('#chat').scrollTop($('#chat')[0].scrollHeight)
+    });
 }
 
 function send(){
-    const data = { contents : $('#chatting').val()}
+    const data = { contents : $('#chatting').val() };
     $.ajax({
         url:"chat/"+squadNo+"/send",
         type:"post",
-        dataType: 'json',
+        dataType: "json",
         contentType : "application/json",
-        data: JSON.stringify(data)
+        data: JSON.stringify(data),
     }).done(function (){
+        $('#chatting').val('');
         chat();
-    })
+    });
+}
+
+function read(){
+    $.ajax({
+        url:"joining/"+squadNo+"/read",
+        type:"post"
+    });
+}
+
+let select_pos;
+$('.position_add').click(function (){
+    select_pos = $(this).attr("id");
+    $('#select_box').toggle();
+    member_list();
+})
+
+function close_select(){
+    $('#select_box').toggle();
+}
+
+function member_list(){
+    $.ajax({
+        url: "joining/" + squadNo + "/invited",
+        type: "get"
+    }).done(function (response){
+        $('#member_list').empty();
+        response.forEach(members => {
+            $('#member_list').append(
+                `<div>
+                    ${members.nickname}<button onclick="change_pos(this.id)" id="${members.code}">V</button>
+                </div>`
+            );
+        });
+    });
+}
+
+function change_pos(code){
+    $.ajax({
+        url:"joining/"+squadNo+"/position/change?code="+code+"&state="+select_pos,
+        type:"post"
+    }).done(function (response){
+       $('#member_list').toggle();
+       $('#'+select_pos).hide();
+       $('#sel_'+select_pos).append(
+         `${response.nickname}<button onclick="delete_pos(this.id, this.name)" id="${response.code}" name=${select_pos}>X</button>`
+       );
+    });
+}
+
+function delete_pos(code, sel_pos){
+    $.ajax({
+        url:"joining/"+squadNo+"/position/delete?code="+code,
+        type:"post"
+    }).done(function (){
+        $('#sel_'+sel_pos).empty();
+        $('#'+select_pos).show();
+    });
+}
+
+function get_position(){
+
 }
