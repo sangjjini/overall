@@ -13,6 +13,13 @@
     text-align: center;
 }
 
+
+.slide_img {
+    width:100%;
+    height:600px;
+    background-image: url("../images/main_slider_img.jpg");
+}
+
 .squad_maker {
     background: url("../images/background_ground_img.png") no-repeat;
     background-size: cover;

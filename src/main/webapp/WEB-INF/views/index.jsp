@@ -19,7 +19,9 @@
     <div id = container>
         <section id="main_slider">
             <div class="slide_img">
-                <img src="/images/main_slider_img.jpg">
+                <div class="box">
+
+                </div>
             </div>
         </section>
         <section id="squad_contents">
