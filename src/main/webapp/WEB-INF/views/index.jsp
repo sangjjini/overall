@@ -19,22 +19,27 @@
     <div id = container>
         <section id="main_slider">
             <div class="slide_img">
-                <img src="/images/main_slider_img.jpg">
+                <div class="box">
+
+                </div>
+            </div>
+            <div class="slide_txt">
+                <p>오버롤에 오신것을 환영합니다</p>
+                <div class="button"><a href="#">오버롤 소개</a></div>
             </div>
         </section>
         <section id="squad_contents">
-            <h1>콘텐츠</h1>
             <div class="squad_maker">
                 <div class="squad_maker_txt">
                 <p>당신의 취향의 스쿼드를 만들어 보세요</p>
-                <div class="button">스쿼드만들기</div>
+                    <div class="button"><a href="squad">스쿼드만들기</a></div>
                 </div>
             </div>
             <div class="squad_match">
                 <div class="squad_match_txt">
                 <p>OVERALL에서  스쿼드를</p>
                     <p>만들어 풋살 매치를 즐기세요</p>
-                <div class="button">스쿼드매치</div>
+                    <div class="button"><a href="/squad/match">스쿼드매치</a></div>
                 </div>
             </div>
         </section>
