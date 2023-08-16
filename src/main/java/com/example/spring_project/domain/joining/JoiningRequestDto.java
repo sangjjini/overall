@@ -19,4 +19,11 @@ public class JoiningRequestDto {
         this.state = joining.getState();
         this.alarm = joining.getAlarm();
     }
+
+    public JoiningRequestDto(JoiningResponseDto joiningResponseDto){
+        this.email = joiningResponseDto.getEmail();
+        this.squadNo = joiningResponseDto.getSquadNo();
+        this.state = joiningResponseDto.getState();
+        this.alarm = joiningResponseDto.getAlarm();
+    }
 }

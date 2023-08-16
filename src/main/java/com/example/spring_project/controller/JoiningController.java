@@ -1,16 +1,14 @@
 package com.example.spring_project.controller;
 
 import com.example.spring_project.domain.chat.ChatRepository;
-import com.example.spring_project.domain.joining.Joining;
-import com.example.spring_project.domain.joining.JoiningId;
-import com.example.spring_project.domain.joining.JoiningRepository;
-import com.example.spring_project.domain.joining.JoiningRequestDto;
+import com.example.spring_project.domain.joining.*;
 import com.example.spring_project.domain.member.Member;
 import com.example.spring_project.domain.member.MemberRepository;
 import com.example.spring_project.domain.member.MemberResponseDto;
 import com.example.spring_project.domain.squad.Squad;
 import com.example.spring_project.domain.squad.SquadRepository;
 import com.example.spring_project.domain.squad.SquadRequestDto;
+import com.example.spring_project.payload.Response;
 import com.example.spring_project.service.JoiningService;
 import com.example.spring_project.service.SquadService;
 import lombok.RequiredArgsConstructor;
@@ -120,4 +118,50 @@ public class JoiningController {
         joiningRequestDto.setAlarm(chatRepository.countBySquadNo(no));
         joiningService.updateJoining(log, no, joiningRequestDto);
     }
+
+    @PostMapping("joining/{no}/position/change")
+    public Member acceptJoining(@PathVariable long no, @RequestParam long code, @RequestParam String state) {
+        Member member = memberRepository.findByCode(code);
+        List<Joining> list = joiningRepository.findAllBySquadNoAndState(no, state);
+        if(!list.isEmpty()){
+            JoiningRequestDto joiningDto = new JoiningRequestDto(list.get(0));
+            joiningDto.setState("Y");
+            joiningService.updateJoining(joiningDto.getEmail(), no, joiningDto);
+        }
+        Joining joining = joiningRepository.findByEmailAndSquadNo(member.getEmail(), no);
+        JoiningRequestDto joiningRequestDto = new JoiningRequestDto(joining);
+        joiningRequestDto.setState(state);
+        joiningService.updateJoining(member.getEmail(), no, joiningRequestDto);
+        return member;
+    }
+
+    @PostMapping("joining/{no}/position/delete")
+    public void deletePosition(@PathVariable long no, @RequestParam long code) {
+        Member member = memberRepository.findByCode(code);
+        Joining joining = joiningRepository.findByEmailAndSquadNo(member.getEmail(), no);
+        JoiningRequestDto joiningRequestDto = new JoiningRequestDto(joining);
+        joiningRequestDto.setState("Y");
+        joiningService.updateJoining(member.getEmail(), no, joiningRequestDto);
+    }
+
+//    @GetMapping("joining/{no}/position")
+//    public MemberResponseDto getMember(@PathVariable long no, @RequestParam String state) {
+//        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, state);
+//        if(!joiningList.isEmpty()){
+//            String email = joiningList.get(0).getEmail();
+//            Member member = memberRepository.findByEmail(email);
+//            MemberResponseDto memberResponseDto = new MemberResponseDto(member);
+//
+//        }
+//
+//        List<MemberResponseDto> members = new ArrayList<>();
+//        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, "N");
+//        for(int i=0; i<joiningList.size(); i++) {
+//            String email = joiningList.get(i).getEmail();
+//            Member member = memberRepository.findByEmail(email);
+//            MemberResponseDto memberResponseDto = new MemberResponseDto(member);
+//            members.add(memberResponseDto);
+//        }
+//        return members;
+//    }
 }
