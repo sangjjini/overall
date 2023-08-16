@@ -5,7 +5,9 @@ $(window).on('load', function (){
     squadNo = urlParams.get('no');
     squad();
     invited();
+    // 실시간 적용 필요
     chat();
+    read();
 });
 
 function squad(){
@@ -32,14 +34,14 @@ function invited(){
                     `<div>
                     <p>${members.nickname}(방장)</p>
                     <button onclick="out(this.id)" id="${members.code}">방출</button>
-                </div>`
+                    </div><br>`
                 );
             } else {
                 $('#invited').append(
                     `<div>
                     <p>${members.nickname}</p>
                     <button onclick="out(this.id)" id="${members.code}">방출</button>
-                </div>`
+                    </div><br>`
                 );
             }
         });
@@ -129,7 +131,7 @@ function update(){
     $.ajax({
         url: "squad/"+squadNo+"/update",
         type: "post",
-        dataType: 'json',
+        dataType: "json",
         contentType : "application/json",
         data: JSON.stringify(data)
     }).done(function (response){
@@ -155,29 +157,41 @@ function chat(){
                     `<div class="myChat" id="${chat.no}">
                         <div>${chat.nickname}</div>
                         <div>${chat.contents}</div>
-                    </div>`
+                    </div><br>`
                 );
             } else {
                 $('#chat').append(
                     `<div class="otherChat" id="${chat.no}">
                         <div>${chat.nickname}</div>
                         <div>${chat.contents}</div>
-                    </div>`
+                    </div><br>`
                 );
             }
-        })
-    })
+        });
+        $('#chat').scrollTop($('#chat')[0].scrollHeight)
+    });
 }
 
 function send(){
-    const data = { contents : $('#chatting').val()}
+    const data = { contents : $('#chatting').val() };
     $.ajax({
         url:"chat/"+squadNo+"/send",
         type:"post",
-        dataType: 'json',
+        dataType: "json",
         contentType : "application/json",
-        data: JSON.stringify(data)
+        data: JSON.stringify(data),
+        error:function(request,status,error){
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
     }).done(function (){
+        $('#chatting').val('');
         chat();
-    })
+    });
+}
+
+function read(){
+    $.ajax({
+        url:"joining/"+squadNo+"/read",
+        type:"post"
+    });
 }

@@ -1,6 +1,5 @@
 package com.example.spring_project.domain.chat;
 
-import com.example.spring_project.domain.joining.JoiningId;
 import com.example.spring_project.util.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

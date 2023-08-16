@@ -1,5 +1,6 @@
 package com.example.spring_project.controller;
 
+import com.example.spring_project.domain.chat.ChatRepository;
 import com.example.spring_project.domain.joining.Joining;
 import com.example.spring_project.domain.joining.JoiningId;
 import com.example.spring_project.domain.joining.JoiningRepository;
@@ -30,6 +31,7 @@ public class JoiningController {
     private final SquadService squadService;
     private final MemberRepository memberRepository;
     private final SquadRepository squadRepository;
+    private final ChatRepository chatRepository;
 
     @DeleteMapping("joining/{no}/leave")
     public void leaveJoining(WebRequest request, @PathVariable long no) {
@@ -107,5 +109,15 @@ public class JoiningController {
             members.add(memberResponseDto);
         }
         return members;
+    }
+
+    @PostMapping("joining/{no}/read")
+    public void readAlarm(WebRequest request, @PathVariable long no){
+        //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        String log = "kevin@gmail.com";
+        Joining joining = joiningRepository.findByEmailAndSquadNo(log, no);
+        JoiningRequestDto joiningRequestDto = new JoiningRequestDto(joining);
+        joiningRequestDto.setAlarm(chatRepository.countBySquadNo(no));
+        joiningService.updateJoining(log, no, joiningRequestDto);
     }
 }

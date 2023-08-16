@@ -22,6 +22,7 @@
             width: 500px;
             height: 300px;
             background-color: antiquewhite;
+            overflow: auto;
         }
         .myChat{
             display: flex;
@@ -69,14 +70,15 @@
         </div>
         <br>
 
-        <button onclick="leave()">스쿼드 탈퇴</button>
-        <br>
-
         <div id="chat"></div>
         <div>
             <input type="text" id="chatting" placeholder="내용">
             <button onclick="send()">전송</button>
         </div>
+        <br>
+
+        <button onclick="leave()">스쿼드 탈퇴</button>
+        <br>
     </div>
 <c:import url="footer.jsp" />
 </body>
