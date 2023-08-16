@@ -80,11 +80,51 @@
     padding:20px;
     border:1px solid black;
     border-bottom:none;
+
+}
+
+ .graph_wrap {
+    width: 100%;
+    background-color: #dedede;
+}
+
+.stats_wrap .graph_wrap .physical_data {
+    height: 60px;
+    padding: 0;
+    text-align: center;
+    background-color: #003ffd;
+    color: #111;
+    text-indent: -9999px;
+}
+
+.stats_wrap .graph_wrap .speed_data {
+    height: 60px;
+    padding: 0;
+    text-align: center;
+    background-color: #d20707;
+    color: #111;
+    text-indent: -9999px;
+}
+
+.stats_wrap .graph_wrap .rating_data {
+    height: 60px;
+    padding: 0;
+    text-align: center;
+    background-color: #fccf05;
+    color: #111;
+    text-indent: -9999px;
 }
 
 .stats_wrap #stat:last-child {
     border-bottom:1px solid black;
 }
+
+#stat {
+    display:flex;
+    gap:30px;
+    align-items: center;
+}
+
 
 .style_wrap {
     display:flex;
@@ -104,5 +144,11 @@
     border:1px solid black;
     justify-content: center;
     gap:10px;
+}
+
+.match_evaluation {
+    border:1px solid black;
+    padding:10px;
+    margin:10px;
 }
 

@@ -39,7 +39,6 @@ To change this template use File | Settings | File Templates.
         </div>
         </div>
         <div class="stats_wrap">
-
         </div>
         <div class="style_wrap">
 
@@ -52,6 +51,9 @@ To change this template use File | Settings | File Templates.
             <span>vs</span>
             <h2>1</h2>
             <div class="team2">알힐랄</div>
+            <div class="match_evaluation">
+                <h1><a href="#">매치평가</a></h1>
+            </div>
         </div>
     </div>
 </div>

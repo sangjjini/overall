@@ -43,7 +43,7 @@ table {
 }
 a {color: #2b2b2b; text-decoration: none; outline: none}
 
-a:hover, a:active {text-decoration: none; color:#2b2b2b; background-color:transparent;}
+a:hover, a:active {text-decoration: none; color:#2b2b2b;}
 
 @font-face {
     font-family: 'MBC1961GulimM';
