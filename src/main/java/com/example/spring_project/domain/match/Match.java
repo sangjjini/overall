@@ -62,6 +62,9 @@ public class Match{
         if(dto.getContents() != null)
             this.contents = dto.getContents();
 
+        if(dto.getSquadB() != null)
+            this.squadB = dto.getSquadB();
+
         if(dto.getDeadline() >= '0' && dto.getDeadline() <= '2')
             this.deadline = dto.getDeadline();
 

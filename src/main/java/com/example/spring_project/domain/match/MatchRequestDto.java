@@ -14,7 +14,6 @@ public class MatchRequestDto {
     private String title;
     private String contents;
     private String author;
-
     private String startAt;
     private String endAt;
     private char deadline;

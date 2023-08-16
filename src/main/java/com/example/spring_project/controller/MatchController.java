@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+    import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
@@ -21,6 +21,7 @@ import org.springframework.web.context.request.WebRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,12 +48,18 @@ public class MatchController {
 //            response.put("making","fail");
 //            return response.toMap();
 //        }
+        System.out.println("st : " + dto.getStartAt());
+        System.out.println("et : " + dto.getEndAt());
 
         try {
             if(dto.getSquadA() != null && dto.getSquadB() != null) {
                 dto.setDeadline('1');
             }else {
                 dto.setDeadline('0');
+            }
+
+            if(dto.getSquadB().equals("")){
+                dto.setSquadB(null);
             }
 
             //dto.setAuthor(log);
@@ -78,28 +85,41 @@ public class MatchController {
         return response.toMap();
     }
 
-    @GetMapping("list/{page}")
-    public List<Match> getMatchAll(@PathVariable int page, @RequestParam(required = false)String keyword, @PageableDefault(size=3) Pageable pageable){
+    @GetMapping("list")
+    public List<Match> getMatchAll(@RequestParam(required = false)String keyword, @PageableDefault(size=3) Pageable pageable){
         if(keyword != null && !keyword.equals("")){
             String pattern = "%" + keyword + "%";
-            return matchRepository.findAllByTitleLike(pattern, pageable.withPage(page - 1));
+            return matchRepository.findAllByTitleLike(pattern);
         }else {
-            return matchRepository.findAll(pageable.withPage(page-1)).getContent();
+            return matchRepository.findAll();
         }
     }
 
     @GetMapping("{no}")
     public Map getMatchByNo(@PathVariable long no){
         JSONObject response = new JSONObject();
-        try {
-            Match match = matchRepository.findById(no).orElseThrow(
-                    () -> new IllegalArgumentException("존재하지 않는 경기입니다.")
-            );
-            response.put("result",match);
-        }catch (Exception e){
-            e.printStackTrace();
-            response.put("result","fail");
+        Match match = matchRepository.getMatchByNo(no);
+        Squad squadA = squadRepository.findByName(match.getSquadA());
+        Squad squadB = squadRepository.findByName(match.getSquadB());
+        Member member = memberRepository.findByEmail(match.getAuthor());
+
+        response.put("title", match.getTitle());
+        response.put("startAt", match.getStartAt());
+        response.put("endAt", match.getEndAt());
+        response.put("author", member.getNickname());
+        response.put("deadline", match.getDeadline());
+
+
+        if(squadA != null) {
+            response.put("squadA",squadA.getName());
+            response.put("squadA_logo", squadA.getImageUrl());
         }
+
+        if(squadB != null){
+            response.put("squadB",squadB.getName());
+            response.put("squadB_logo", squadB.getImageUrl());
+        }
+
         return response.toMap();
     }
 
@@ -197,10 +217,6 @@ public class MatchController {
         }else{
             response.put("squadBLogo",squadB.getImageUrl());
         }
-
-
-
-
         return response.toMap();
     }
     // 매치 퇴장
@@ -229,10 +245,14 @@ public class MatchController {
         return response.toMap();
     }
     @PostMapping ("test")
-    public Map test(@RequestBody String email){
-        JSONObject response = new JSONObject(email);
-        System.out.println("email : " + response.getString("email"));
-        response.put("data","success");
-        return response.toMap();
+    public void test(@RequestBody MatchRequestDto dto){
+        System.out.println(dto.getTitle());
+        System.out.println(dto.getAuthor());
+        System.out.println(dto.getContents());
+        System.out.println(dto.getStartAt());
+        System.out.println(dto.getEndAt());
+        System.out.println(dto.getSquadA());
+        System.out.println(dto.getSquadB());
     }
+
 }
