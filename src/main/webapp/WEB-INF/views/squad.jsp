@@ -58,34 +58,33 @@
             </div>
 
             <div class="contents_right">
-                <div>
+                <div id="select_box">
+                    <button onclick="close_select()">X</button>
+                    <div id="member_list"></div>
+                </div>
+                <div class="position_area">
                     <button class="position_add" id="A">+</button>
                     <div id="sel_A"></div>
                 </div>
                 <div class="position_row">
-                    <div>
+                    <div class="position_area">
                         <button class="position_add" id="B">+</button>
                         <div id="sel_B"></div>
                     </div>
-                    <div>
+                    <div class="position_area">
                         <button class="position_add" id="C">+</button>
                         <div id="sel_C"></div>
                     </div>
                 </div>
-                <div>
+                <div class="position_area">
                     <button class="position_add" id="D">+</button>
                     <div id="sel_D"></div>
                 </div>
-                <div>
+                <div class="position_area">
                     <button class="position_add" id="E">+</button>
                     <div id="sel_E"></div>
                 </div>
             </div>
-            <div id="select_box">
-                <button onclick="close_select()">X</button>
-                <div id="member_list"></div>
-            </div>
-
         </div>
 
         <div class="contents_bottom">

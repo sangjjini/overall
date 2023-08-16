@@ -8,7 +8,6 @@ import com.example.spring_project.domain.member.MemberResponseDto;
 import com.example.spring_project.domain.squad.Squad;
 import com.example.spring_project.domain.squad.SquadRepository;
 import com.example.spring_project.domain.squad.SquadRequestDto;
-import com.example.spring_project.payload.Response;
 import com.example.spring_project.service.JoiningService;
 import com.example.spring_project.service.SquadService;
 import lombok.RequiredArgsConstructor;
@@ -144,24 +143,15 @@ public class JoiningController {
         joiningService.updateJoining(member.getEmail(), no, joiningRequestDto);
     }
 
-//    @GetMapping("joining/{no}/position")
-//    public MemberResponseDto getMember(@PathVariable long no, @RequestParam String state) {
-//        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, state);
-//        if(!joiningList.isEmpty()){
-//            String email = joiningList.get(0).getEmail();
-//            Member member = memberRepository.findByEmail(email);
-//            MemberResponseDto memberResponseDto = new MemberResponseDto(member);
-//
-//        }
-//
-//        List<MemberResponseDto> members = new ArrayList<>();
-//        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, "N");
-//        for(int i=0; i<joiningList.size(); i++) {
-//            String email = joiningList.get(i).getEmail();
-//            Member member = memberRepository.findByEmail(email);
-//            MemberResponseDto memberResponseDto = new MemberResponseDto(member);
-//            members.add(memberResponseDto);
-//        }
-//        return members;
-//    }
+    @GetMapping("joining/{no}/position")
+    public MemberResponseDto getMember(@PathVariable long no, @RequestParam String state) {
+        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, state);
+        MemberResponseDto memberResponseDto = new MemberResponseDto();
+        if(!joiningList.isEmpty()){
+            String email = joiningList.get(0).getEmail();
+            Member member = memberRepository.findByEmail(email);
+            memberResponseDto = new MemberResponseDto(member);
+        }
+        return memberResponseDto;
+    }
 }

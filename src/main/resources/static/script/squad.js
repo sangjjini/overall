@@ -8,6 +8,8 @@ $(window).on('load', function (){
     // 실시간 적용 필요
     chat();
     read();
+    get_position();
+    member_list();
 });
 
 function squad(){
@@ -199,15 +201,14 @@ function read(){
     });
 }
 
-let select_pos;
+let position;
 $('.position_add').click(function (){
-    select_pos = $(this).attr("id");
-    $('#select_box').toggle();
-    member_list();
+    position = $(this).attr("id");
+    $('#select_box').show();
 })
 
 function close_select(){
-    $('#select_box').toggle();
+    $('#select_box').hide();
 }
 
 function member_list(){
@@ -226,29 +227,44 @@ function member_list(){
     });
 }
 
+const positions = ["A", "B", "C", "D", "E"];
 function change_pos(code){
     $.ajax({
-        url:"joining/"+squadNo+"/position/change?code="+code+"&state="+select_pos,
+        url:"joining/"+squadNo+"/position/change?code="+code+"&state="+position,
         type:"post"
-    }).done(function (response){
-       $('#member_list').toggle();
-       $('#'+select_pos).hide();
-       $('#sel_'+select_pos).append(
-         `${response.nickname}<button onclick="delete_pos(this.id, this.name)" id="${response.code}" name=${select_pos}>X</button>`
-       );
+    }).done(function (){
+        close_select();
+        for(let i=0; i<positions.length; i++){
+            $('#'+positions[i]).show();
+            $('#sel_'+positions[i]).empty();
+        }
+        get_position();
     });
 }
 
-function delete_pos(code, sel_pos){
+function delete_pos(code, pos){
     $.ajax({
         url:"joining/"+squadNo+"/position/delete?code="+code,
         type:"post"
     }).done(function (){
-        $('#sel_'+sel_pos).empty();
-        $('#'+select_pos).show();
+        $('#sel_'+pos).empty();
+        $('#'+pos).show();
     });
 }
 
 function get_position(){
-
+    for(let i=0; i<positions.length; i++){
+        $.ajax({
+            url:"joining/"+squadNo+"/position?state="+positions[i],
+            type:"get"
+        }).done(function (response){
+            if(response.nickname != null){
+                $('#'+positions[i]).hide();
+                $('#sel_'+positions[i]).empty();
+                $('#sel_'+positions[i]).append(
+                    `${response.nickname}<button onclick="delete_pos(this.id, this.name)" id="${response.code}" name="${positions[i]}">X</button>`
+                );
+            }
+        })
+    }
 }
