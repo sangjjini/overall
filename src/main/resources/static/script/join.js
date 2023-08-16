@@ -1,5 +1,5 @@
-var emailDupl = false; // 아이디 중복 여부
-var ChkEmailDupl = false; // 아이디 중복 확인 후 결과를 저장.
+var emailDupl = false; // 이메일 중복 여부
+var Chkverified = false; // 이메일 중복 확인 후 결과를 저장.
 var nickDupl = false; // 닉네임 중복 여부
 var ChkNickDupl = false; // 닉네임 중복 확인 후 결과를 저장.
 var verified = false; // 사용자의 이메일 인증 상태 여부
@@ -26,7 +26,11 @@ $(document).ready(function(){
         $("#hint_nickName").text("").css("color", "#ff3860");
         $("#hint_nickName").hide();
     });
-})
+
+    $("#email").click(function() {
+        $("hint_email").hide();
+    });
+});
 
 function signupChk(){
     $('#submit_btn').prop("disabled", true);
@@ -35,9 +39,10 @@ function signupChk(){
         $('#submit_btn').prop("disabled", false);
     }, 500);
 
-    var getNickName= RegExp(/^[가-힣a-zA-Z0-9]{2,8}$/); // 한글, 영어 대소문자, 숫자 [ 2~8자리 까지 입력 가능 ]
-    var getEmail = RegExp(/^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$/); // 이메일 형식만 입력 가능 (@)
+    var getEmail = RegExp(/^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$/); // 이메일 형식만 입력 가능 (@.com)
     var getPw= RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@!%*#?&]{8,16}$/); // 문자, 숫자, 특수문자 최소 1개씩 포함시켜야함. [ 최소 8자리이상 입력 ]
+    var getname = RegExp( /^[가-힣]{2,6}|[a-zA-Z]{2,15}\s[a-zA-Z]{2,15}$/);
+    var getNickName= RegExp(/^[가-힣a-zA-Z0-9]{2,8}$/); // 한글, 영어 대소문자, 숫자 [ 2~8자리 까지 입력 가능 ]
     var phoneFirst = $('#phone-first').val();
     var phoneSecond = $('#phone-second').val();
     var phoneThird = $('#phone-third').val();
@@ -48,9 +53,9 @@ function signupChk(){
     //이메일 공백 확인
     if($("#email").val() == ""){
         // alert("이메일 형식에 맞게 작성해 주세요");
-        $("#hint_email").text("이메일을 확인해 주세요!");
+        $("#hint_email").text("올바른 이메일을 입력해 주세요");
         $("#hint_email").show();
-        //$("#email").focus();
+        $("#email").val("");
         return false;
     }
 
@@ -60,15 +65,14 @@ function signupChk(){
         $("#hint_email").text("이메일 형식에 맞지 않습니다.");
         $("#hint_email").show();
         $("#email").val("");
-        //$("#email").focus();
         return false;
     }
 
-    if (!ChkEmailDupl){
-        $("#hint_email").text("이메일 중복체크를 해야합니다.");
-        $("#hint_email").show();
-        return false;
-    }
+    // if (!Chkverified){
+    //     $("#hint_email").text("이메일 인증을 해야합니다.");
+    //     $("#hint_email").show();
+    //     return false;
+    // }
 
     if (emailDupl){
         $("#hint_email").text("중복된 이메일 입니다.");
@@ -82,7 +86,6 @@ function signupChk(){
         $("#hint_password").text("최소 8자리 이상 영문, 숫자, 특수문자 최소 1글자 포함해 입력해야 합니다.");
         $("#hint_password").show();
         $("#password").val("");
-        //$("#password").focus();
         return false;
     }
 
@@ -94,9 +97,15 @@ function signupChk(){
             //$("#password").focus();
         } else {
             //alert("비밀번호 확인을 입력해 주세요.");
-            //$("#passwordChk").focus();
         }
         $("#hint_passwordChk").show();
+        return false;
+    }
+
+    // 이름 유효성
+    if (getname.$('input[name="name"]').val().length == 0) {
+        $("#hint_name").text("이름을 입력해 주세요");
+        $("#hint_name").show();
         return false;
     }
 
@@ -111,25 +120,25 @@ function signupChk(){
     }
 
     if (!ChkNickDupl){
-        $("#hint_nickName").text("닉네임 중복체크를 해야합니다.");
+        $("#hint_nickName").text("닉네임 중복체크를 해야합니다");
         $("#hint_nickName").show();
         return false;
     }
 
     if (nickDupl){
-        $("#hint_nickName").text("중복된 닉네임 입니다.");
+        $("#hint_nickName").text("중복된 닉네임 입니다");
         $("#hint_nickName").show();
         return false;
     }
 
     if(!verified){
-        $("#hint_email").text("이메일이 인증되지 않았습니다.");
+        $("#hint_email").text("이메일이 인증되지 않았습니다");
         $("#hint_email").show();
         return false;
     }
 
     if (!getPhone.test(phone)) {
-        alert('잘못된 휴대폰 번호입니다.');
+        alert('잘못된 휴대폰 번호입니다');
         $('#phone-first').focus();
         return false;
     }
@@ -138,16 +147,38 @@ function signupChk(){
         email: $("#email").val(),
         password: $("#password").val(),
         passwordChk: $("#passwordChk").val(),
+        name: $("#name").val(),
         nickName: $("#nickName").val(),
     };
+
+    // 이메일 인증 코드 요청을 보내는 함수
+    function sendVerificationCode() {
+        var email = $(#email).val();
+
+        $.ajax({
+            type: "POST",
+            url: "/emailConfirm", // 이메일 인증 코드 요청을 처리하는 컨트롤러 URL
+            data: { email: email }, // 이메일 데이터 전송
+            success: function(response) {
+                alert("인증 코드가 이메일로 전송되었습니다.");
+            },
+             error: function(xhr, status, error){
+                alert("인증 코드 발송중 오류가 발생했습니다.");
+             }
+        });
+    }
 
 
     console.log("email:"+formData.email);
 
+    function completeSignup(){
+        var email = $("#email").val();
+        var verificationCode = $("#verificationCode").val();
+
     //servlet에 ajax 요청 보내기
     $.ajax({
         type: "POST",
-        url: "/joinForm", // 서블릿의 URL
+        url: "/completeSignup", // 회원 가입 완료 처리를 하는 컨트롤러 URL
         //contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: formData,
         //dataType: "json",
@@ -174,4 +205,5 @@ function signupChk(){
             alert("회원가입에 실패했습니다.");
         }
     });
+    }
 }

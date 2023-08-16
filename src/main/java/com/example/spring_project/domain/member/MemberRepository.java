@@ -1,13 +1,24 @@
 package com.example.spring_project.domain.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
     //주어진 이메일과 비밀번호에 해당하는 회원을 조회(주어진 조건에 맞는 회원을 찾아 반환함)
-    public Member findByEmailAndPassword(String email, String password);
+    // 유저이름과 이메일을 파라미터로 받아 검색하는 쿼리 메소드 생성
+    // SELECT * FROM users WHERE username = ? AND email = ?
+    public List<Member> findAllBynameAndEmail(String name, String email);
+
+    // SELECT * FROM users WHERE email LIKE ?
+//    public List<Member> findAllByEmailLikeOrderByName(String pattern);
+
+//    public Member findByEmailAndPassword(String email, String password);
 
     //주어진 이메일에 해당하는 회원을 조회(주어진 이메일에 해당하는 회원을 찾아 반환함)
     public Member findByEmail(String email);
@@ -28,4 +39,18 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     // 내가 추가함
     Member findByCode(long code);
+
+    // 네이티브 쿼리로 메소드 생성
+
+//    @Query(nativeQuery = true, value = "SELECT * FROM members WHERE name = :name AND email = :email")
+//    public List<Member> test1(@Param("name") String name, @Param("email") String email);
+
+    @Modifying
+    @Query(nativeQuery = true, value = "UPDATE members SET password = :password WHERE name = :name AND email = :email")
+    void updateMemberPassword(@Param("name") String name, @Param("email") String email, @Param("password") String password);
+
+
+//    void deleteByEmail(String email); // 물어볼것.
+//
+//    void updateMember(String email); // 물어볼것
 }
