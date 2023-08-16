@@ -78,13 +78,13 @@ public class MatchController {
         return response.toMap();
     }
 
-    @GetMapping("list/{page}")
-    public List<Match> getMatchAll(@PathVariable int page, @RequestParam(required = false)String keyword, @PageableDefault(size=3) Pageable pageable){
+    @GetMapping("list")
+    public List<Match> getMatchAll(@RequestParam(required = false)String keyword, @PageableDefault(size=3) Pageable pageable){
         if(keyword != null && !keyword.equals("")){
             String pattern = "%" + keyword + "%";
-            return matchRepository.findAllByTitleLike(pattern, pageable.withPage(page - 1));
+            return matchRepository.findAllByTitleLike(pattern);
         }else {
-            return matchRepository.findAll(pageable.withPage(page-1)).getContent();
+            return matchRepository.findAll();
         }
     }
 
@@ -197,10 +197,6 @@ public class MatchController {
         }else{
             response.put("squadBLogo",squadB.getImageUrl());
         }
-
-
-
-
         return response.toMap();
     }
     // 매치 퇴장
@@ -235,4 +231,5 @@ public class MatchController {
         response.put("data","success");
         return response.toMap();
     }
+
 }
