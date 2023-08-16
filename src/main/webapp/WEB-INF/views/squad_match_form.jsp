@@ -24,8 +24,8 @@
                 <input type="text" id="title" name="title" placeholder="제목을 입력해주세요.">
                 <%--                <input type="text" id="author" name="author" value="작성자:${log}" readonly>--%>
                 <input type="text" id="author" name="author" value="작성자:kevin@gmail.com" readonly>
-                <input type="datetime-local" id="startAt" name="startAt" placeholder="경기시작 시간을 입력해주세요.">
-                <input type="datetime-local" id="endAt" name="endAt" placeholder="경기시작 시간을 입력해주세요.">
+                <input type="datetime-local" id="startAt" name="startAt">
+                <input type="datetime-local" id="endAt" name="endAt">
                 <div class="squad-input">
                     <input type="text" id="squadA" name="squadB" placeholder="A팀명 입력">
                     <input type="text" id="squadB" name="squadB" placeholder="B팀명 입력">
