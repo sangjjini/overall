@@ -13,35 +13,58 @@
     <%-- 제이쿼리 --%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/reset.css" type="text/css">
-    <link rel="stylesheet" href="/css/squad_match.css" type="text/css">
-    <script src="/script/squad_match.js"></script>
+    <link rel="stylesheet" href="/css/match_read.css" type="text/css">
+    <script src="/script/match_read.js"></script>
 </head>
 <body>
 <c:import url="header.jsp"/>
-    <section>
         <div class="contents">
-            <form method="post" action="/squad/match/making">
-                <input type="text" id="title" name="title" placeholder="제목을 입력해주세요.">
-<%--                <input type="text" id="author" name="author" value="작성자:${log}" readonly>--%>
-                <input type="text" id="author" name="author" value="작성자:kevin@gmail.com" readonly>
-                <input type="datetime-local" id="startAt" name="startAt" placeholder="경기시작 시간을 입력해주세요.">
-                <input type="datetime-local" id="endAt" name="endAt" placeholder="경기시작 시간을 입력해주세요.">
-                <div class="squad-input">
-                    <input type="text" id="squadA" name="squadB" placeholder="A팀명 입력">
-                    <input type="text" id="squadB" name="squadB" placeholder="B팀명 입력">
+            <div class="container">
+                <div class="sub_container">
+                    <div>
+                        <h1 id="title"></h1>
+                    </div>
+                    <div class="match-preview">
+                        <div class="match_info">
+                            <section>
+                                <ul>
+                                    <li id="schedule">
+                                        <span></span>
+                                    </li>
+                                    <li id="author">
+                                        <span></span>
+                                    </li>
+                                    <li id="deadline">
+                                        <span></span>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+                        <div class="logo_container">
+                            <div>
+                                <div id="squadA_logo">
+                                    <img src="" alt="">
+                                </div>
+                                <div id="squadA_name">
+                                    <h1></h1>
+                                </div>
+                            </div>
+                            <div class="vs">
+                                <h1>vs</h1>
+                            </div>
+                            <div>
+                                <div id="squadB_logo">
+                                    <img src="" alt="">
+                                </div>
+                                <div id="squadB_name">
+                                    <h1></h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <textarea id="contents" name="contents" placeholder="내용을 입력해주세요."></textarea>
-<%--                <input type="hidden" id="deadline" name="deadline" value="0">--%>
-                <input type="button" id="submit-btn" name="submit-btn" value="등록" onclick="checkValue()">
-            </form>
+            </div>
         </div>
-        <div class="match-preview">
-<%--            <span>Match-Preview</span>--%>
-<%--            <div id="match-logo-preview-area"></div>--%>
-<%--            <div id="match-squad-preview-area"></div>--%>
-            <div id="results"></div>
-        </div>
-    </section>
 <c:import url="footer.jsp"/>
 </body>
 </html>

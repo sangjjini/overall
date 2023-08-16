@@ -18,30 +18,24 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
-<section>
-    <div class="contents">
-        <form method="post" action="/squad/match/making">
-            <input type="text" id="title" name="title" placeholder="제목을 입력해주세요.">
-            <%--                <input type="text" id="author" name="author" value="작성자:${log}" readonly>--%>
-            <input type="text" id="author" name="author" value="작성자:kevin@gmail.com" readonly>
-            <input type="datetime-local" id="startAt" name="startAt" placeholder="경기시작 시간을 입력해주세요.">
-            <input type="datetime-local" id="endAt" name="endAt" placeholder="경기시작 시간을 입력해주세요.">
-            <div class="squad-input">
-                <input type="text" id="squadA" name="squadB" placeholder="A팀명 입력">
-                <input type="text" id="squadB" name="squadB" placeholder="B팀명 입력">
-            </div>
-            <textarea id="contents" name="contents" placeholder="내용을 입력해주세요."></textarea>
-            <%--                <input type="hidden" id="deadline" name="deadline" value="0">--%>
-            <input type="button" id="submit-btn" name="submit-btn" value="등록" onclick="checkValue()">
-        </form>
-    </div>
-    <div class="match-preview">
-        <%--            <span>Match-Preview</span>--%>
-        <%--            <div id="match-logo-preview-area"></div>--%>
-        <%--            <div id="match-squad-preview-area"></div>--%>
-        <div id="results"></div>
-    </div>
-</section>
+    <section class="wrap">
+        <div class="contents">
+            <form method="post" action="/squad/match/making">
+                <input type="text" id="title" name="title" placeholder="제목을 입력해주세요.">
+                <%--                <input type="text" id="author" name="author" value="작성자:${log}" readonly>--%>
+                <input type="text" id="author" name="author" value="작성자:kevin@gmail.com" readonly>
+                <input type="datetime-local" id="startAt" name="startAt" placeholder="경기시작 시간을 입력해주세요.">
+                <input type="datetime-local" id="endAt" name="endAt" placeholder="경기시작 시간을 입력해주세요.">
+                <div class="squad-input">
+                    <input type="text" id="squadA" name="squadB" placeholder="A팀명 입력">
+                    <input type="text" id="squadB" name="squadB" placeholder="B팀명 입력">
+                </div>
+                <textarea id="contents" name="contents" placeholder="내용을 입력해주세요."></textarea>
+                <%--                <input type="hidden" id="deadline" name="deadline" value="0">--%>
+                <input type="button" id="submit-btn" name="submit-btn" value="등록" onclick="checkValue()">
+            </form>
+        </div>
+    </section>
 <c:import url="footer.jsp"/>
 </body>
 </html>

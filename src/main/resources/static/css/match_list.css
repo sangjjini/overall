@@ -1,3 +1,8 @@
+.container{
+    margin: 0 auto;
+    width: 80%;
+}
+
 #match_table_wrap{
     max-width: 1200px;
     margin: 0 auto;
@@ -19,6 +24,7 @@
 }
 
 .match_table ul li {
+    font-family: MBC1961GulimM;
     width: 100%;
 }
 
@@ -44,4 +50,48 @@
 
 #lines{
     cursor: pointer;
+}
+
+#lines:first-child{
+    border-top: 1px solid #282830;
+}
+
+.buttons{
+    /*position: fixed;*/
+    /*display: flex;*/
+    /*justify-content: flex-end;*/
+    position: fixed;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    width: 80%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    bottom: 16px;
+    padding-right: 16px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.buttons > a{
+    display: block;
+    position: relative;
+    background-color: black;
+    width: 48px;
+    height: 48px;
+    border: 1px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.buttons > a > img{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 46%;
+    height: auto;
+    transform: translate(-50%,-50%);
 }

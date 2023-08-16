@@ -17,26 +17,41 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
-    <section>
-        <div class="contents">
-            <div id="match_table_wrap">
-                <ul class="match_table">
-                    <li class="table_attribute_wrap">
-                        <ul class="table_attribute">
-                            <li>번호</li>
-                            <li>제목</li>
-                            <li>팀명</li>
-                            <li>시간</li>
-                        </ul>
-                    </li>
-                    <li id="lines">
-
-                    </li>
-                    <li></li>
-                </ul>
+    <div class="contents">
+        <div class="container">
+            <div class="sub_container">
+                <div id="match_table_wrap">
+                    <ul class="match_table">
+                        <%-- <li class="table_attribute_wrap">
+                            <ul class="table_attribute">
+                                <li>시간</li>
+                                <li>제목</li>
+                                <li>팀명</li>
+                                <li>아아</li>
+                            </ul>
+                        </li> --%>
+                        <li id="lines">
+                        </li>
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="buttons">
+                    <c:choose>
+                        <c:when test="${not empty log}">
+                            <a href="/squad/match" class="new_match">
+                                <img src="/images/write_icon.png" alt="" class="icon">
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="/login" class="new_match">
+                                <img src="/images/write_icon.png" alt="" class="icon">
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 <c:import url="footer.jsp"/>
 </body>
 </html>
