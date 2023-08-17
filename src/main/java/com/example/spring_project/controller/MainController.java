@@ -34,8 +34,22 @@ public class MainController {
     @GetMapping("squad")
     public String squad(@RequestParam(required = false) long no) { return "squad";}
 
-    @GetMapping("mypage")
+    @GetMapping("/mypage")
     public String mypage(){
         return "mypage";
     }
+
+    @GetMapping("/userrating")
+    public String userRating(){
+        return "user_rating";
+    }
+
+    @GetMapping("/introduce")
+    public String introduce() {return "introduce";}
+
+    @GetMapping("/team")
+    public String team() {return "team";}
+
+    @GetMapping("/profileUpdate")
+    public String profileUpdate() {return "profile_update";}
 }

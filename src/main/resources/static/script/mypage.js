@@ -19,8 +19,9 @@ $(window).on('load', function () {
             const sPercent = speedstat * 100 / 150;
             sum = Math.round(speedstat + physical);
             $('.stats_wrap').append(`<div id="stat" class="physical">
+<h1>피지컬</h1>
 <div class="physical_status">
-${physical}
+<h2>${physical}</h2>
 </div>
 <div class="graph_wrap">
 <div id="data_result" class="physical_data" data="${physical}">1
@@ -28,7 +29,8 @@ ${physical}
 </div>
 </div>
                     <div id="stat" class="speed">
-                    <div class="speed_status">${speedstat}</div>
+                    <h1>스피드</h1>
+                    <div class="speed_status"><h2>${speedstat}</h2></div>
                     <div class="graph_wrap">
                     <div id="data_result" class="speed_data" data="${speedstat}">2
                     </div>
@@ -50,8 +52,9 @@ ${physical}
                 const overall = Math.round((sum + ratingstat) / 3);
                 $('.overall_param').append(`<div id="param"><h1>${overall}</h1></div>`);
                 $('.stats_wrap').append(`<div id="stat" class="rating">
+<h1>유저평가</h1>
 <div class="rating_status">
-${ratingstat}
+<h2>${ratingstat}</h2>
 </div>
 <div class="graph_wrap">
 <div id="data_result" class="rating_data" data="${ratingstat}">3
@@ -63,8 +66,15 @@ ${ratingstat}
             })
 
         });
-    });
+    }); //오버롤 종료
 
+    //기록호출
+    $.ajax({
+        url: "/mypage/overallList",
+        type: "get"
+    }).done(function(response){
+
+    });
 
 
 

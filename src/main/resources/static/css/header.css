@@ -12,6 +12,7 @@
     display:flex;
     padding: 30px 0;
     font-family : MBC1961GulimM;
+    white-space: nowrap;
 }
 
 #header .main_nav {

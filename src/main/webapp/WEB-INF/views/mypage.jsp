@@ -20,9 +20,9 @@ To change this template use File | Settings | File Templates.
 <div class="wrap">
 <div class="contents">
 <div class="contents_menu">
-    <div class="menu"><a href="#"><h1>오버롤</h1></a></div>
-    <div class="menu"><a href="#"><h1>프로필 수정</h1></a></div>
-    <div class="menu"><a href="#"><h1>스타일 설정</h1></a></div>
+    <div class="menu on"><a href="/mypage"><h1>오버롤</h1></a></div>
+    <div class="menu"><a href="/profileUpdate"><h1>프로필 수정</h1></a></div>
+    <div class="menu"><a href="#"><h1>오버롤 설정</h1></a></div>
     <div class="menu"><a href="#"><h1>고객센터</h1></a></div>
 
 </div>
@@ -40,21 +40,14 @@ To change this template use File | Settings | File Templates.
         </div>
         <div class="stats_wrap">
         </div>
-        <div class="style_wrap">
+        <div class="foot_wrap">
+            <div class="left_foot"><h3>5</h3></div>
+            <div class="right_foot"><h3>5</h3></div>
+        </div>
 
-        </div>
     </div>
-    <div class="match_history">
-        <div class="history_contents">
-            <div class="team1">레알마드리드</div>
-            <h2>2</h2>
-            <span>vs</span>
-            <h2>1</h2>
-            <div class="team2">알힐랄</div>
-            <div class="match_evaluation">
-                <h1><a href="#">매치평가</a></h1>
-            </div>
-        </div>
+    <div class="style_wrap">
+
     </div>
 </div>
 

@@ -25,7 +25,7 @@
             </div>
             <div class="slide_txt">
                 <p>오버롤에 오신것을 환영합니다</p>
-                <div class="button"><a href="#">오버롤 소개</a></div>
+                <div class="button"><a href="introduce">오버롤 소개</a></div>
             </div>
         </section>
         <section id="squad_contents">
