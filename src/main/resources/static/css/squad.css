@@ -1,72 +1,225 @@
+.page_title{
+    height: 200px;
+    padding-left: 5%;
+    background: #92d5ff;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 70px;
+}
+.page_title>h1{
+    font-size: 35px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
 button{
     padding: 0;
 }
 .contents_top{
     display: flex;
+    margin: 0 5%;
+    margin-top: 70px;
+    border-top: 10px solid #3e3d55;
 }
 
 /*스쿼드 정보*/
 .contents_left{
     display: flex;
     flex-direction: column;
-    padding: 5px 5%;
+    padding: 40px 2%;
+    margin: 0 3%;
     width: 300px;
-    background-color: aquamarine;
+    border-bottom: 1px solid #3e3d55;
+    height: 100%;
 }
-.contents_list>button{
-    width: 160px;
+.squad_edit{
+    border: none;
+    background: #3e3d55;
+    color: white;
+    width: 100%;
+    height: 45px;
     margin: 0 auto;
+    cursor: pointer;
+    font-size: 15px;
+}
+.delete_btn{
+    background: #656477;
 }
 .contents_list{
     display: flex;
     flex-direction: column;
     margin-top: 20px;
 }
+.contents_list>label{
+    padding-left: 10px;
+    height: 40px;
+    line-height: 40px;
+}
 .small_title{
     font-weight: 700;
     color: #3f3f3f;
 }
-.small_title_btn{
-    display: flex;
-    justify-content: space-between;
-}
-.contents_list>input{
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    height: 34px;
-    margin-top: 10px;
-    padding: 0 10px;
+#name{
+    height: 40px;
 }
 .contents_list>textarea{
-    border: 1px solid lightgray;
+    height: 70px;
+    padding-top: 10px;
+}
+.invited_btn{
+    border: none;
+    background: #3e3d55;
+    color: white;
+    width: 30%;
+    height: 35px;
+    cursor: pointer;
+}
+
+.input_area{
     border-radius: 5px;
-    height: 68px;
-    margin-top: 10px;
-    padding: 5px 10px;
-}
-.contents_member{
-    display: flex;
-    flex-direction: row;
-    margin-top: 20px;
-}
-.list_pos{
-    width: 80px;
-}
-.list_name{
-    width: 160px;
+    border: 3px solid #3e3d55;
+    padding-left: 10px;
 }
 #invite_list{
     display: none;
     position: absolute;
-    background-color: aqua;
+    background-color: white;
+    border: 1px solid lightgray;
+    width: 400px;
+    padding: 5px 5px 20px 5px;
+}
+.invite_area{
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+}
+.invite_title{
+    margin: 0 10px 10px 10px;
+}
+#email{
+    width: 75%;
+    height: 30px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+.cancel_btn{
+    float: right;
+    border: none;
+    width: 20px;
+    height: 20px;
+    background: #92d5ff;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 15px;
+    color: white;
+}
+.small_btn{
+    width: 20%;
+    margin: 0 auto;
+    border: none;
+    background: #3e3d55;
+    color: white;
+    height: 30px;
+    cursor: pointer;
+}
+.squad_member{
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    align-items: center;
+    margin-top: 20px;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+.email_area{
+    display: flex;
+    align-items: center;
+}
+#inviting{
+    padding: 20px 10px 0 10px;
+}
+.inviting_list{
+    line-height: 25px;
+}
+.answer_btn{
+    float: right;
+    border: none;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 15px;
+    color: white;
+    margin: 0 3px
+}
+.accept_btn{
+    background: #92d5ff;
+}
+.refuse_btn{
+    background: #f14e4e;
+}
+.contents_member{
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    align-items: center;
+}
+.list_pos{
+    width: 20%;
+}
+.list_name{
+    width: 60%;
+}
+.list_out{
+    width: 20%;
+    text-align: center;
+}
+.out_btn{
+    width: 100%;
+    margin: 0 auto;
+    border: none;
+    background: #3e3d55;
+    color: white;
+    height: 30px;
+    cursor: pointer;
+}
+/*표시*/
+
+.center_line{
+    width: 1px;
+    border-left: 1px solid lightgray;
+    margin-top: 10px;
 }
 
 /*포지션*/
+.right_area{
+    margin: 0 auto;
+}
+.formation{
+    width: 180px;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    padding: 0 10px;
+    background: #161616;
+    font-size: 15px;
+    color: #fff;
+    text-align: center;
+    margin: 40px auto;
+}
 .contents_right{
-    background: cornflowerblue;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    background-image: url("../images/soccer_field.png");
+    background-repeat: no-repeat;
+    height: 852px;
+    width: 602px;
+    margin: 0 auto;
+}
+.field{
+
 }
 .position_area{
     width: 100%;

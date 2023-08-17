@@ -34,6 +34,9 @@ public class MainController {
     @GetMapping("squad")
     public String squad(@RequestParam(required = false) long no) { return "squad";}
 
+    @GetMapping("squad/list")
+    public String squads(){return "squad_list";}
+
     @GetMapping("mypage")
     public String mypage(){
         return "mypage";

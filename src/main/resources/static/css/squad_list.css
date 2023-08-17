@@ -1,0 +1,132 @@
+.page_title{
+    height: 200px;
+    padding-left: 5%;
+    background: #92d5ff;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 70px;
+}
+.page_title>h1{
+    font-size: 35px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+.contents{
+    display: flex;
+    padding: 0 5%;
+    height: 100%;
+}
+.contents_left{
+    display: flex;
+    flex-direction: column;
+    /*padding: 70px 0;*/
+    width: 300px;
+}
+.left_menu{
+    border-top: 10px solid #3e3d55;
+    border-bottom: 1px solid #3e3d55;
+    height: 400px;
+    padding-top: 30px;
+    padding-right: 20px;
+}
+.make_btn{
+    border: none;
+    background: #3e3d55;
+    color: white;
+    width: 100%;
+    height: 50px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+#squad_name {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    width: 100%;
+    height: 40px;
+    padding-left: 10px;
+    margin-top: 20px;
+}
+.error_name{
+    display: none;
+    color: red;
+    border: none;
+    padding-left: 10px;
+    margin-top: 20px;
+}
+.sub_section{
+    text-align: center;
+    display: flex;
+    margin-top: 20px;
+}
+.make_sub{
+    width: 50%;
+    margin: 0 auto;
+    border: none;
+    background: #3e3d55;
+    color: white;
+    height: 35px;
+    cursor: pointer;
+}
+.enter_btn{
+    background: #25c4f2;
+}
+.cancel_btn{
+    background: #3e3d55;
+}
+#my_squad{
+    display: flex;
+    flex-direction: column;
+}
+#my_squad>a{
+    margin-top: 30px;
+    padding-left: 20px;
+}
+#my_squad>a:hover{
+    color: blue;
+}
+.contents_right{
+    width: 100%;
+    border-top: 10px solid #3e3d55;
+    /*margin-top: 70px;*/
+}
+#show_make{
+    display: none;
+}
+.bar{
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    padding: 0 20px;
+    line-height: 70px;
+    border-bottom: 1px solid lightgray;
+    text-align: center;
+}
+.bar_num{
+    width: 7%;
+}
+.bar_name{
+    width: 15%;
+}
+.bar_content{
+    width: 68%;
+    text-align: left;
+    padding-left: 10px;
+}
+.bar_join{
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.join_btn{
+    border: none;
+    width: 35px;
+    height: 35px;
+    background: #25c7f5;
+    font-size: 20px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}

@@ -54,16 +54,32 @@ public class JoiningController {
 
     // 매핑 : squad/8/invite?email=test
     @PostMapping("joining/{no}/invite")
-    public Map inviteJoining(@PathVariable long no, @RequestParam String email) {
+    public Map inviteJoining(@PathVariable long no, @RequestParam(required = false) String email) {
         JSONObject response = new JSONObject();
+        if(email == null || email.isEmpty()){
+            //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+            email = "kevin@gmail.com";
+        }
         JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
-        // 유저 조회 기능 필요
-        joiningRequestDto.setEmail(email);
-        joiningRequestDto.setSquadNo(no);
-        joiningRequestDto.setState("N");
-        Joining joining = new Joining(joiningRequestDto);
-        joiningRepository.save(joining);
-        return response.put("invite", "success").toMap();
+        // 유저 조회
+        Member member = memberRepository.findByEmail(email);
+        if(member != null){
+            Joining joinCheck = joiningRepository.findByEmailAndSquadNo(email, no);
+            // 이미 초대되었는지 확인
+            if(joinCheck != null){
+                response.put("invite", "already");
+            }else{
+                joiningRequestDto.setEmail(email);
+                joiningRequestDto.setSquadNo(no);
+                joiningRequestDto.setState("N");
+                Joining joining = new Joining(joiningRequestDto);
+                joiningRepository.save(joining);
+                response.put("invite", "success");
+            }
+        } else{
+            response.put("invite", "fail");
+        }
+        return response.toMap();
     }
 
     @PostMapping("joining/{no}/accept")

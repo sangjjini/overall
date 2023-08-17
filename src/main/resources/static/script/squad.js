@@ -36,8 +36,8 @@ function invited(){
                     `<div class="contents_member">
                         <div class="list_pos"></div>
                         <div class="list_name">${members.nickname}(방장)</div>
-                        <div>
-                            <button onclick="out(this.id)" id="${members.code}">방출</button>
+                        <div class="list_out">
+                            <button onclick="out(this.id)" id="${members.code}" class="out_btn">방출</button>
                         </div>
                     </div>`
                 );
@@ -46,8 +46,8 @@ function invited(){
                     `<div class="contents_member">
                         <div class="list_pos"></div>
                         <div class="list_name">${members.nickname}</div>
-                        <div>
-                            <button onclick="out(this.id)" id="${members.code}">방출</button>
+                        <div class="list_out">
+                            <button onclick="out(this.id)" id="${members.code}" class="out_btn">방출</button>
                         </div>
                     </div>`
                 );
@@ -57,8 +57,13 @@ function invited(){
 }
 
 function show_invite(){
-    $('#invite_list').toggle();
+    $('#invite_list').show();
     inviting();
+}
+
+function close_invite(){
+    $('#email').val("");
+    $('#invite_list').hide();
 }
 
 function inviting(){
@@ -69,10 +74,10 @@ function inviting(){
         $('#inviting').empty();
         response.forEach(members => {
             $('#inviting').append(
-                `<div id="${members.code}">
-                    <p>${members.nickname}(${members.email})</p>
-                    <button onclick="accept(this.id)" id="${members.code}">수락</button>
-                    <button onclick="refuse(this.id)" id="${members.code}">거절</button>
+                `<div id="${members.code}" class="inviting_list">
+                    ${members.nickname}(${members.email})
+                    <button onclick="refuse(this.id)" id="${members.code}" class="answer_btn refuse_btn">X</button>
+                    <button onclick="accept(this.id)" id="${members.code}" class="answer_btn accept_btn">V</button>
                 </div>`
             );
         });
@@ -84,9 +89,16 @@ function invite(){
     $.ajax({
         url: "joining/" + squadNo + "/invite?email=" + email,
         type: "post",
-    }).done(function (){
-        $('#email').val('');
-        inviting();
+    }).done(function (response){
+        const result = Object.values(response)[0];
+        if(result === "fail"){
+            alert("존재하지 않는 회원입니다.");
+        }else if(result === "already"){
+            alert("이미 가입신청이 완료된 회원입니다.");
+        }else{
+            $('#email').val('');
+            inviting();
+        }
     });
 }
 
@@ -187,7 +199,7 @@ function send(){
         type:"post",
         dataType: "json",
         contentType : "application/json",
-        data: JSON.stringify(data),
+        data: JSON.stringify(data)
     }).done(function (){
         $('#chatting').val('');
         chat();
