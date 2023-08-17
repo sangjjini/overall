@@ -22,7 +22,7 @@
                     <div class="logo">
                         <a href="/"><img src="/images/logo_black.png"></a>
                     </div>
-                    <form id="login" method="post">
+                    <form id="login" method="post" action="/login">
                         <div class="id_txt">이메일</div>
                         <div class="login-box">
                             <ion-icon name="person-outline"></ion-icon>
@@ -43,7 +43,7 @@
                         <input type="button" id="submit_button" value="login"
                                onclick="loginChk()">
                         <div class="login_signup">
-                            <a href="finduser" class="forget_password">아이디 / 비밀번호 찾기</a>
+                            <a href="/finduser" class="forget_password">아이디 / 비밀번호 찾기</a>
                             <a href="/join">회원가입</a>
                         </div>
                     </form>

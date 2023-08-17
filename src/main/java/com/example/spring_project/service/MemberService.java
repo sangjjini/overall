@@ -49,15 +49,9 @@ public class MemberService {
         // MemberRequestDto 객체를 매개변수로 받아서 새로운 Memeber 객체를 생성하고,
         // memberRepository를 통해 데이터베이스에 저장함.
 
-        // 이메일 중복 검사
-//        if (memberRepository.findByEmail(memberDto.getEmail()) != null) {
-//            throw new IllegalArgumentException("이미 가입된 이메일입니다.");
-//        }
-//
-//        //이메일 중복이 아니면 회원 생성.
-//        Member member = new Member(memberDto);
-//        memberRepository.save(member);
-//
+        //이메일 중복 검사
+
+
     }
 
     @Transactional // 데이터베이스 작업을 원자적으로 처리하여 데이터 일관성을 유지하기 위함.
