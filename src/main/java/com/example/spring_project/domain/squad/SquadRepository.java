@@ -8,5 +8,4 @@ public interface SquadRepository extends JpaRepository<Squad, Long> {
     Squad findByNo(Long no);
     Squad findByHost(String author);
     Squad findByName(String name);
-
 }

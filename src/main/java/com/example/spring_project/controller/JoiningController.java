@@ -8,7 +8,6 @@ import com.example.spring_project.domain.member.MemberResponseDto;
 import com.example.spring_project.domain.squad.Squad;
 import com.example.spring_project.domain.squad.SquadRepository;
 import com.example.spring_project.domain.squad.SquadRequestDto;
-import com.example.spring_project.payload.Response;
 import com.example.spring_project.service.JoiningService;
 import com.example.spring_project.service.SquadService;
 import lombok.RequiredArgsConstructor;
@@ -55,16 +54,32 @@ public class JoiningController {
 
     // 매핑 : squad/8/invite?email=test
     @PostMapping("joining/{no}/invite")
-    public Map inviteJoining(@PathVariable long no, @RequestParam String email) {
+    public Map inviteJoining(@PathVariable long no, @RequestParam(required = false) String email) {
         JSONObject response = new JSONObject();
+        if(email == null || email.isEmpty()){
+            //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+            email = "kevin@gmail.com";
+        }
         JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
-        // 유저 조회 기능 필요
-        joiningRequestDto.setEmail(email);
-        joiningRequestDto.setSquadNo(no);
-        joiningRequestDto.setState("N");
-        Joining joining = new Joining(joiningRequestDto);
-        joiningRepository.save(joining);
-        return response.put("invite", "success").toMap();
+        // 유저 조회
+        Member member = memberRepository.findByEmail(email);
+        if(member != null){
+            Joining joinCheck = joiningRepository.findByEmailAndSquadNo(email, no);
+            // 이미 초대되었는지 확인
+            if(joinCheck != null){
+                response.put("invite", "already");
+            }else{
+                joiningRequestDto.setEmail(email);
+                joiningRequestDto.setSquadNo(no);
+                joiningRequestDto.setState("N");
+                Joining joining = new Joining(joiningRequestDto);
+                joiningRepository.save(joining);
+                response.put("invite", "success");
+            }
+        } else{
+            response.put("invite", "fail");
+        }
+        return response.toMap();
     }
 
     @PostMapping("joining/{no}/accept")
@@ -144,24 +159,15 @@ public class JoiningController {
         joiningService.updateJoining(member.getEmail(), no, joiningRequestDto);
     }
 
-//    @GetMapping("joining/{no}/position")
-//    public MemberResponseDto getMember(@PathVariable long no, @RequestParam String state) {
-//        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, state);
-//        if(!joiningList.isEmpty()){
-//            String email = joiningList.get(0).getEmail();
-//            Member member = memberRepository.findByEmail(email);
-//            MemberResponseDto memberResponseDto = new MemberResponseDto(member);
-//
-//        }
-//
-//        List<MemberResponseDto> members = new ArrayList<>();
-//        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, "N");
-//        for(int i=0; i<joiningList.size(); i++) {
-//            String email = joiningList.get(i).getEmail();
-//            Member member = memberRepository.findByEmail(email);
-//            MemberResponseDto memberResponseDto = new MemberResponseDto(member);
-//            members.add(memberResponseDto);
-//        }
-//        return members;
-//    }
+    @GetMapping("joining/{no}/position")
+    public MemberResponseDto getMember(@PathVariable long no, @RequestParam String state) {
+        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, state);
+        MemberResponseDto memberResponseDto = new MemberResponseDto();
+        if(!joiningList.isEmpty()){
+            String email = joiningList.get(0).getEmail();
+            Member member = memberRepository.findByEmail(email);
+            memberResponseDto = new MemberResponseDto(member);
+        }
+        return memberResponseDto;
+    }
 }

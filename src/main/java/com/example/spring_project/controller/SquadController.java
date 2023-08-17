@@ -13,6 +13,8 @@ import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -24,12 +26,15 @@ public class SquadController {
     private final SquadService squadService;
 
     @PostMapping("squad/make")
-    public Map makeSquad(WebRequest request, @RequestBody SquadRequestDto squadRequestDto) {
+    public Map makeSquad(WebRequest request, @RequestParam String name) {
         JSONObject response = new JSONObject();
 //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         String log = "kevin@gmail.com";
+        SquadRequestDto squadRequestDto = new SquadRequestDto();
         // 스쿼드 이름 중복 검사
-        if(squadRepository.findByName(squadRequestDto.getName()) == null){
+        if(squadRepository.findByName(name) == null){
+            squadRequestDto.setName(name);
+            squadRequestDto.setContents("안녕하세요! "+name+" 입니다.");
             squadRequestDto.setHost(log);
             squadRequestDto.setMaking(log);
             // 스쿼드 생성
@@ -47,7 +52,7 @@ public class SquadController {
             // making 제거
             squadRequestDto.setMaking(null);
             squadService.updateSquad(squadSave.getNo(), squadRequestDto);
-            response.put("save", "success");
+            response.put("save", squadSave.getNo());
         } else {
             response.put("save", "fail");
         }
@@ -77,4 +82,28 @@ public class SquadController {
         return response.toMap();
     }
 
+    @GetMapping("squad/my")
+    public List<SquadResponseDto> getMySquad(){
+        //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        String log = "kevin@gmail.com";
+        List<Joining> joiningList = joiningRepository.findAllByEmail(log);
+        List<SquadResponseDto> squadResponseDtos = new ArrayList<>();
+        for(int i=0; i<joiningList.size(); i++){
+            Squad squad = squadRepository.findByNo(joiningList.get(i).getSquadNo());
+            SquadResponseDto squadResponseDto = new SquadResponseDto(squad);
+            squadResponseDtos.add(squadResponseDto);
+        }
+        return squadResponseDtos;
+    }
+
+    @GetMapping("squad/all")
+    public List<SquadResponseDto> getAllSquad(){
+        List<Squad> squads = squadRepository.findAll();
+        List<SquadResponseDto> squadResponseDtos = new ArrayList<>();
+        for(int i=0; i<squads.size(); i++){
+            SquadResponseDto squadResponseDto = new SquadResponseDto(squads.get(i));
+            squadResponseDtos.add(squadResponseDto);
+        }
+        return squadResponseDtos;
+    }
 }

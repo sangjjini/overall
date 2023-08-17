@@ -8,6 +8,8 @@ $(window).on('load', function (){
     // 실시간 적용 필요
     chat();
     read();
+    get_position();
+    member_list();
 });
 
 function squad(){
@@ -34,8 +36,8 @@ function invited(){
                     `<div class="contents_member">
                         <div class="list_pos"></div>
                         <div class="list_name">${members.nickname}(방장)</div>
-                        <div>
-                            <button onclick="out(this.id)" id="${members.code}">방출</button>
+                        <div class="list_out">
+                            <button onclick="out(this.id)" id="${members.code}" class="out_btn">방출</button>
                         </div>
                     </div>`
                 );
@@ -44,8 +46,8 @@ function invited(){
                     `<div class="contents_member">
                         <div class="list_pos"></div>
                         <div class="list_name">${members.nickname}</div>
-                        <div>
-                            <button onclick="out(this.id)" id="${members.code}">방출</button>
+                        <div class="list_out">
+                            <button onclick="out(this.id)" id="${members.code}" class="out_btn">방출</button>
                         </div>
                     </div>`
                 );
@@ -55,8 +57,13 @@ function invited(){
 }
 
 function show_invite(){
-    $('#invite_list').toggle();
+    $('#invite_list').show();
     inviting();
+}
+
+function close_invite(){
+    $('#email').val("");
+    $('#invite_list').hide();
 }
 
 function inviting(){
@@ -67,10 +74,10 @@ function inviting(){
         $('#inviting').empty();
         response.forEach(members => {
             $('#inviting').append(
-                `<div id="${members.code}">
-                    <p>${members.nickname}(${members.email})</p>
-                    <button onclick="accept(this.id)" id="${members.code}">수락</button>
-                    <button onclick="refuse(this.id)" id="${members.code}">거절</button>
+                `<div id="${members.code}" class="inviting_list">
+                    ${members.nickname}(${members.email})
+                    <button onclick="refuse(this.id)" id="${members.code}" class="answer_btn refuse_btn">X</button>
+                    <button onclick="accept(this.id)" id="${members.code}" class="answer_btn accept_btn">V</button>
                 </div>`
             );
         });
@@ -82,9 +89,16 @@ function invite(){
     $.ajax({
         url: "joining/" + squadNo + "/invite?email=" + email,
         type: "post",
-    }).done(function (){
-        $('#email').val('');
-        inviting();
+    }).done(function (response){
+        const result = Object.values(response)[0];
+        if(result === "fail"){
+            alert("존재하지 않는 회원입니다.");
+        }else if(result === "already"){
+            alert("이미 가입신청이 완료된 회원입니다.");
+        }else{
+            $('#email').val('');
+            inviting();
+        }
     });
 }
 
@@ -185,7 +199,7 @@ function send(){
         type:"post",
         dataType: "json",
         contentType : "application/json",
-        data: JSON.stringify(data),
+        data: JSON.stringify(data)
     }).done(function (){
         $('#chatting').val('');
         chat();
@@ -199,15 +213,14 @@ function read(){
     });
 }
 
-let select_pos;
+let position;
 $('.position_add').click(function (){
-    select_pos = $(this).attr("id");
-    $('#select_box').toggle();
-    member_list();
+    position = $(this).attr("id");
+    $('#select_box').show();
 })
 
 function close_select(){
-    $('#select_box').toggle();
+    $('#select_box').hide();
 }
 
 function member_list(){
@@ -226,29 +239,44 @@ function member_list(){
     });
 }
 
+const positions = ["A", "B", "C", "D", "E"];
 function change_pos(code){
     $.ajax({
-        url:"joining/"+squadNo+"/position/change?code="+code+"&state="+select_pos,
+        url:"joining/"+squadNo+"/position/change?code="+code+"&state="+position,
         type:"post"
-    }).done(function (response){
-       $('#member_list').toggle();
-       $('#'+select_pos).hide();
-       $('#sel_'+select_pos).append(
-         `${response.nickname}<button onclick="delete_pos(this.id, this.name)" id="${response.code}" name=${select_pos}>X</button>`
-       );
+    }).done(function (){
+        close_select();
+        for(let i=0; i<positions.length; i++){
+            $('#'+positions[i]).show();
+            $('#sel_'+positions[i]).empty();
+        }
+        get_position();
     });
 }
 
-function delete_pos(code, sel_pos){
+function delete_pos(code, pos){
     $.ajax({
         url:"joining/"+squadNo+"/position/delete?code="+code,
         type:"post"
     }).done(function (){
-        $('#sel_'+sel_pos).empty();
-        $('#'+select_pos).show();
+        $('#sel_'+pos).empty();
+        $('#'+pos).show();
     });
 }
 
 function get_position(){
-
+    for(let i=0; i<positions.length; i++){
+        $.ajax({
+            url:"joining/"+squadNo+"/position?state="+positions[i],
+            type:"get"
+        }).done(function (response){
+            if(response.nickname != null){
+                $('#'+positions[i]).hide();
+                $('#sel_'+positions[i]).empty();
+                $('#sel_'+positions[i]).append(
+                    `${response.nickname}<button onclick="delete_pos(this.id, this.name)" id="${response.code}" name="${positions[i]}">X</button>`
+                );
+            }
+        })
+    }
 }
