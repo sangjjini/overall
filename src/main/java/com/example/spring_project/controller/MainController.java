@@ -55,4 +55,8 @@ public class MainController {
 
     @GetMapping("/profileUpdate")
     public String profileUpdate() {return "profile_update";}
+
+    @GetMapping("/overallUpdate")
+    public String overallUpdate() {return "overall_update";}
+    
 }

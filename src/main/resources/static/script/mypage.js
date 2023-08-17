@@ -61,20 +61,13 @@ $(window).on('load', function () {
 </div>
 </div></div>`);
                 $('.rating_data').css("width", rPercent + "%");
-                $('.style_wrap').append(`<div id="style">${rate.style}</div>`);
+                $('.style_wrap').append(`<div id="style">#${rate.style}</div>`);
 
             })
 
         });
     }); //오버롤 종료
 
-    //기록호출
-    $.ajax({
-        url: "/mypage/overallList",
-        type: "get"
-    }).done(function(response){
-
-    });
 
 
 

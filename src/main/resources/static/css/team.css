@@ -61,9 +61,16 @@
 .main_profile:nth-child(2) {
     justify-content: flex-end;
 }
+.main_profile:nth-child(2) .txt_box h1 {
+    align-items: flex-end;
+}
 
 .main_profile:last-child {
     justify-content: flex-end;
+}
+
+.main_profile:last-child .txt_box h1 {
+    align-items: flex-end;
 }
 
 .txt_box {
