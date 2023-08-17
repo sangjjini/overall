@@ -13,6 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link type="text/css" href="/css/reset.css" rel="stylesheet" />
     <link type="text/css" href="/css/profile_update.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
     <script src="/script/mypage.js"></script>
 </head>
 <body>
@@ -22,26 +23,21 @@
         <div class="contents_menu">
             <div class="menu"><a href="mypage"><h1>오버롤</h1></a></div>
             <div class="menu on"><a href="/profileUpdate"><h1>프로필 수정</h1></a></div>
-            <div class="menu"><a href="#"><h1>오버롤 설정</h1></a></div>
-            <div class="menu"><a href="#"><h1>고객센터</h1></a></div>
-
+            <div class="menu"><a href="/overallUpdate"><h1>오버롤 설정</h1></a></div>
         </div>
         <div class="profile_contents">
             <div class="profile_update">
                 <h1>프로필 수정</h1>
-
                 <div class="update_contents_wrap">
                     <div class="update_contents">
-                        비밀번호변경
+                        <div class="txt">변경하실 비밀번호를 입력해주세요</div>
+                        <input type="text">
+                        <div class="button"><a href="#">비밀번호 변경</a></div>
                     </div>
                     <div class="update_contents">
-                        email변경
-                    </div>
-                    <div class="update_contents">
-                        닉네임변경
-                    </div>
-                    <div class="update_contents">
-                        주소변경
+                        <div class="txt">변경하실 닉네임을 입력해주세요</div>
+                        <input type="text">
+                        <div class="button"><a href="#">닉네임 변경</a></div>
                     </div>
                 </div>
             </div>

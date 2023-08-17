@@ -13,6 +13,7 @@
     <%-- 제이쿼리--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link type="text/css" href="/css/index.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
 </head>
 <body>
     <jsp:include page="header.jsp"></jsp:include>

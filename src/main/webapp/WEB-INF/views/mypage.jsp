@@ -13,6 +13,7 @@ To change this template use File | Settings | File Templates.
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <link type="text/css" href="/css/reset.css" rel="stylesheet" />
 <link type="text/css" href="/css/mypage.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
 <script src="/script/mypage.js"></script>
 </head>
 <body>
@@ -22,9 +23,7 @@ To change this template use File | Settings | File Templates.
 <div class="contents_menu">
     <div class="menu on"><a href="/mypage"><h1>오버롤</h1></a></div>
     <div class="menu"><a href="/profileUpdate"><h1>프로필 수정</h1></a></div>
-    <div class="menu"><a href="#"><h1>오버롤 설정</h1></a></div>
-    <div class="menu"><a href="#"><h1>고객센터</h1></a></div>
-
+    <div class="menu"><a href="/overallUpdate"><h1>오버롤 설정</h1></a></div>
 </div>
 <div class="mypage_contents">
     <div class="overall">
