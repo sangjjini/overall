@@ -26,31 +26,29 @@ function loginChk() {
         $("#password").focus();
         return false;
     }
+    let obj = {email:id, password:password};
 
     // 유효성 검사 통과
     $.ajax({
-        type: 'POST',
-        url: 'MemberController',
-        data: data = {
-            id: id,
-            password: password
-        },
-
+        method: 'POST',
+        url: '/login',
+        data: JSON.stringify(obj),
+        contentType: 'application/json',
         success: (response) => {
-            // console.log(response.result);
-
-            if(response.result === "loginTrue"){
-                alert('로그인이 완료되었습니다.');
-                window.location.href='/';
-            }else if(response.result === "noUser"){
-                alert('유저정보가 존재하지 않습니다.');
-            }
-
+            console.log("성공");
+            alert('로그인이 완료되었습니다.');
+            window.location.href='/';
+            // if(response.result === "loginTrue"){
+            //     alert('로그인이 완료되었습니다.');
+            //     window.location.href='/';
+            // }else if(response.result === "noUser"){
+            //     alert('유저정보가 존재하지 않습니다.');
+            // }
         },
-
-        error: () => {
-            alert('로그인 오류');
-        },
+        error: function (request, status, error) {
+            console.log("code: " + request.status)
+            // console.log("message: " + request.responseText)
+            // console.log("error: " + error);
+        }
     });
-
-};
+}
