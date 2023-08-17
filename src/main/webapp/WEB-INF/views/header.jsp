@@ -23,7 +23,7 @@
         <div class="mypage"><a href="/mypage">마이페이지</a></div>
     </div>
     <div class="login_wrap">
-        <div class="login"><a href="#">로그인</a></div>
+        <div class="login"><a href="/login">로그인</a></div>
     </div>
 </header>
 </body>
