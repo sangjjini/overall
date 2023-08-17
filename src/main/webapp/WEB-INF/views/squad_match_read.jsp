@@ -14,7 +14,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/reset.css" type="text/css">
     <link rel="stylesheet" href="/css/match_read.css" type="text/css">
-    <script src="/script/match_read.js"></script>
 </head>
 <body>
 <c:import url="header.jsp"/>
@@ -25,13 +24,17 @@
                         <h1 id="title"></h1>
                     </div>
                     <div class="match-preview">
+<%--                        <input type="hidden" id="log_temp" name="lot_temp" value="${log}">--%>
+                        <input type="hidden" id="log_temp" name="log_temp" value="kevin@gmail.com">
+<%--                        <input type="hidden" id="log_temp" name="log_temp" value="neymar@gmail.com">--%>
+<%--                        <input type="hidden" id="log_temp" name="log_temp" value="SIUUU@naver.com">--%>
                         <div class="match_info">
                             <section>
                                 <ul>
                                     <li id="schedule">
                                         <span></span>
                                     </li>
-                                    <li id="author">
+                                   <li id="author">
                                         <span></span>
                                     </li>
                                     <li id="deadline">
@@ -62,9 +65,27 @@
                             </div>
                         </div>
                     </div>
+                    <div class="match_btn_container">
+                        <input type="button" id="match_btn" name="match_btn" value="">
+                    </div>
+                    <div id="applyContainer" class="hidden">
+                        <div id="applyContent">
+                            <div id="squad_container">
+                                <ul id="squad_list_table">
+                                    <li id="lines">
+
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <button id="modalCloseButton">닫기</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+<script src="/script/match_read.js"></script>
 <c:import url="footer.jsp"/>
 </body>
 </html>

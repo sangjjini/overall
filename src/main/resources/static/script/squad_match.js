@@ -20,7 +20,6 @@ $(document).ready(function(){
                 let startAt = data.startAt.substring(11,16);
                 let endAt = data.endAt;
                 let deadline = data.deadline;
-                console.log(deadline)
 
                 if(date === endAt.substring(0,10)){
                     endAt = data.endAt.substring(11,16);
@@ -73,7 +72,7 @@ function checkValue(){
     // const et = document.getElementById("endAt").value;
     const st = document.getElementById("startAt").value.replace('T',' ');
     const et = document.getElementById("endAt").value.replace('T',' ');
-    const squadA = document.getElementById("squadA").value;
+    const squadA = document.getElementById("squads").value;
     const squadB = document.getElementById("squadB").value;
 
     console.log("title : ",title);
@@ -145,6 +144,7 @@ function checkValue(){
         })
     }
 }
+
 
 
 
