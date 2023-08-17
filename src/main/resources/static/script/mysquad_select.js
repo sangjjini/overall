@@ -8,7 +8,6 @@ $(document).ready(function(){
         contentType: 'application/json',
         dataType:'json',
         success : (response) => {
-            //console.log(response.length);
             let select = $('#squads');
             select.append(
                 '<option value="" selected>자신이 속한 팀 선택</option>'

@@ -2,6 +2,11 @@ const url = new URL(window.location.href);
 const urlParam = url.searchParams;
 let no = urlParam.get('no');
 
+function listBack(){
+    window.location.href = "/squad/matchList"
+}
+
+
 $(document).ready(function(){
     console.log("no : ",no);
 
@@ -93,11 +98,29 @@ $(document).ready(function(){
             }else if(deadline === '모집중'){
                 $('.match_btn_container').attr({id:""})
                 $('#match_btn').attr({value:"신청 하기"});
-                $('#match_btn').attr({onclick:"mySquadlistModal()"});
+                $('#match_btn').attr({onclick:"mySquadListModal()"});
 
+                let match_btn = document.getElementById('match_btn');
+                let modalCloseButton = document.getElementById('modalCloseButton');
+                let modal = document.getElementById('applyContainer')
+                console.log("match_btn : " + match_btn)
+                console.log("modalCloseButton : " + modalCloseButton)
+                match_btn.addEventListener('click', () => {
+                    modal.classList.remove('hidden');
+                });
+                modalCloseButton.addEventListener('click', () => {
+                    modal.classList.add('hidden');
+                });
             }else if(deadline === '경기 준비중' && squadB_host === log){
+                console.log(squadB_host)
+                console.log(log)
                 $('#match_btn').attr({value:"참가 취소"});
                 $('#match_btn').attr({onclick:"leaveMatch()"});
+            }else{
+                $('#match_btn').attr({value:"신청 마감"});
+                $('#match_btn').attr({disabled:"disabled"});
+                // const target = document.getElementById('match_btn');
+                // target.disabled = true;
             }
         }
     });
@@ -107,8 +130,13 @@ function deleteMatch(){
         url:"/squad/match/" + no + "/delete",
         method: "delete",
         success: (response) => {
-            alert("경기가 삭제되었습니다.")
-            window.location.replace("/squad/matchList");
+            console.log(response.delete);
+            if (response.delete === "success") {
+                alert("경기가 삭제되었습니다.")
+                window.location.replace("/squad/matchList");
+            }else{
+                alert("삭제에 실패하였습니다.")
+            }
         },
         error : function(errorThrown) {
             console.log("실패");
@@ -117,20 +145,24 @@ function deleteMatch(){
     });
 }
 function leaveMatch(){
+    let name = $('#squadB_name > h1').text();
     $.ajax({
         url:"/squad/match/" + no + "/leave",
-        method: "delete",
+        method: "post",
+        data:JSON.stringify({"name":name}),
+        contentType: 'application/json',
+        dataType:'json',
         success: (response) => {
             alert("참가신청이 취소되었습니다.")
             window.location.replace("/squad/matchList");
         },
-        error : function(errorThrown) {
-            console.log("실패");
-            console.log(errorThrown.statusText);
+        error:function(request,status,error){
+            console.log("실패")
+            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
         }
     });
 }
-function mySquadlistModal(){
+function mySquadListModal(){
     let log = $('#log_temp').val();
     let obj = {"email" : log};
     $.ajax({
@@ -139,66 +171,59 @@ function mySquadlistModal(){
         data: JSON.stringify(obj),
         contentType: 'application/json',
         dataType:'json',
-        success: (response) => {
-            $('#squad_list').empty();
+        success : (response) => {
+            let select = $('#squads');
+            select.empty();
+            select.append(
+                '<option value="" selected>참가팀 선택</option>'
+            );
             for(let i = 0; i < response.length; i++){
-                let data = response[i]
-                $('#lines').append(
-                    '<ul class="list_content" onclick="applyMatch(this)">'+
-                    '<li name="squad_name" value="' + data + '">' + data + '</li>' +
-                    '<li></li>'+
-                    '</ul>'
+                let data = response[i];
+                select.append(
+                    '<option value="' + data + '">' + data + '</option>'
                 )
             }
-            //window.location.replace("/squad/matchRead?no=" + no);
         },
         error : function(errorThrown) {
             console.log("실패");
             console.log(errorThrown.statusText);
         }
-    });
+    })
 }
-function applyMatch(ul){
-    // const select_squad = .val();
-    // console.log(select_squad)
+
+function applyMatch(){
+    let squad_name = $('#squads').val();
+    let host = $('#squadA_name > h1').text();
+    console.log(squad_name);
+    console.log(host);
+
+    if(squad_name === host){
+        alert("이미 참가중인 팀입니다.")
+        return false;
+    }else if(squad_name === ''){
+        alert("팀을 선택해주세요.")
+        return false;
+    }
+
     // console.log(ul);
 //     let log = $('#log_temp').val();
-//     let obj = {"log" : log};
-//     $.ajax({
-//         url:"/squad/match/" + no + "/apply",
-//         method: "post",
-//         data: JSON.stringify(obj),
-//         contentType: 'application/json',
-//         dataType:'json',
-//         success: (response) => {
-//             $('#squad_list').empty();
-//             for(let i = 0; i < response.length; i++){
-//                 let data = response[i]
-//                 $('#lines').append(
-//                     '<ul class="list_content">'+
-//                     '<li>' + data + '</li>' +
-//                     '<li></li>'+
-//                     '</ul>'
-//                 )
-//             }
-//             //window.location.replace("/squad/matchRead?no=" + no);
-//
-//         },
-//         error : function(errorThrown) {
-//             console.log("실패");
-//             console.log(errorThrown.statusText);
-//         }
-//     });
+    let obj = {"applySquad" : squad_name,"host":host};
+    $.ajax({
+        url:"/squad/match/" + no + "/apply",
+        method: "post",
+        data: JSON.stringify(obj),
+        contentType: 'application/json',
+        dataType:'json',
+        success: (response) => {
+            console.log(response.apply);
+            alert("참가 신청이 완료되었습니다.");
+            window.location.replace("/squad/matchRead?no=" + no);
+        },
+        error : function(errorThrown) {
+            alert("신청 실패");
+            console.log(errorThrown.statusText);
+        }
+    });
 }
-let match_btn = document.getElementById('match_btn');
-let modalCloseButton = document.getElementById('modalCloseButton');
-let modal = document.getElementById('applyContainer')
-console.log("match_btn : " + match_btn)
-console.log("modalCloseButton : " + modalCloseButton)
-match_btn.addEventListener('click', () => {
-    modal.classList.remove('hidden');
-});
-modalCloseButton.addEventListener('click', () => {
-    modal.classList.add('hidden');
-});
+
 

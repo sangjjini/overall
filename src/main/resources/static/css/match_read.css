@@ -105,3 +105,35 @@
 #applyContainer.hidden{
     display: none;
 }
+
+.view_back{
+    margin: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.view_back > a{
+    display: flex;
+    align-items: center;
+    background: #3e3d55;
+    height: 50px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+.tm{
+    margin-top: 5px;
+    width: 60px;
+    border-right: 1px solid #525166;
+    text-align: center;
+    height: 50px;
+}
+.icon_return{
+
+}
+.text{
+    color: white;
+    font-size: 15px;
+    width: 170px;
+    text-align: center;
+}

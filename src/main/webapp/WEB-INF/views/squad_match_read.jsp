@@ -14,20 +14,29 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/reset.css" type="text/css">
     <link rel="stylesheet" href="/css/match_read.css" type="text/css">
+    <link rel="shortcut icon" href="/images/favicon.ico">
 </head>
 <body>
 <c:import url="header.jsp"/>
         <div class="contents">
             <div class="container">
+                <div class="view_back">
+                    <a href="/squad/matchList" class="btn_back_list">
+                        <em class="tm">
+                            <img src="/images/back_icon.png" alt="" class="icon_return">
+                        </em>
+                        <span class="text">목록으로 돌아가기</span>
+                    </a>
+                </div>
                 <div class="sub_container">
                     <div>
                         <h1 id="title"></h1>
                     </div>
                     <div class="match-preview">
 <%--                        <input type="hidden" id="log_temp" name="lot_temp" value="${log}">--%>
-                        <input type="hidden" id="log_temp" name="log_temp" value="kevin@gmail.com">
+<%--                        <input type="hidden" id="log_temp" name="log_temp" value="kevin@gmail.com">--%>
 <%--                        <input type="hidden" id="log_temp" name="log_temp" value="neymar@gmail.com">--%>
-<%--                        <input type="hidden" id="log_temp" name="log_temp" value="SIUUU@naver.com">--%>
+                        <input type="hidden" id="log_temp" name="log_temp" value="SIUUU@naver.com">
                         <div class="match_info">
                             <section>
                                 <ul>
@@ -64,21 +73,20 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="match_btn_container">
-                        <input type="button" id="match_btn" name="match_btn" value="">
-                    </div>
-                    <div id="applyContainer" class="hidden">
-                        <div id="applyContent">
-                            <div id="squad_container">
-                                <ul id="squad_list_table">
-                                    <li id="lines">
+                        <div class="match_btn_container">
+                            <input type="button" id="match_btn" name="match_btn" value="">
+                        </div>
+                        <div id="applyContainer" class="hidden">
+                            <div id="applyContent">
+                                <div id="squad_container">
+                                    <select name="squads" id="squads" size="1">
 
-                                    </li>
-                                </ul>
-                            </div>
-                            <div>
-                                <button id="modalCloseButton">닫기</button>
+                                    </select>
+                                </div>
+                                <div>
+                                    <button id="apply_btn" onclick="applyMatch()">참가신청</button>
+                                    <button id="modalCloseButton">닫기</button>
+                                </div>
                             </div>
                         </div>
                     </div>
