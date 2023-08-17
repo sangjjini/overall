@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor //필드에 대한 생성자를 자동으로 생성 해줌.
@@ -17,6 +16,8 @@ import java.util.List;
 public class MemberService {
     @Autowired
     private final MemberRepository memberRepository;
+
+    private EmailService emailService;
 
     public List<Member> findByUsernameAndEmail(String name, String email) {
         return memberRepository.findAllBynameAndEmail(name, email);
@@ -34,30 +35,82 @@ public class MemberService {
         return member;
     }
 
+    public boolean isNicknameValid(String nickname) {
+        return nickname != null && !nickname.trim().isEmpty();
+    }
+
     @Transactional
-    public void createMember(MemberRequestDto memberDto) {// 사용자를 생성하는 기능.
-        Member member = new Member(memberDto);
+    public Member createMember(MemberRequestDto memberRequestDto) {// 사용자를 생성하는 기능.
+        // Member 엔티티 생성
+            Member member = new Member(memberRequestDto);
+
+            //MemberRepository를 이용하여 저장
+            return memberRepository.save(member);
         // MemberRequestDto 객체를 매개변수로 받아서 새로운 Memeber 객체를 생성하고,
         // memberRepository를 통해 데이터베이스에 저장함.
 
         // 이메일 중복 검사
-        if (memberRepository.findByEmail(memberDto.getEmail()) != null) {
-            throw new IllegalArgumentException("이미 가입된 이메일입니다.");
-        }
-
+//        if (memberRepository.findByEmail(memberDto.getEmail()) != null) {
+//            throw new IllegalArgumentException("이미 가입된 이메일입니다.");
+//        }
+//
+//        //이메일 중복이 아니면 회원 생성.
+//        Member member = new Member(memberDto);
+//        memberRepository.save(member);
+//
     }
 
     @Transactional // 데이터베이스 작업을 원자적으로 처리하여 데이터 일관성을 유지하기 위함.
-    public void deleteMemberByEmail(String Email) { //사용자를 삭제하는 기능을 수행함.
-        memberRepository.deleteById(Long.valueOf(Email));
-    } // 해당 사용자의 Email에 해당하는 레코드를 memberRepository를 통해 데이터베이스에서 삭제
+    public void deleteMemberByEmail(String email) { //사용자를 삭제하는 기능을 수행함.
+        Member memberToDelete = memberRepository.findByEmail(email); // 주어진 이메일에 해당하는 사용자를 findByEmail 메서드로 조회
+        if(memberToDelete != null){
+            memberRepository.delete(memberToDelete); //사용자가 존재하는 경우, memberRepository.delete 메서드로 사용자를 삭제함.
+        } else {
+            throw new IllegalArgumentException("해당 이메일에 해당하는 사용자가 없습니다.");
+        }         // 사용자가 존재하지 않는 경우, 예외를 던져 사용자가 없음을 알림.
+    }
+
 
     @Transactional
-    public void updateMamber(String name, MemberRequestDto memberDto) {
-        Member member = memberRepository.findByEmail(name);
+    public void updateUser(String email, MemberRequestDto memberDto) {
+        Member member = getMemberByEmail(email);
         member.update(memberDto);
-    } // 주어진 사용자 이름()에 해당하는 사용자 정보를 업데이트하는 기능을 수행함.
-      // getUserById(name) 메서드를 사용하여 해당 사용자를 가져온 후, userDto 정보를 사용하여 사용자 정보를 업데이트
+    }
+
+    }
+//    @Transactional
+//    public void updateMember(String email, MemberRequestDto memberDto) {
+//        //이메일 유효성 검사와 존재 여부 확인.
+//        if(!isValidEmail(email)){
+//            throw new IllegalArgumentException("올바른 이메일 형식이 아닙니다.");
+//        }
+//        Member member = memberRepository.findByEmail(email);
+//        if(member == null){
+//            throw new IllegalArgumentException("해당 이메일에 해당하는 사용자가 존재하지 않습니다.");
+//        }
+//        member.update(memberDto);
+//    }
+
+//    private boolean isValidEmail(String email) throws Exception {
+//        // 정규식 패턴을 사용하여 이메일 형식을 검사
+//        String regex = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$";
+//
+//        boolean isValid = email.matches(regex);
+//
+//        if (isValid) {
+//            // 이메일 형식이 올바른 경우의 처리
+//            String confirmationCode = emailService.sendSimpleMessage(email);
+//            response.put("isValidEmail", true);
+//            response.put("confirmationCode", confirmationCode);
+//        } else {
+//            // 이메일 형식이 잘못된 경우의 처리
+//            response.put("isValidEmail", false);
+//            response.put("message", "올바른 이메일 형식이 아닙니다.");
+//        }
+//        return isValid;
+////        return email.matches(emailPattern);
+//    }
+
 
 
 
@@ -92,4 +145,3 @@ public class MemberService {
 //    public List<Member> getAllMembers() {
 //        return memberRepository.findAll();
 //    }
-}

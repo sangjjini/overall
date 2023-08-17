@@ -49,6 +49,10 @@ public class Member {
         this.email = requestDto.getEmail();
         this.password = requestDto.getPassword();
         this.name = requestDto.getName();
+        this.nickname = requestDto.getNickname();
+        this.phone = requestDto.getPhone();
+        this.province = requestDto.getProvince();
+        this.city = requestDto.getCity();
     }
 
 }

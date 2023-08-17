@@ -18,7 +18,7 @@
 <div id="wrap">
     <section id="main-section">
         <div class="join_container">
-            <form id="form" class="sign">
+            <form id="form" class="sign" action="/join" method="post">
                 <div class="signup_container">
                 <div id="h1">
                 <h1> 풋살이 하고싶을 땐<br>OverAll</h1>
@@ -62,8 +62,9 @@
                         <small class="small hint" id="hint_nickName">최소 2자리 이상 8자리 이하 한글, 영문, 숫자만 입력해야 합니다</small>
                     </div>
                     <div class="input-control_addr">
-                        <label class="label" for="addr">활동지역</label>
-                        <input id="addr" name="addr" type="text" maxlength="50">
+                        <label class="label" for="province">활동지역</label>
+                        <input id="province" name="province" type="text" maxlength="50">
+                        <input id="city" name="city" type="text" maxlength="50">
                         <small class="small hint" id="hint_addr">활동지역을 입력해 주세요. ex) 서울시 강동구</small>
                     </div>
                     <div class="input-control_phone">

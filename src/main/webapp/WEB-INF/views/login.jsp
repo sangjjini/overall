@@ -22,11 +22,11 @@
                     <div class="logo">
                         <a href="/"><img src="/images/logo_black.png"></a>
                     </div>
-                    <form id="login">
-                        <div class="id_txt">아이디</div>
+                    <form id="login" method="post">
+                        <div class="id_txt">이메일</div>
                         <div class="login-box">
                             <ion-icon name="person-outline"></ion-icon>
-                            <input type="text" name="id" id="id" maxlength="30"
+                            <input type="text" name="email" id="email" maxlength="30"
                                    autocapitalize="off">
                         </div>
                         <div class="pw_txt">비밀번호</div>

@@ -1,19 +1,16 @@
 package com.example.spring_project.controller;
 
-import com.example.spring_project.domain.member.Member;
+import com.example.spring_project.domain.member.LoginRequestDto;
 import com.example.spring_project.domain.member.MemberRepository;
 import com.example.spring_project.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.context.annotation.SessionScope;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -26,11 +23,11 @@ public class LogController {
 
     //사용자의 로그인 정보를 받아서 세션에 저장하고 "index" 뷰로 이동.
 //    @SessionScope
-    @PostMapping("login")
-    public ModelAndView login(@RequestBody Member member, HttpSession session) {
+    @PostMapping("/login")
+    public ModelAndView login(@RequestBody LoginRequestDto loginRequestDto, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("index"); // "index" 뷰를 생성
-        modelAndView.addObject("log", member.getEmail());
-        session.setAttribute("loggedInUser", member.getEmail());
+        modelAndView.addObject("log", loginRequestDto.getEmail());
+        session.setAttribute("loggedInUser", loginRequestDto.getEmail());
         return modelAndView; // "index" 뷰 반환
     }
 //    Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
