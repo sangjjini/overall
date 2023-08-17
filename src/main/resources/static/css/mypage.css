@@ -1,8 +1,26 @@
+@font-face {
+    font-family: 'IAMAPLAYER';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/IAMAPLAYER.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .contents {
     display:flex;
     justify-content: center;
     padding:100px;
     gap:50px;
+}
+
+h1 {
+    white-space: nowrap;
 }
 
 .contents_menu {
@@ -14,12 +32,22 @@
     display:inline-block;
     width:100%;
     padding:20px;
-    border:1px solid black;
-    border-bottom:none;
+    border:1px solid #a4a4b7;
+    color:#a4a4b7;
+    border-top:none;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size:18px;
 }
 
 .contents_menu .menu:last-child a {
-    border-bottom: 1px solid black;
+    border-top:none;
+    color:#a4a4b7;
+}
+
+.contents_menu .on a {
+    border-color:black;
+    color:black;
+    border-top:1px solid black;
 }
 
 .contents_menu .menu {
@@ -37,14 +65,23 @@
     width:100%;
     display:flex;
     flex-direction: column;
-    border:1px solid black;
-    padding:20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    padding:100px;
 
 }
+
 .mypage_contents .overall {
     display:flex;
     gap:40px;
+    font-family: "I AM A PLAYER" ,"Tenada";
+}
 
+.mypage_contents .overall h1 {
+    font-size:22px;
+}
+.mypage_contents .overall h2 {
+    font-family: "MBC1961GulimM";
+    font-size:22px;
 }
 
 .overall .overall_left {
@@ -56,7 +93,11 @@
 }
 
 .overall .overall_left .nickname {
-    font-size:24px;
+    font-size:36px;
+}
+
+.overall .overall_left .position {
+    font-size:36px;
 }
 
 .mypage_contents .overall_param {
@@ -78,46 +119,52 @@
 
 .stats_wrap #stat {
     padding:20px;
-    border:1px solid black;
     border-bottom:none;
+}
 
+#stat h1 {
+    width:110px;
 }
 
  .graph_wrap {
     width: 100%;
     background-color: #dedede;
+     border-radius: 5px;
 }
 
 .stats_wrap .graph_wrap .physical_data {
-    height: 60px;
+    height: 40px;
     padding: 0;
     text-align: center;
-    background-color: #003ffd;
+    background: rgb(244,83,96);
+    background: linear-gradient(90deg, rgba(244,83,96,1) 33%, rgba(255,61,77,1) 93%);
     color: #111;
     text-indent: -9999px;
+    border-radius: 5px;
 }
 
 .stats_wrap .graph_wrap .speed_data {
-    height: 60px;
+    height: 40px;
     padding: 0;
     text-align: center;
-    background-color: #d20707;
+    background: rgb(93,134,255);
+    background: linear-gradient(90deg, rgba(93,134,255,1) 33%, rgba(32,88,251,1) 93%);
     color: #111;
     text-indent: -9999px;
+    border-radius: 5px;
 }
 
 .stats_wrap .graph_wrap .rating_data {
-    height: 60px;
+    height: 40px;
     padding: 0;
     text-align: center;
-    background-color: #fccf05;
+    background: rgb(70,199,189);
+    background: linear-gradient(90deg, rgba(70,199,189,1) 33%, rgba(0,201,185,1) 93%);
     color: #111;
     text-indent: -9999px;
+    border-radius: 5px;
 }
 
-.stats_wrap #stat:last-child {
-    border-bottom:1px solid black;
-}
 
 #stat {
     display:flex;
@@ -125,10 +172,37 @@
     align-items: center;
 }
 
+.foot_wrap {
+    display:flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.foot_wrap h3 {
+    color:white;
+    font-size:42px;
+    font-family: MBC1961GulimM;
+}
+
+.foot_wrap .left_foot {
+    width:100%;
+    background: url("../images/left_foot.png") 100% 50% no-repeat;
+    background-size: contain;
+    padding:100px 50px;
+}
+
+.foot_wrap .right_foot {
+    width:100%;
+    background: url("../images/right_foot.png") 0 50% no-repeat;
+    background-size: contain;
+    padding:100px 50px;
+}
+
 
 .style_wrap {
+    padding-top:100px;
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .style_wrap #style {
@@ -137,18 +211,4 @@
     padding:20px;
 }
 
-.history_contents {
-    margin-top:50px;
-    padding:20px;
-    display:flex;
-    border:1px solid black;
-    justify-content: center;
-    gap:10px;
-}
-
-.match_evaluation {
-    border:1px solid black;
-    padding:10px;
-    margin:5px;
-}
 
