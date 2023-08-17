@@ -34,9 +34,9 @@
                     </div>
                     <div class="match-preview">
 <%--                        <input type="hidden" id="log_temp" name="lot_temp" value="${log}">--%>
-<%--                        <input type="hidden" id="log_temp" name="log_temp" value="kevin@gmail.com">--%>
+                        <input type="hidden" id="log_temp" name="log_temp" value="kevin@gmail.com">
 <%--                        <input type="hidden" id="log_temp" name="log_temp" value="neymar@gmail.com">--%>
-                        <input type="hidden" id="log_temp" name="log_temp" value="SIUUU@naver.com">
+<%--                        <input type="hidden" id="log_temp" name="log_temp" value="SIUUU@naver.com">--%>
                         <div class="match_info">
                             <section>
                                 <ul>

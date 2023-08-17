@@ -25,8 +25,8 @@
             <form method="post" action="/squad/match/making">
                 <input type="text" id="title" name="title" placeholder="제목을 입력해주세요.">
                 <%--                <input type="text" id="author" name="author" value="작성자:${log}" readonly>--%>
-<%--                <input type="text" id="author" name="author" value="작성자:kevin@gmail.com" readonly>--%>
-                <input type="text" id="author" name="author" value="작성자:neymar@gmail.com" readonly>
+                <input type="text" id="author" name="author" value="작성자:kevin@gmail.com" readonly>
+<%--                <input type="text" id="author" name="author" value="작성자:neymar@gmail.com" readonly>--%>
                 <input type="datetime-local" id="startAt" name="startAt">
                 <input type="datetime-local" id="endAt" name="endAt">
                 <div class="squad-input">

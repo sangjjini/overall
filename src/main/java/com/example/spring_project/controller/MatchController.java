@@ -255,7 +255,7 @@ public class MatchController {
         String email = dto.getEmail();
         //String email = "neymar@gmail.com";
         System.out.println(email);
-        List<Joining> list = joiningRepository.findByEmailAndState(email,"Y");
+        List<Joining> list = joiningRepository.findByEmailAndStateNot(email,"N");
         List<String> mySquadList = new ArrayList<>();
         for(Joining joining : list){
             System.out.println(joining);
