@@ -144,6 +144,7 @@ public class MatchController {
         JSONObject response = new JSONObject();
         //String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
         String log = "kevin@gmail.com";
+        //String log = "neymar@gmail.com";
         try{
             Match match = matchRepository.findById(no).orElseThrow(
                     () -> new IllegalArgumentException("존재하지 않는 경기입니다.")
@@ -151,6 +152,8 @@ public class MatchController {
             if(match.getAuthor().equals(log)){
                 matchService.deleteMatch(no);
                 response.put("delete","success");
+            }else{
+                response.put("delete","fail");
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -161,33 +164,25 @@ public class MatchController {
 
     // 매치 신청
     @PostMapping("{no}/apply")
-    public List<String> applyMatch(@PathVariable long no, @RequestBody String log){
-        JSONObject response = new JSONObject(log);
-        String email = response.getString("log");
-//        Match match = matchRepository.getMatchByNo(no);
-//        if(match.getSquadB() != null){
-//            response.put("apply", "참가할 수 없는 매치입니다.");
-//            return response.toMap();
-//        }
-//        try {
-//            Squad squad = squadRepository.findByName(dto.getSquadB());
-//            dto.setSquadB(squad.getName());
-//            dto.setDeadline('1');
-//            matchService.updateMatch(no, dto);
-//            response.put("apply","success");
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            response.put("apply","fail");
-//        }
-        System.out.println(response.getString("log"));
-        List<Joining> list = joiningRepository.findByEmailAndState(email,"Y");
-        List<String> mySquadList = new ArrayList<>();
-        for(Joining joining : list){
-            long sNo = joining.getSquadNo();
-            Squad squad = squadRepository.findByNo(sNo);
-            mySquadList.add(squad.getName());
+    public Map applyMatch(@PathVariable long no, @RequestBody String squadName){
+        JSONObject response = new JSONObject(squadName);
+        //String email = response.getString("log");
+        String applySquad = response.getString("applySquad");
+        String host = response.getString("host");
+        Match match = matchRepository.getMatchByNo(no);
+        System.out.println("applySquad : " + applySquad);
+        System.out.println("host : " + host);
+
+        if(match.getSquadB() != null){
+            response.put("apply", "fail");
+        }else {
+            MatchRequestDto dto = new MatchRequestDto();
+            dto.setSquadB(applySquad);
+            dto.setDeadline('1');
+            matchService.updateMatch(no, dto);
+            response.put("apply", "success");
         }
-        return mySquadList;
+        return response.toMap();
     }
     // 매치 퇴장
     @PostMapping("{no}/leave")
@@ -268,7 +263,6 @@ public class MatchController {
             Squad squad = squadRepository.findByNo(no);
             mySquadList.add(squad.getName());
         }
-
         return mySquadList;
     }
 
