@@ -67,6 +67,15 @@ button{
     height: 70px;
     padding-top: 10px;
 }
+.error_name{
+    color: red;
+    margin-top: 10px;
+    padding-left: 10px;
+    font-size: 13px;
+    outline: none;
+    border: none;
+    display: none;
+}
 .invited_btn{
     border: none;
     background: #3e3d55;
@@ -84,24 +93,26 @@ button{
 #invite_list{
     display: none;
     position: absolute;
-    background-color: white;
+    left: 90px;
+    top: 760px;
+    background-color: #f6f6f6;
     border: 1px solid lightgray;
-    width: 400px;
-    padding: 5px 5px 20px 5px;
+    width: 330px;
+    padding: 5px 5px 0 5px;
+    font-size: 15px;
 }
-.invite_area{
+.popup_area{
     display: flex;
     flex-direction: column;
     padding-left: 5px;
 }
 .invite_title{
-    margin: 0 10px 10px 10px;
+    margin: 10px 10px 0 10px;
 }
 #email{
     width: 75%;
     height: 30px;
     border: 1px solid gray;
-    border-radius: 5px;
     padding-left: 10px;
 }
 .cancel_btn{
@@ -109,7 +120,7 @@ button{
     border: none;
     width: 20px;
     height: 20px;
-    background: #92d5ff;
+    background: #25c7f5;
     border-radius: 50%;
     cursor: pointer;
     font-size: 15px;
@@ -117,7 +128,6 @@ button{
 }
 .small_btn{
     width: 20%;
-    margin: 0 auto;
     border: none;
     background: #3e3d55;
     color: white;
@@ -137,12 +147,17 @@ button{
 .email_area{
     display: flex;
     align-items: center;
+    margin: 20px 10px 0 10px;
+    justify-content: space-between;
 }
-#inviting{
-    padding: 20px 10px 0 10px;
+.list_area{
+    padding: 10px 0;
+    border-top: 1px solid;
+    margin: 20px 10px;
 }
 .inviting_list{
     line-height: 25px;
+    margin: 10px;
 }
 .answer_btn{
     float: right;
@@ -151,14 +166,15 @@ button{
     height: 25px;
     cursor: pointer;
     font-size: 15px;
-    color: white;
-    margin: 0 3px
 }
 .accept_btn{
-    background: #92d5ff;
+    background: #25c7f5;
+    color: white;
 }
 .refuse_btn{
-    background: #f14e4e;
+    background: white;
+    color: gray;
+    border: 1px solid lightgray;
 }
 .contents_member{
     display: flex;
@@ -217,18 +233,17 @@ button{
     height: 852px;
     width: 602px;
     margin: 0 auto;
-}
-.field{
-
+    justify-content: flex-end;
 }
 .position_area{
     width: 100%;
-    height: 100%;
+    height: 15%;
     text-align: center;
 }
 .position_row{
     display: flex;
     flex-direction: row;
+    height: 15%;
 }
 .position_add{
     margin: 0 auto;
@@ -241,12 +256,15 @@ button{
 }
 #select_box{
     display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    border: 1px solid lightgray;
+    padding: 5px 5px 20px 5px;
+    font-size: 15px;
     width: 300px;
     height: 300px;
-    background: chartreuse;
-    position: absolute;
-    top: 0;
-    right: 0;
+    top: 800px;
+    right: 225px;
 }
 
 /*채팅*/
@@ -270,4 +288,13 @@ button{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+}
+.shadow{
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.52);
+    width: 100%;
+    height: 100vh;
+    display: none;
 }

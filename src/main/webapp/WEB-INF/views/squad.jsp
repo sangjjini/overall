@@ -17,6 +17,7 @@
 </head>
 <body>
 <c:import url="header.jsp" />
+    <div class="shadow"></div>
     <div class="page_title">
         <h1>스쿼드 메이커</h1>
         <p>스쿼드를 만들어보세요.</p>
@@ -27,10 +28,11 @@
                 <div class="contents_list">
                     <label for="name" class="small_title">스쿼드 이름</label>
                     <input type="text" id="name" class="input_area">
+                    <input type="text" class="error_name" readonly>
                 </div>
                 <div class="contents_list">
                     <label for="contents" class="small_title">스쿼드 소개</label>
-                    <textarea id="contents" class="input_area"></textarea>
+                    <textarea id="contents" class="input_area" spellcheck="false"></textarea>
                 </div>
                 <div class="contents_list">
                     <input type="hidden" id="host">
@@ -42,7 +44,7 @@
                         <button onclick="show_invite()" class="invited_btn">초대하기</button>
                     </div>
                     <div id="invite_list">
-                        <div class="invite_area">
+                        <div class="popup_area">
                             <div>
                                 <button onclick="close_invite()" class="cancel_btn">X</button>
                             </div>
@@ -53,7 +55,7 @@
                                 <input type="text" id="email">
                                 <button onclick="invite()" class="small_btn">초대</button>
                             </div>
-                            <div id="inviting"></div>
+                            <div id="inviting" class="list_area"></div>
                         </div>
                     </div>
                 </div>
@@ -74,8 +76,13 @@
                 <div class="formation">포메이션</div>
                 <div class="contents_right">
                     <div id="select_box">
-                        <button onclick="close_select()">X</button>
-                        <div id="member_list"></div>
+                        <div class="popup_area">
+                            <div>
+                                <button onclick="close_select()" class="cancel_btn">X</button>
+                            </div>
+                            <div class="invite_title small_title">스쿼드 선수</div>
+                            <div id="member_list" class="list_area"></div>
+                        </div>
                     </div>
                     <div class="position_area">
                         <button class="position_add" id="A">+</button>
