@@ -19,7 +19,7 @@
     border: 1px solid #ebecef;
     box-sizing: border-box;
     font-size: 15px;
-    font-family: '돋움', serif;
+    font-family: MBC1961GulimM;
 }
 textarea:focus {
     outline: none;
@@ -29,7 +29,7 @@ textarea{
     border-radius: 8px;
     box-sizing: border-box;
     font-size: 15px;
-    font-family: '돋움', serif;
+    font-family: MBC1961GulimM;
     min-height: 500px;
     resize: none;
 }
@@ -38,11 +38,17 @@ textarea{
     display: flex;
 }
 
-.squad-input > #squadA, .squad-input > #squadB{
+#squads, .squad-input > #squadB{
     width: 49%;
 }
-#squadA{
+#squads{
     margin: 5px 5px 5px 0;
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid #ebecef;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-family: MBC1961GulimM;
 }
 #squadB{
     margin: 5px 0 5px 10px;

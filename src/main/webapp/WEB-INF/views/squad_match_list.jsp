@@ -37,7 +37,7 @@
                 </div>
                 <div class="buttons">
                     <c:choose>
-                        <c:when test="${not empty log}">
+                        <c:when test="${empty log}">
                             <a href="/squad/match" class="new_match">
                                 <img src="/images/write_icon.png" alt="" class="icon">
                             </a>

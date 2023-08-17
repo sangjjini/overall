@@ -19,11 +19,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -50,9 +49,8 @@ public class MatchController {
 //        }
         System.out.println("st : " + dto.getStartAt());
         System.out.println("et : " + dto.getEndAt());
-
         try {
-            if(dto.getSquadA() != null && dto.getSquadB() != null) {
+            if(dto.getSquadA().equals("") && dto.getSquadB().equals("")) {
                 dto.setDeadline('1');
             }else {
                 dto.setDeadline('0');
@@ -107,8 +105,8 @@ public class MatchController {
         response.put("startAt", match.getStartAt());
         response.put("endAt", match.getEndAt());
         response.put("author", member.getNickname());
+        response.put("email", member.getEmail());
         response.put("deadline", match.getDeadline());
-
 
         if(squadA != null) {
             response.put("squadA",squadA.getName());
@@ -118,6 +116,7 @@ public class MatchController {
         if(squadB != null){
             response.put("squadB",squadB.getName());
             response.put("squadB_logo", squadB.getImageUrl());
+            response.put("squadB_host", squadB.getHost());
         }
 
         return response.toMap();
@@ -144,14 +143,15 @@ public class MatchController {
     public Map deleteMatchByNo(@PathVariable long no, WebRequest request){
         JSONObject response = new JSONObject();
         //String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
+        String log = "kevin@gmail.com";
         try{
             Match match = matchRepository.findById(no).orElseThrow(
                     () -> new IllegalArgumentException("존재하지 않는 경기입니다.")
             );
-            //if(match.getAuthor().equals(log)){
+            if(match.getAuthor().equals(log)){
                 matchService.deleteMatch(no);
                 response.put("delete","success");
-            //}
+            }
         }catch (Exception e){
             e.printStackTrace();
             response.put("delete","fail");
@@ -161,25 +161,60 @@ public class MatchController {
 
     // 매치 신청
     @PostMapping("{no}/apply")
-    public Map applyMatch(@PathVariable long no, @RequestBody MatchRequestDto dto){
-        JSONObject response = new JSONObject();
-        Match match = matchRepository.getMatchByNo(no);
-        if(match.getSquadB() != null){
-            response.put("apply", "참가할 수 없는 매치입니다.");
-            return response.toMap();
+    public List<String> applyMatch(@PathVariable long no, @RequestBody String log){
+        JSONObject response = new JSONObject(log);
+        String email = response.getString("log");
+//        Match match = matchRepository.getMatchByNo(no);
+//        if(match.getSquadB() != null){
+//            response.put("apply", "참가할 수 없는 매치입니다.");
+//            return response.toMap();
+//        }
+//        try {
+//            Squad squad = squadRepository.findByName(dto.getSquadB());
+//            dto.setSquadB(squad.getName());
+//            dto.setDeadline('1');
+//            matchService.updateMatch(no, dto);
+//            response.put("apply","success");
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            response.put("apply","fail");
+//        }
+        System.out.println(response.getString("log"));
+        List<Joining> list = joiningRepository.findByEmailAndState(email,"Y");
+        List<String> mySquadList = new ArrayList<>();
+        for(Joining joining : list){
+            long sNo = joining.getSquadNo();
+            Squad squad = squadRepository.findByNo(sNo);
+            mySquadList.add(squad.getName());
         }
-        try {
-            Squad squad = squadRepository.findByName(dto.getSquadB());
-            dto.setSquadB(squad.getName());
-            dto.setDeadline('1');
+        return mySquadList;
+    }
+    // 매치 퇴장
+    @PostMapping("{no}/leave")
+    public Map matchLeave(@PathVariable long no, WebRequest request, @RequestBody String name){
+        //String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        JSONObject response = new JSONObject(name);
+        Match match = matchRepository.getMatchByNo(no);
+        // log
+        String log = "kevin@gmail.com";
+        String squadName = response.getString("name");
+//        if(match.getAuthor().equals(response.getString("name"))){
+//            System.out.println("매치 만든놈이 도망간다!");
+//        }
+        System.out.println("sqB : " + match.getSquadB().equals(squadName));
+        System.out.println("squadName : " + squadName);
+        if(match.getSquadB().equals(squadName)){
+            MatchRequestDto dto = new MatchRequestDto();
+            dto.setSquadB(null);
+            dto.setDeadline('0');
             matchService.updateMatch(no, dto);
-            response.put("apply","success");
-        }catch (Exception e){
-            e.printStackTrace();
-            response.put("apply","fail");
+            response.put("leave","success");
+        }else {
+            response.put("leave", "fail");
         }
         return response.toMap();
     }
+
     @PostMapping("/getMatch")
     public Map getTeam(@RequestBody String squad) throws UnsupportedEncodingException {
         JSONObject response = new JSONObject();
@@ -219,31 +254,24 @@ public class MatchController {
         }
         return response.toMap();
     }
-    // 매치 퇴장
-    @PostMapping("{no}/leave")
-    public Map matchLeave(@PathVariable long no, WebRequest request, @RequestBody String name){
-        //String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        JSONObject response = new JSONObject(name);
-        Match match = matchRepository.getMatchByNo(no);
-        // log
-        String log = "kevin@gmail.com";
-        String squadName = response.getString("name");
-//        if(match.getAuthor().equals(response.getString("name"))){
-//            System.out.println("매치 만든놈이 도망간다!");
-//        }
-        System.out.println("sqB : " + match.getSquadB().equals(squadName));
-        System.out.println("squadName : " + squadName);
-        if(match.getSquadB().equals(squadName)){
-            MatchRequestDto dto = new MatchRequestDto();
-            dto.setSquadB(null);
-            dto.setDeadline('0');
-            matchService.updateMatch(no, dto);
-            response.put("leave","success");
-        }else {
-            response.put("leave", "fail");
+
+    @PostMapping("mysquad")
+    public List<String> mySquad(@RequestBody MemberRequestDto dto){
+        String email = dto.getEmail();
+        //String email = "neymar@gmail.com";
+        System.out.println(email);
+        List<Joining> list = joiningRepository.findByEmailAndState(email,"Y");
+        List<String> mySquadList = new ArrayList<>();
+        for(Joining joining : list){
+            System.out.println(joining);
+            long no = joining.getSquadNo();
+            Squad squad = squadRepository.findByNo(no);
+            mySquadList.add(squad.getName());
         }
-        return response.toMap();
+
+        return mySquadList;
     }
+
     @PostMapping ("test")
     public void test(@RequestBody MatchRequestDto dto){
         System.out.println(dto.getTitle());
@@ -254,5 +282,4 @@ public class MatchController {
         System.out.println(dto.getSquadA());
         System.out.println(dto.getSquadB());
     }
-
 }
