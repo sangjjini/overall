@@ -1,0 +1,50 @@
+input{
+    /*border: 1px solid #ebecef;*/
+    /*border-radius: 5px;*/
+    /*box-sizing: border-box;*/
+}
+.content{
+    display: flex;
+    margin: 70px 5% 0;
+    border-top: 10px solid #3e3d55;
+}
+.contents_left{
+    display: flex;
+    flex-direction: column;
+    padding: 40px 2%;
+    margin: 0 3%;
+    width: 300px;
+    border-bottom: 1px solid #3e3d55;
+    height: 100%;
+}
+.contents_list{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.small_title{
+    width: 25%;
+}
+textarea{
+    /*border: 1px solid #ebecef;*/
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-family: MBC1961GulimM;
+    min-height: 200px;
+    resize: none;
+}
+.date, .squad{
+    flex-direction: row;
+}
+#startAt, #endAt, #squadA, #squadB{
+    margin-right: 15px;
+}
+#squadA, #squadB{
+    width: 68%;
+}
+.center_line{
+    width: 1px;
+    border-left: 1px solid lightgray;
+    margin-top: 10px;
+}
