@@ -174,7 +174,7 @@ function signupChk() {
         nickName: $("#nickName").val(),
         phone: $("#Phone").val(),
         province: $("#province").val(),
-        city: $()
+        city: $("#city").val(),
     };
 
     // console.log("email:" + formData.email);
