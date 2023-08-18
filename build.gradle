@@ -29,6 +29,13 @@ dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    //Db 관련
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.2.0'
+    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.3.0'
+    implementation group: 'org.mybatis', name: 'mybatis-typehandlers-jsr310', version: '1.0.2'
+    implementation group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.6'
+
     // spring 프로젝트에서 jsp 파일 작성할 수 있게됨
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.69'
 

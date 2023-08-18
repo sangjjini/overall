@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,30 +59,50 @@ public class MemberController {
 //    }
 
     @PostMapping("/join")
-    public Map join(@RequestBody MemberRequestDto userDto) {
-        JSONObject response = new JSONObject();
-        try {
-            memberService.getMemberByEmail(userDto.getEmail());
-            response.put("join", "fail");
-        } catch(IllegalArgumentException e) {
-            if (!memberService.isNicknameValid(userDto.getNickname())) {
-                response.put("join", "fail");
-                response.put("message","닉네임이 유효하지 않습니다");
-            } else {
-            memberService.createMember(userDto);
-            response.put("join", "success");
-            }
-        }
-        return response.toMap();
-    }
+    public Map<String, String> join(@RequestBody MemberRequestDto memberRequestDto) {
+        Map<String, String> result = new HashMap<>();
 
-//    @PostMapping("/emailConfirm")
-//    public String emailConfirm(@RequestParam String email) throws Exception {
+        Map<String, String> response = new HashMap<>();
+//        JSONObject response = new JSONObject();
+        result = memberService.createMember(memberRequestDto);
+
+        response.put("join", result.get("status"));
+        if (result.containsKey("message")) {
+            response.put("message", result.get("message"));
+        }
+        return response;
+    }
+//        try {
+//            //이메일 중복 여부 검사
+//            memberService.getMemberByEmail(memberRequestDto.getEmail());
 //
-//        String confirm = emailService.sendSimpleMessage(email);
-//
-//        return confirm;
-//    }
+//            //이미 가입된 이메일이면 실패 응답
+//            response.put("join", "fail");
+//        } catch(IllegalArgumentException e) {
+//            if (!memberService.isNicknameValid(memberRequestDto.getNickname())) {
+//                //닉네임이 유효하지 않으면 실패 응답
+//                response.put("join", "fail");
+//                response.put("message","닉네임이 유효하지 않습니다");
+//            } else {
+//                //회원 정보를 데이터베이스에 저장하고 성공 응답
+//                Map<String, String> result = memberService.createMember(memberRequestDto);
+//                response.put("join", result.get("status"));
+//                if(result.containsKey("message")){
+//                    response.put("message", result.get("message"));
+//                }
+////            memberService.createMember(memberRequestDto);
+////            response.put("join", "success");
+//            }
+//        }
+//        return response.toMap();
+
+    @PostMapping("/emailConfirm")
+    public String emailConfirm(@RequestParam String email) throws Exception {
+
+        String confirm = emailService.sendSimpleMessage(email);
+
+        return confirm;
+    }
 
     @DeleteMapping("member/{email}/leave")
     public Map leave(@PathVariable String email) {
