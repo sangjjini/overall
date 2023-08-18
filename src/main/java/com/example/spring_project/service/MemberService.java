@@ -42,8 +42,9 @@ public class MemberService {
     }
 
     @Transactional
-    public Map<String, String> createMember(MemberRequestDto memberRequestDto) {// 사용자를 생성하는 기능.
+    public Map<String, String> createMember(MemberRequestDto memberRequestDto) {
         Map<String, String> response = new HashMap<>();
+
         // 이미 존재하는 이메일인지 체크
         Member existingMember = memberRepository.findByEmail(memberRequestDto.getEmail());
         if (existingMember != null) {
@@ -64,6 +65,7 @@ public class MemberService {
                 response.put("message", "회원 가입 중 오류가 발생했습니다.");
             }
         }
+
         return response;
     }
 

@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,18 +58,16 @@ public class MemberController {
 //    }
 
     @PostMapping("/join")
-    public Map<String, String> join(@RequestBody MemberRequestDto memberRequestDto) {
-        Map<String, String> result = new HashMap<>();
-
-        Map<String, String> response = new HashMap<>();
-//        JSONObject response = new JSONObject();
-        result = memberService.createMember(memberRequestDto);
+    public Map join(@RequestBody MemberRequestDto memberRequestDto) {
+        JSONObject response = new JSONObject();
+        Map<String, String> result = memberService.createMember(memberRequestDto);
 
         response.put("join", result.get("status"));
         if (result.containsKey("message")) {
             response.put("message", result.get("message"));
         }
-        return response;
+
+        return response.toMap();
     }
 //        try {
 //            //이메일 중복 여부 검사
