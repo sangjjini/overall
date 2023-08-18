@@ -64,7 +64,6 @@ public class MemberService {
             result.put("status", "error");
             result.put("message", "멤버를 생성하는 동안 오류가 발생했습니다");
         }
-
         return result;
     }
 //        Member existingMember = memberRepository.findByEmail(memberRequestDto.getEmail());
