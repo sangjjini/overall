@@ -56,7 +56,7 @@
                     <div class="input-control_nickname">
                         <label class="label" for="nickName">닉네임</label>
                         <div class="input_and_button">
-                            <input id="nickName" name="nickName" type="text" maxlength="8" placeholder="최소 2자리 이상 8자리 이하 한글, 영문, 숫자">
+                            <input id="nickName" name="nickname" type="text" maxlength="8" placeholder="최소 2자리 이상 8자리 이하 한글, 영문, 숫자">
                             <button id="dup_btn" type="button" value="중복확인" class="dup" onclick="nickDuplChk()">중복 확인</button>
                         </div>
                         <small class="small hint" id="hint_nickName">최소 2자리 이상 8자리 이하 한글, 영문, 숫자만 입력해야 합니다</small>
