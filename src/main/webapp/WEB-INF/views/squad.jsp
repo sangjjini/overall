@@ -73,7 +73,7 @@
             <div class="center_line"></div>
 
             <div class="right_area">
-                <div class="formation">포메이션</div>
+                <div class="formation">포메이션 1-2-1</div>
                 <div class="contents_right">
                     <div id="select_box">
                         <div class="popup_area">
@@ -85,36 +85,49 @@
                         </div>
                     </div>
                     <div class="position_area">
-                        <button class="position_add" id="A">+</button>
-                        <div id="sel_A"></div>
+                        <div class="area_img">
+                            <button class="position_add" id="A">+</button>
+                            <div id="sel_A" class="sel_area"></div>
+                        </div>
                     </div>
                     <div class="position_row">
                         <div class="position_area">
-                            <button class="position_add" id="B">+</button>
-                            <div id="sel_B"></div>
+                            <div class="area_img">
+                                <button class="position_add" id="B">+</button>
+                                <div id="sel_B" class="sel_area"></div>
+                            </div>
                         </div>
                         <div class="position_area">
-                            <button class="position_add" id="C">+</button>
-                            <div id="sel_C"></div>
+                            <div class="area_img">
+                                <button class="position_add" id="C">+</button>
+                                <div id="sel_C" class="sel_area"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="position_area">
-                        <button class="position_add" id="D">+</button>
-                        <div id="sel_D"></div>
+                        <div class="area_img">
+                            <button class="position_add" id="D">+</button>
+                            <div id="sel_D" class="sel_area"></div>
+                        </div>
                     </div>
                     <div class="position_area">
-                        <button class="position_add" id="E">+</button>
-                        <div id="sel_E"></div>
+                        <div class="area_img">
+                            <button class="position_add" id="E">+</button>
+                            <div id="sel_E" class="sel_area"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="contents_bottom">
-            <div id="chat"></div>
-            <div>
-                <input type="text" id="chatting" placeholder="내용">
-                <button onclick="send()">전송</button>
+            <div class="chat_title">스쿼드 대화</div>
+            <div class="chat_area">
+                <div id="chat"></div>
+                <div class="send_area">
+                    <input type="text" id="chatting" placeholder="내용을 입력하세요">
+                    <button onclick="send()" class="send_btn">전송</button>
+                </div>
             </div>
         </div>
     </div>

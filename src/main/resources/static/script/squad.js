@@ -195,15 +195,21 @@ function chat(){
             if(chat.email === email){
                 $('#chat').append(
                     `<div class="myChat" id="${chat.no}">
-                        <div>${chat.nickname}</div>
-                        <div>${chat.contents}</div>
+                        <div class="chat_name">${chat.nickname}</div>
+                        <div class="chat_contents">
+                            <div class="chat_date">${chat.createdAt}</div>
+                            ${chat.contents}
+                        </div>
                     </div><br>`
                 );
             } else {
                 $('#chat').append(
                     `<div class="otherChat" id="${chat.no}">
-                        <div>${chat.nickname}</div>
-                        <div>${chat.contents}</div>
+                        <div class="chat_name">${chat.nickname}</div>
+                        <div class="chat_contents">
+                            ${chat.contents}
+                            <div class="chat_date">${chat.createdAt}</div>
+                        </div>
                     </div><br>`
                 );
             }
@@ -298,7 +304,11 @@ function get_position(){
                 $('#'+positions[i]).hide();
                 $('#sel_'+positions[i]).empty();
                 $('#sel_'+positions[i]).append(
-                    `${response.nickname}<button onclick="delete_pos(this.id, this.name)" id="${response.code}" name="${positions[i]}">X</button>`
+                    `<div class="pos_text">
+                        ${response.nickname}
+                    </div>
+                    <button onclick="delete_pos(this.id, this.name)" id="${response.code}"
+                     name="${positions[i]}" class="cancel_btn pos_delete">X</button>`
                 );
             }
         })
