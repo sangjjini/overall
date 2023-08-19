@@ -38,12 +38,12 @@ function loginChk() {
             console.log("성공");
             alert('로그인이 완료되었습니다.');
             window.location.href='/';
-            // if(response.result === "loginTrue"){
-            //     alert('로그인이 완료되었습니다.');
-            //     window.location.href='/';
-            // }else if(response.result === "noUser"){
-            //     alert('유저정보가 존재하지 않습니다.');
-            // }
+            if(response.result === "loginTrue"){
+                alert('로그인이 완료되었습니다.');
+                window.location.href='/';
+            }else if(response.result === "noUser"){
+                alert('유저정보가 존재하지 않습니다.');
+            }
         },
         error: function (request, status, error) {
             console.log("code: " + request.status)
