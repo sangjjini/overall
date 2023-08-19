@@ -42,6 +42,7 @@ public class MemberController {
         return member;
     }
 
+
 //    @PostMapping("/join")
 //    public Map join(@RequestBody MemberRequestDto memberDto) {
 //        JSONObject response = new JSONObject();

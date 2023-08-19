@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
     <link type="text/css" href="/css/header.css" rel="stylesheet" />
+    <script src="/script/header.js"></script>
 </head>
 <body>
 <header id = "header">
@@ -19,11 +20,19 @@
             <div class="nav_list"><a href="squad/match">스쿼드매치</a></div>
         </div>
     </div>
-    <div class="mypage_wrap">
-        <div class="mypage"><a href="/mypage">마이페이지</a></div>
-    </div>
-    <div class="login_wrap">
-        <div class="login"><a href="/login">로그인</a></div>
+    <div class="nav_right">
+    <c:choose>
+        <c:when test="${empty log}">
+            <div class="login_wrap">
+                <div class="login"><a href="/login">로그인</a></div>
+            </div>
+        </c:when>
+        <c:otherwise>
+                <div class="mypage_wrap">
+                    <div class="mypage"><a href="/mypage">마이페이지</a></div>
+                </div>
+        </c:otherwise>
+    </c:choose>
     </div>
 </header>
 </body>
