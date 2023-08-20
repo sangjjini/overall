@@ -8,3 +8,11 @@
 //         $('#header .login_wrap').removeClass('logined');
 //     }
 // })
+function logout(){
+    $.ajax({
+        url:"logout",
+        type:"post"
+    }).done(function (){
+        location.href = "/";
+    });
+}

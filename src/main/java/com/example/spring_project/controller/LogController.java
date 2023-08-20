@@ -74,13 +74,12 @@ public class LogController {
 
     // 사용자의 로그아웃을 처리하고 세션에서 "log" 속성을 삭제한 후 메인페이지로 리다이렉트.
     @PostMapping("logout")
-    public String logout(HttpSession session, SessionStatus status){
-        session.invalidate(); // 세션 무효화로 로그아웃 처리
+    public void logout(WebRequest request, SessionStatus status){
+//        session.invalidate(); // 세션 무효화로 로그아웃 처리
         //우선 호출 후
         status.setComplete(); // 현재 세션 상태를 완료로 변경하여 세션 데이터 제거
         //세션 속성을 수정
-//        request.removeAttribute("log", WebRequest.SCOPE_SESSION); // "log" 세션 속성 제거
-        return "redirect:/"; // 메인페이지로 리다이렉트
+        request.removeAttribute("log", WebRequest.SCOPE_SESSION); // "log" 세션 속성 제거
     }
 
 //    @GetMapping("/")

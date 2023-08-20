@@ -54,14 +54,15 @@
                                 <input type="text" id="email">
                                 <button onclick="invite()" class="small_btn">초대</button>
                             </div>
-                            <div id="inviting" class="list_area"></div>
+                            <div id="inviting" class="list_area">
+                                <input type="hidden" class="error_name" id="invite_error">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="contents_member">
                     <div class="list_pos small_title">포지션</div>
                     <div class="list_name small_title">이름</div>
-                    <div class="list_out small_title">방출</div>
                 </div>
                 <div id="invited"></div>
                 <div class="contents_list">

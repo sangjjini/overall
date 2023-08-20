@@ -8,7 +8,7 @@ $(window).on('load', function (){
     invited();
     // 실시간 적용 필요
     chat();
-    read();
+    // read();
     get_position();
     member_list();
 });
@@ -56,10 +56,8 @@ function invited(){
                     invited.append(
                         `<div class="contents_member">
                             <div class="list_pos"></div>
-                            <div class="list_name">${members.nickname}</div>
-                            <div class="list_out">
-                                <button onClick="out(this.id)" id="${members.code}" class="out_btn">방출</button>
-                            </div>
+                            <div class="list_name">${members.nickname}
+                            <button onClick="out(this.id)" id="${members.code}" class="out_btn">방출</button></div>
                         </div>`
                     );
                 } else{
@@ -114,16 +112,16 @@ function invite(){
         }).done(function (response){
             const result = Object.values(response)[0];
             if(result === "fail"){
-                alert("존재하지 않는 회원입니다.");
+                $('#invite_error').val("존재하지 않는 회원입니다.");
             }else if(result === "already"){
-                alert("이미 가입신청이 완료된 회원입니다.");
+                $('#invite_error').val("이미 가입신청이 완료된 회원입니다.");
             }else{
                 $('#email').val('');
-                inviting();
+                invited();
             }
         });
     } else{
-        alert("이메일을 입력해주세요.")
+        $('#invite_error').val("이메일을 입력해주세요.");
     }
 }
 
