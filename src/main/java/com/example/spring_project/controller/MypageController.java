@@ -21,16 +21,16 @@ public class MypageController {
     @GetMapping("mypage/overallList")
     public Overall getOverallAll(WebRequest request) {
 
-//        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "SIUUU@naver.com";
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+//        String log = "SIUUU@naver.com";
         Overall list = overallRepository.findByEmail(log);
         return list;
     }
 
     @GetMapping("mypage/overallList/nickname")
-    public Member GetNickname(){
+    public Member GetNickname(WebRequest request){
 
-        String log = "SIUUU@naver.com";
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         Member member = memberRepository.findByEmail(log);
         return member;
     }

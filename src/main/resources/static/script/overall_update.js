@@ -1,5 +1,5 @@
-// let emailNo = $('#homin').val();
- let emailNo = "SIUUU@naver.com";
+let emailNo = $('#homin').val();
+ // let emailNo = "SIUUU@naver.com";
 
 $(window).on('load', function (){
     $.ajax({
@@ -20,7 +20,6 @@ $(window).on('load', function (){
 
 function overallupdate() {
     const data = {
-        email : emailNo,
         overall : 98,
         speed : $('#speed').val(),
         age : $('#age').val(),
@@ -31,7 +30,7 @@ function overallupdate() {
         pos : $('#pos').val()
     }
     $.ajax({
-        url: "overallUpdate/" + emailNo + "/update",
+        url: "overallUpdate/update",
         type: "post",
         dataType: "json",
         contentType: "application/json",
