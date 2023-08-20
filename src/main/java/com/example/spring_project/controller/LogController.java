@@ -2,13 +2,19 @@ package com.example.spring_project.controller;
 
 import com.example.spring_project.domain.member.Member;
 import com.example.spring_project.domain.member.MemberRepository;
+import com.example.spring_project.domain.member.MemberRequestDto;
 import com.example.spring_project.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 
 @RestController// 현재 클래스를 스프링에서 관리하는 컨트롤러 bean 으로 생성.
@@ -91,5 +97,17 @@ public class LogController {
 //        memberRepository.save(member); // 엔티티 저장
 //    }
 
-
+    @SessionScope
+    @PostMapping("sign_in")
+    public Map sign_in(HttpSession session, @RequestBody MemberRequestDto memberRequestDto){
+        JSONObject response = new JSONObject();
+        Member member = memberRepository.findByEmail(memberRequestDto.getEmail());
+        if(member != null && member.getPassword().equals(memberRequestDto.getPassword())){
+            session.setAttribute("log", member.getEmail());
+            response.put("sign_in", "success");
+        }else{
+            response.put("sign_in", "fail");
+        }
+        return response.toMap();
+    }
 }

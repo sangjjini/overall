@@ -17,6 +17,8 @@
 </head>
 <body>
 <c:import url="header.jsp" />
+    <input id="host" style="display: none">
+    <input id="log" value="${sessionScope.log}" style="display: none">
     <div class="shadow"></div>
     <div class="page_title">
         <h1>스쿼드 메이커</h1>
@@ -34,10 +36,7 @@
                     <label for="contents" class="small_title">스쿼드 소개</label>
                     <textarea id="contents" class="input_area" spellcheck="false"></textarea>
                 </div>
-                <div class="contents_list">
-                    <input type="hidden" id="host">
-                    <button class="squad_edit" onclick="update()">정보 변경</button>
-                </div>
+                <div class="contents_list" id="edit_btn"></div>
                 <div class="contents_list">
                     <div class="squad_member">
                         <div class="small_title">스쿼드 멤버</div>

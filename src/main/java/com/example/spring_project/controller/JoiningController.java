@@ -52,14 +52,32 @@ public class JoiningController {
         }
     }
 
+    @PostMapping("joining/{no}/apply")
+    public Map applyJoining(WebRequest request, @PathVariable long no) {
+        JSONObject response = new JSONObject();
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        // 유저 조회
+        Member member = memberRepository.findByEmail(log);
+        Joining joinCheck = joiningRepository.findByEmailAndSquadNo(log, no);
+        // 이미 초대되었는지 확인
+        if(joinCheck != null){
+            response.put("apply", "already");
+        }else{
+            JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
+            joiningRequestDto.setEmail(log);
+            joiningRequestDto.setSquadNo(no);
+            joiningRequestDto.setState("N");
+            Joining joining = new Joining(joiningRequestDto);
+            joiningRepository.save(joining);
+            response.put("apply", "success");
+        }
+        return response.toMap();
+    }
+
     // 매핑 : squad/8/invite?email=test
     @PostMapping("joining/{no}/invite")
-    public Map inviteJoining(@PathVariable long no, @RequestParam(required = false) String email) {
+    public Map inviteJoining(@PathVariable long no, @RequestParam String email) {
         JSONObject response = new JSONObject();
-        if(email == null || email.isEmpty()){
-            //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-            email = "kevin@gmail.com";
-        }
         JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
         // 유저 조회
         Member member = memberRepository.findByEmail(email);
@@ -71,7 +89,7 @@ public class JoiningController {
             }else{
                 joiningRequestDto.setEmail(email);
                 joiningRequestDto.setSquadNo(no);
-                joiningRequestDto.setState("N");
+                joiningRequestDto.setState("Y");
                 Joining joining = new Joining(joiningRequestDto);
                 joiningRepository.save(joining);
                 response.put("invite", "success");
@@ -83,7 +101,7 @@ public class JoiningController {
     }
 
     @PostMapping("joining/{no}/accept")
-    public void acceptJoining(@PathVariable long no, @RequestParam long code) {
+    public void acceptJoining(@PathVariable long no, @RequestParam(required = false) long code) {
         String email = memberRepository.findByCode(code).getEmail();
         Joining joining = joiningRepository.findByEmailAndSquadNo(email, no);
         JoiningRequestDto joiningRequestDto = new JoiningRequestDto(joining);
@@ -126,8 +144,7 @@ public class JoiningController {
 
     @PostMapping("joining/{no}/read")
     public void readAlarm(WebRequest request, @PathVariable long no){
-        //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "kevin@gmail.com";
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         Joining joining = joiningRepository.findByEmailAndSquadNo(log, no);
         JoiningRequestDto joiningRequestDto = new JoiningRequestDto(joining);
         joiningRequestDto.setAlarm(chatRepository.countBySquadNo(no));
