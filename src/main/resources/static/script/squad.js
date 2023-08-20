@@ -12,6 +12,8 @@ $(window).on('load', function (){
     member_list();
 });
 
+let name_squad;
+let contents_squad;
 function squad(){
     $.ajax({
         url: "squad/" + squadNo,
@@ -20,6 +22,8 @@ function squad(){
         $('#name').val(response.name);
         $('#contents').val(response.contents);
         $('#host').val(response.host);
+        name_squad = response.name;
+        contents_squad = response.contents;
     });
 }
 
@@ -75,9 +79,11 @@ function inviting(){
         response.forEach(members => {
             $('#inviting').append(
                 `<div id="${members.code}" class="inviting_list">
-                    ${members.nickname}(${members.email})
-                    <button onclick="refuse(this.id)" id="${members.code}" class="answer_btn refuse_btn">X</button>
-                    <button onclick="accept(this.id)" id="${members.code}" class="answer_btn accept_btn">V</button>
+                    - ${members.nickname}(${members.email})
+                    <button onclick="refuse(this.id)" id="${members.code}" 
+                    class="answer_btn refuse_btn">X</button>
+                    <button onclick="accept(this.id)" id="${members.code}" 
+                    class="answer_btn accept_btn">V</button>
                 </div>`
             );
         });
@@ -143,25 +149,39 @@ function out(id){
 }
 
 function update(){
-    const data = {
-        no : squadNo,
-        host : "kevin@gmail.com",
-        name : $('#name').val(),
-        contents : $('#contents').val()};
-    $.ajax({
-        url: "squad/"+squadNo+"/update",
-        type: "post",
-        dataType: "json",
-        contentType : "application/json",
-        data: JSON.stringify(data)
-    }).done(function (response){
-        const result = Object.values(response)[0];
-        if(result === "success"){
-            alert("변경 완료");
-        } else {
-            alert("중복된 스쿼드 이름입니다.");
+    const name = $('#name').val();
+    const contents = $('#contents').val();
+    const error = $('.error_name');
+    if(name === ""){
+        error.val("스쿼드 이름을 입력해주세요.");
+        error.show();
+    }else{
+        if(name_squad === name && contents_squad === contents){
+            alert("변경된 내용이 없습니다.");
+        }else{
+            const data = {
+                no : squadNo,
+                name : name,
+                contents : contents
+            };
+            $.ajax({
+                url: "squad/"+squadNo+"/update",
+                type: "post",
+                dataType: "json",
+                contentType : "application/json",
+                data: JSON.stringify(data)
+            }).done(function (response){
+                const result = Object.values(response)[0];
+                if(result === "success"){
+                    alert("변경이 완료되었습니다.");
+                    error.hide();
+                } else {
+                    error.val("중복된 스쿼드 이름입니다.");
+                    error.show();
+                }
+            });
         }
-    });
+    }
 }
 
 function chat(){
@@ -175,15 +195,21 @@ function chat(){
             if(chat.email === email){
                 $('#chat').append(
                     `<div class="myChat" id="${chat.no}">
-                        <div>${chat.nickname}</div>
-                        <div>${chat.contents}</div>
+                        <div class="chat_name">${chat.nickname}</div>
+                        <div class="chat_contents">
+                            <div class="chat_date">${chat.createdAt}</div>
+                            ${chat.contents}
+                        </div>
                     </div><br>`
                 );
             } else {
                 $('#chat').append(
                     `<div class="otherChat" id="${chat.no}">
-                        <div>${chat.nickname}</div>
-                        <div>${chat.contents}</div>
+                        <div class="chat_name">${chat.nickname}</div>
+                        <div class="chat_contents">
+                            ${chat.contents}
+                            <div class="chat_date">${chat.createdAt}</div>
+                        </div>
                     </div><br>`
                 );
             }
@@ -217,10 +243,13 @@ let position;
 $('.position_add').click(function (){
     position = $(this).attr("id");
     $('#select_box').show();
+    $('.shadow').show();
+    close_invite();
 })
 
 function close_select(){
     $('#select_box').hide();
+    $('.shadow').hide();
 }
 
 function member_list(){
@@ -231,8 +260,9 @@ function member_list(){
         $('#member_list').empty();
         response.forEach(members => {
             $('#member_list').append(
-                `<div>
-                    ${members.nickname}<button onclick="change_pos(this.id)" id="${members.code}">V</button>
+                `<div class="inviting_list">
+                    ${members.nickname}<button onclick="change_pos(this.id)" 
+                    id="${members.code}" class="answer_btn accept_btn">V</button>
                 </div>`
             );
         });
@@ -274,7 +304,11 @@ function get_position(){
                 $('#'+positions[i]).hide();
                 $('#sel_'+positions[i]).empty();
                 $('#sel_'+positions[i]).append(
-                    `${response.nickname}<button onclick="delete_pos(this.id, this.name)" id="${response.code}" name="${positions[i]}">X</button>`
+                    `<div class="pos_text">
+                        ${response.nickname}
+                    </div>
+                    <button onclick="delete_pos(this.id, this.name)" id="${response.code}"
+                     name="${positions[i]}" class="cancel_btn pos_delete">X</button>`
                 );
             }
         })

@@ -72,12 +72,20 @@ public class SquadController {
     @PostMapping("squad/{no}/update")
     public Map updateSquad(@PathVariable long no, @RequestBody SquadRequestDto squadRequestDto) {
         JSONObject response = new JSONObject();
-        // 스쿼드 이름 중복 검사
-        if(squadRepository.findByName(squadRequestDto.getName()) == null){
+        Squad squad = squadRepository.findByNo(squadRequestDto.getNo());
+        squadRequestDto.setHost(squad.getHost());
+        // 스쿼드의 내용만 바꿨을 경우
+        if((squad.getName()).equals(squadRequestDto.getName())){
             squadService.updateSquad(no, squadRequestDto);
             response.put("update", "success");
-        } else{
-            response.put("update", "fail");
+        }else{
+            // 스쿼드 이름 중복 검사
+            if(squadRepository.findByName(squadRequestDto.getName()) == null){
+                squadService.updateSquad(no, squadRequestDto);
+                response.put("update", "success");
+            } else{
+                response.put("update", "fail");
+            }
         }
         return response.toMap();
     }

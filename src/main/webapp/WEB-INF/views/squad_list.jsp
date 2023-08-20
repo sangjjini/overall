@@ -27,7 +27,7 @@
                 <button onclick="show_make()" class="make_btn">스쿼드 만들기</button>
                 <div id="show_make">
                     <input type="text" id="squad_name" placeholder="스쿼드 이름">
-                    <input class="error_name">
+                    <input class="error_name" readonly>
                     <div class="sub_section">
                         <button onclick="squadMake()" class="enter_btn make_sub">만들기</button>
                         <button onclick="close_make()" class="cancel_btn make_sub">취소</button>
