@@ -5,11 +5,9 @@ $(window).on('load', function (){
     const urlParams = new URL(location.href).searchParams;
     squadNo = urlParams.get('no');
     squad();
-    invited();
     // 실시간 적용 필요
     chat();
     // read();
-    get_position();
     member_list();
 });
 
@@ -33,6 +31,7 @@ function squad(){
              <button class="squad_edit" onclick="update()">정보 변경</button>`
             );
         }
+        invited();
     });
 }
 
@@ -47,7 +46,9 @@ function invited(){
             if(members.email === host){
                 invited.append(
                     `<div class="contents_member">
-                        <div class="list_pos"></div>
+                        <div class="list_pos">
+                            <input type="text" class="pos_input" id="pos_${members.code}" readonly>
+                        </div>
                         <div class="list_name">${members.nickname}(방장)</div>
                     </div>`
                 );
@@ -55,7 +56,9 @@ function invited(){
                 if(log === host){
                     invited.append(
                         `<div class="contents_member">
-                            <div class="list_pos"></div>
+                            <div class="list_pos">
+                                <input type="text" class="pos_input" id="pos_${members.code}" readonly>
+                            </div>
                             <div class="list_name">${members.nickname}
                             <button onClick="out(this.id)" id="${members.code}" class="out_btn">방출</button></div>
                         </div>`
@@ -63,13 +66,16 @@ function invited(){
                 } else{
                     invited.append(
                         `<div class="contents_member">
-                            <div class="list_pos"></div>
+                            <div class="list_pos">
+                                <input type="text" class="pos_input" id="pos_${members.code}" readonly>
+                            </div>
                             <div class="list_name">${members.nickname}</div>
                         </div>`
                     );
                 }
             }
         });
+        get_position();
     });
 }
 
@@ -81,6 +87,7 @@ function show_invite(){
 function close_invite(){
     $('#email').val("");
     $('#invite_list').hide();
+    $('#error_invite').hide();
 }
 
 function inviting(){
@@ -105,6 +112,7 @@ function inviting(){
 
 function invite(){
     let email = $('#email').val();
+    const error = $('#error_invite');
     if(email !== ""){
         $.ajax({
             url: "joining/" + squadNo + "/invite?email=" + email,
@@ -112,16 +120,21 @@ function invite(){
         }).done(function (response){
             const result = Object.values(response)[0];
             if(result === "fail"){
-                $('#invite_error').val("존재하지 않는 회원입니다.");
+                error.val("존재하지 않는 회원입니다.");
+                error.show();
             }else if(result === "already"){
-                $('#invite_error').val("이미 가입신청이 완료된 회원입니다.");
+                error.val("이미 가입신청이 완료된 회원입니다.");
+                error.show();
             }else{
-                $('#email').val('');
+                error.hide();
+                $('#email').val("");
                 invited();
+                alert("초대가 완료되었습니다.");
             }
         });
     } else{
-        $('#invite_error').val("이메일을 입력해주세요.");
+        error.val("이메일을 입력해주세요.");
+        error.show();
     }
 }
 
@@ -166,15 +179,16 @@ function out(id){
 }
 
 function update(){
-    const name = $('#name').val();
-    const contents = $('#contents').val();
-    const error = $('.error_name');
+    let name = $('#name').val();
+    let contents = $('#contents').val();
+    const error = $('#error_name');
     if(name === ""){
         error.val("스쿼드 이름을 입력해주세요.");
         error.show();
     }else{
         if(name_squad === name && contents_squad === contents){
-            alert("변경된 내용이 없습니다.");
+            error.val("변경된 내용이 없습니다.");
+            error.show();
         }else{
             const data = {
                 no : squadNo,
@@ -192,6 +206,8 @@ function update(){
                 if(result === "success"){
                     alert("변경이 완료되었습니다.");
                     error.hide();
+                    name_squad = $('#name').val();
+                    contents_squad = $('#contents').val();
                 } else {
                     error.val("중복된 스쿼드 이름입니다.");
                     error.show();
@@ -295,6 +311,8 @@ function change_pos(code){
         for(let i=0; i<positions.length; i++){
             $('#'+positions[i]).show();
             $('#sel_'+positions[i]).empty();
+            $('#area_'+positions[i]).css("background-image", "url(../images/pos_area.png)");
+            $('#pos_'+code).val("");
         }
         get_position();
     });
@@ -307,6 +325,8 @@ function delete_pos(code, pos){
     }).done(function (){
         $('#sel_'+pos).empty();
         $('#'+pos).show();
+        $('#area_'+pos).css("background-image", "url(../images/pos_area.png)");
+        $('#pos_'+code).val("");
     });
 }
 
@@ -323,10 +343,22 @@ function get_position(){
                 sel_pos.append(
                     `<div class="pos_text">
                         ${response.nickname}
-                    </div>
+                     </div>
                     <button onclick="delete_pos(this.id, this.name)" id="${response.code}"
                      name="${positions[i]}" class="cancel_btn pos_delete">X</button>`
                 );
+                $('#area_'+positions[i]).css("background-image", "url(../images/sel_area.png)");
+                let pos_name = "";
+                if(positions[i] === "A"){
+                    pos_name = "PIVO";
+                }else if(positions[i] === "B" || positions[i] === "C"){
+                    pos_name = "ALA";
+                }else if(positions[i] === "D"){
+                    pos_name = "FIXO";
+                }else if(positions[i] === "E"){
+                    pos_name = "GOLEIRO";
+                }
+                $('#pos_'+response.code).val(pos_name);
             }
         })
     }
