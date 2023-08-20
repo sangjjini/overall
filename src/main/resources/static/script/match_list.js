@@ -97,7 +97,7 @@ function all_match(){
 
             if(now <= date) {
                 $('#lines').append(
-                    `<div class="bar" onclick="readMatch(this)">   
+                    `<div class="bar">   
                         <input type="hidden" id="bar_no" value="${match.no}">                 
                         <div class="bar_date">` + date + ` ` + startAt + ` ~ ` + endAt + `</div>
                         <div class="bar_title">${match.title}</div>

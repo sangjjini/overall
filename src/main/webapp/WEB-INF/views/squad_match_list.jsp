@@ -53,7 +53,7 @@
                 <div class="bar_date">일정</div>
                 <div class="bar_title">제목</div>
                 <div class="bar_content">소개</div>
-                <div class="bar_join">가입 신청</div>
+                <div class="bar_join">참가 신청</div>
             </div>
             <div id="lines"></div>
         </div>

@@ -20,7 +20,8 @@
     <div class="page_title">
         <h1>매치 생성</h1>
         <p></p>
-        <input type="hidden" id="log" value="kevin@gmail.com">
+        <input type="hidden" id="log" value="neymar@gmail.com">
+<%--        <input type="hidden" id="log" value="kevin@gmail.com">--%>
     </div>
     <div class="contents">
         <div class="content">
@@ -37,7 +38,6 @@
                 <div class="contents_list">
                     <label for="author" class="small_title">방장</label>
                     <input type="text" id="author" class="input_area" readonly>
-
                 </div>
                 <div class="contents_list squad">
                     <label for="squadA" class="small_title">A팀</label>
@@ -51,8 +51,10 @@
                 </div>
                 <div class="contents_list">
                     <input type="hidden" id="host">
-                    <button class="squad_edit" onclick="updateMatch()">정보 변경</button>
-                    <button class="squad_edit" onclick="deleteMatch()">매치 삭제</button>
+                    <button class="squad_edit" id="update_btn" onclick="updateMatch()"></button>
+                </div>
+                <div class="contents_list">
+                    <button class="squad_edit" id="delete_btn" onclick="deleteMatch()">매치 삭제</button>
                 </div>
                 <div class="contents_list"></div>
             </div>

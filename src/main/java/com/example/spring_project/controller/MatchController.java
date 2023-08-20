@@ -153,19 +153,21 @@ public class MatchController {
     }
 
     @PutMapping(value = "{no}/update")
-    public Response update(@PathVariable long no, @RequestBody MatchRequestDto dto, WebRequest request){
+    public Map update(@PathVariable long no, @RequestBody MatchRequestDto dto, WebRequest request){
+        JSONObject response = new JSONObject();
         //String log = (String)request.getAttribute("log", WebRequest.SCOPE_SESSION);
         //if(log.equals(dto.getAuthor())){
             try {
                 matchService.updateMatch(no, dto);
-                return new Response("update", "success");
+                response.put("update", "success");
             } catch (Exception e){
                 e.printStackTrace();
-                return new Response("update", "fail");
+                response.put("update", "fail");
             }
 //        }else{
-//            return new Response("update", "작성자만 수정할 수 있습니다.");
+//            response.put("update", "fail");
 //        }
+        return response.toMap();
     }
 
 
