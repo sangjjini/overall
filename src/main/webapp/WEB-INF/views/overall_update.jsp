@@ -14,10 +14,11 @@
     <link type="text/css" href="/css/reset.css" rel="stylesheet" />
     <link type="text/css" href="/css/overall_update.css" rel="stylesheet" />
     <link rel="shortcut icon" href="/images/favicon.ico">
-    <script src="/script/mypage.js"></script>
+    <script src="/script/overall_update.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
+<input type="hidden" id="homin" value="${log}">
 <div class="wrap">
     <div class="contents">
         <div class="contents_menu">
@@ -31,44 +32,38 @@
                 <div class="update_contents_wrap">
                     <div class="update_contents">
                         <div class="txt">당신은 50m달리기가 몇초입니까?</div>
-                        <input type="text">
+                        <input type="text" id="speed">
                     </div>
                     <div class="update_contents">
                         <div class="txt">나이를 입력해주세요</div>
-                        <input type="text">
+                        <input type="text" id="age">
                     </div>
                     <div class="update_contents">
                         <div class="txt">키를 입력해주세요</div>
-                        <input type="text">
+                        <input type="text" id="height">
                     </div>
                     <div class="update_contents">
                         <div class="txt">몸무게를 입력해주세요</div>
-                        <input type="text">
-                    </div>
-                    <div class="update_contents">
-                        <div class="txt">몸무게를 입력해주세요</div>
-                        <input type="text">
+                        <input type="text" id="weight">
                     </div>
                     <div class="update_contents">
                         <div class="txt">당신의 발 숙련도를 입력해주세요</div>
-                        <input type="text">
-                        <input type="text">
+                        <input type="text" id="rightfoot">
+                        <input type="text" id="leftfoot">
                     </div>
-                    <div class="update_contents">
-                        <div class="txt">당신의 플레이스타일은?</div>
-                        <select>
-                            <option value="메짤라">메짤라</option>
-                        </select>
-                    </div>
+<%--                    <div class="update_contents">--%>
+<%--                        <div class="txt">당신의 플레이스타일은?</div>--%>
+<%--                        <select>--%>
+<%--                            <option value="메짤라">메짤라</option>--%>
+<%--                        </select>--%>
+<%--                    </div>--%>
                     <div class="update_contents">
                         <div class="txt">당신의 포지션은 어디입니까</div>
-                        <select>
-                            <option value="CF">CF</option>
-                        </select>
+                            <input type="text" id="pos">
                     </div>
                     <div class="update_contents">
                     <div class="button">
-                        <input type="submit" value="완료">
+                        <input onclick="overallupdate()" type="button" value="완료">
                     </div>
 
                     </div>

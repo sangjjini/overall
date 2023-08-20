@@ -3,16 +3,18 @@ package com.example.spring_project.domain.member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
+@Setter
 @NoArgsConstructor // 기본생성자 - 파라미터X
 @AllArgsConstructor // 기본생성자 - 파라미터O
 @Table(name="member")
 @Entity
 public class Member {
-    @Id
+    @Id // pk지정
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long code;
     @Column(unique = true)
@@ -54,5 +56,4 @@ public class Member {
         this.province = requestDto.getProvince();
         this.city = requestDto.getCity();
     }
-
 }

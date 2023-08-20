@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('#login').on('keyup', function(key){
-        if(key.keyCode===13){
+        if(key.keyCode==13){
             loginChk();
         }
     })
@@ -9,20 +9,20 @@ $(document).ready(function(){
 
 // 유효성 검사 메서드
 function loginChk() {
-    const id = $('#email').val();
-    const password = $('#password').val();
-    let check = true;
+    var id = $('#id').val();
+    var password = $('#password').val();
 
     // 아이디 공백 확인
     if (id === "") {
         alert("아이디를 입력해 주세요");
         $("#id").focus();
-        check = false;
+        return false;
     }
 
     // 비밀번호 유효성 검사
     else if (password === "") {
         alert("비밀번호를 입력해주세요.");
+
         $("#password").focus();
         check = false;
     }

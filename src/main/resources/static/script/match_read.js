@@ -100,17 +100,18 @@ $(document).ready(function(){
                 $('#match_btn').attr({value:"신청 하기"});
                 $('#match_btn').attr({onclick:"mySquadListModal()"});
 
-                let match_btn = document.getElementById('match_btn');
-                let modalCloseButton = document.getElementById('modalCloseButton');
-                let modal = document.getElementById('applyContainer')
-                console.log("match_btn : " + match_btn)
-                console.log("modalCloseButton : " + modalCloseButton)
-                match_btn.addEventListener('click', () => {
-                    modal.classList.remove('hidden');
-                });
-                modalCloseButton.addEventListener('click', () => {
-                    modal.classList.add('hidden');
-                });
+                // let match_btn = document.getElementById('match_btn');
+                // let modalCloseButton = document.getElementById('modalCloseButton');
+                // let modal = document.getElementById('applyContainer')
+                // console.log("match_btn : " + match_btn)
+                // console.log("modalCloseButton : " + modalCloseButton)
+                // match_btn.addEventListener('click', () => {
+                //     modal.classList.remove('hidden');
+                // });
+                // modalCloseButton.addEventListener('click', () => {
+                //     modal.classList.add('hidden');
+                // });
+
             }else if(deadline === '경기 준비중' && squadB_host === log){
                 console.log(squadB_host)
                 console.log(log)
