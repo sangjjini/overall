@@ -36,52 +36,83 @@ public class MatchController {
     private final MemberRepository memberRepository;
     private final JoiningRepository joiningRepository;
 
-    @PostMapping(value="making")
-    public Map making(@RequestBody MatchRequestDto dto, WebRequest request){
+    @PostMapping("make")
+    public Map makeMatch(WebRequest request, @RequestParam String title, @RequestParam String squadA, @RequestParam String startAt, @RequestParam String endAt){
         JSONObject response = new JSONObject();
-//        Squad squadA = squadRepository.findByName(dto.getSquadA());
-//        Squad squadB = squadRepository.findByName(dto.getSquadB());
-        //String log = (String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
+//        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        String log = "kevin@gmail.com";
+        MatchRequestDto matchRequestDto = new MatchRequestDto();
+        matchRequestDto.setTitle(title);
+        matchRequestDto.setContents("재밌게 풋살하실 분들 찾습니다!");
+        matchRequestDto.setAuthor(log);
+        matchRequestDto.setSquadA(squadA);
+        matchRequestDto.setStartAt(startAt);
+        matchRequestDto.setEndAt(endAt);
+        matchRequestDto.setMaking(log);
+        matchRequestDto.setDeadline('0');
 
-//        if(squadA == null || squadB == null) {
-//            response.put("making","fail");
-//            return response.toMap();
-//        }
-        System.out.println("st : " + dto.getStartAt());
-        System.out.println("et : " + dto.getEndAt());
-        try {
-            if(dto.getSquadA().equals("") && dto.getSquadB().equals("")) {
-                dto.setDeadline('1');
-            }else {
-                dto.setDeadline('0');
-            }
-
-            if(dto.getSquadB().equals("")){
-                dto.setSquadB(null);
-            }
-
-            //dto.setAuthor(log);
-            dto.setMaking(dto.getSquadA());
-            Squad squad = squadRepository.findByName(dto.getMaking());
-            if(squad != null) {
-                // match 생성
-                Match match = new Match(dto);
-                matchRepository.save(match);
-
-                //matching 생성
-                Matching matching = new Matching(squad, match);
-                matchingRepository.save(matching);
-                dto.setMaking(null);
-                response.put("making", "success");
-            }else{
-                response.put("making","존재하지 않는 스쿼드입니다.");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            response.put("making","fail");
-        }
+        Match match = new Match(matchRequestDto);
+        matchRepository.save(match);
+        List<Match> matchSave = matchRepository.findAllByMaking(log);
+        int cnt = matchSave.size();
+        System.out.println(cnt);
+        response.put("make", matchSave.get(cnt-1).getNo());
         return response.toMap();
     }
+    @GetMapping("my")
+    public List<Match> getMyMatch(){
+//        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        String log = "kevin@gmail.com";
+//        String log = "neymar@gmail.com";
+        List<Match> matchList = matchRepository.findAllByAuthor(log);
+        return matchList;
+    }
+//    @PostMapping(value="making")
+//    public Map making(@RequestBody MatchRequestDto dto, WebRequest request, @RequestParam String name){
+//        JSONObject response = new JSONObject();
+////        Squad squadA = squadRepository.findByName(dto.getSquadA());
+////        Squad squadB = squadRepository.findByName(dto.getSquadB());
+//        //String log = (String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
+//
+////        if(squadA == null || squadB == null) {
+////            response.put("making","fail");
+////            return response.toMap();
+////        }
+//        System.out.println("st : " + dto.getStartAt());
+//        System.out.println("et : " + dto.getEndAt());
+//        try {
+//            if(dto.getSquadA().equals("") && dto.getSquadB().equals("")) {
+//                dto.setDeadline('1');
+//            }else {
+//                dto.setDeadline('0');
+//            }
+//
+//            if(dto.getSquadB().equals("")){
+//                dto.setSquadB(null);
+//            }
+//
+//            //dto.setAuthor(log);
+//            dto.setMaking(dto.getSquadA());
+//            Squad squad = squadRepository.findByName(dto.getMaking());
+//            if(squad != null) {
+//                // match 생성
+//                Match match = new Match(dto);
+//                matchRepository.save(match);
+//
+//                //matching 생성
+//                Matching matching = new Matching(squad, match);
+//                matchingRepository.save(matching);
+//                dto.setMaking(null);
+//                response.put("making", "success");
+//            }else{
+//                response.put("making","존재하지 않는 스쿼드입니다.");
+//            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            response.put("making","fail");
+//        }
+//        return response.toMap();
+//    }
 
     @GetMapping("list")
     public List<Match> getMatchAll(@RequestParam(required = false)String keyword, @PageableDefault(size=3) Pageable pageable){
@@ -94,32 +125,31 @@ public class MatchController {
     }
 
     @GetMapping("{no}")
-    public Map getMatchByNo(@PathVariable long no){
-        JSONObject response = new JSONObject();
-        Match match = matchRepository.getMatchByNo(no);
-        Squad squadA = squadRepository.findByName(match.getSquadA());
-        Squad squadB = squadRepository.findByName(match.getSquadB());
-        Member member = memberRepository.findByEmail(match.getAuthor());
-
-        response.put("title", match.getTitle());
-        response.put("startAt", match.getStartAt());
-        response.put("endAt", match.getEndAt());
-        response.put("author", member.getNickname());
-        response.put("email", member.getEmail());
-        response.put("deadline", match.getDeadline());
-
-        if(squadA != null) {
-            response.put("squadA",squadA.getName());
-            response.put("squadA_logo", squadA.getImageUrl());
-        }
-
-        if(squadB != null){
-            response.put("squadB",squadB.getName());
-            response.put("squadB_logo", squadB.getImageUrl());
-            response.put("squadB_host", squadB.getHost());
-        }
-
-        return response.toMap();
+    public Match getMatchByNo(@PathVariable long no){
+//        JSONObject response = new JSONObject();
+//        Match match = matchRepository.getMatchByNo(no);
+//        Squad squadA = squadRepository.findByName(match.getSquadA());
+//        Squad squadB = squadRepository.findByName(match.getSquadB());
+//        Member member = memberRepository.findByEmail(match.getAuthor());
+//
+//        response.put("title", match.getTitle());
+//        response.put("startAt", match.getStartAt());
+//        response.put("endAt", match.getEndAt());
+//        response.put("author", member.getNickname());
+//        response.put("email", member.getEmail());
+//        response.put("deadline", match.getDeadline());
+//
+//        if(squadA != null) {
+//            response.put("squadA",squadA.getName());
+//            response.put("squadA_logo", squadA.getImageUrl());
+//        }
+//
+//        if(squadB != null){
+//            response.put("squadB",squadB.getName());
+//            response.put("squadB_logo", squadB.getImageUrl());
+//            response.put("squadB_host", squadB.getHost());
+//        }
+        return matchRepository.getMatchByNo(no);
     }
 
     @PutMapping(value = "{no}/update")
@@ -164,20 +194,22 @@ public class MatchController {
 
     // 매치 신청
     @PostMapping("{no}/apply")
-    public Map applyMatch(@PathVariable long no, @RequestBody String squadName){
-        JSONObject response = new JSONObject(squadName);
+    public Map applyMatch(@PathVariable long no, WebRequest request){
+        //String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
+        String log = "neymar@gmail.com";
+        JSONObject response = new JSONObject();
         //String email = response.getString("log");
-        String applySquad = response.getString("applySquad");
-        String host = response.getString("host");
+//        String applySquad = response.getString("applySquad");
+//        String host = response.getString("host");
+        Squad squad = squadRepository.findByHost(log);
         Match match = matchRepository.getMatchByNo(no);
-        System.out.println("applySquad : " + applySquad);
-        System.out.println("host : " + host);
+
 
         if(match.getSquadB() != null){
             response.put("apply", "fail");
         }else {
             MatchRequestDto dto = new MatchRequestDto();
-            dto.setSquadB(applySquad);
+            dto.setSquadB(squad.getName());
             dto.setDeadline('1');
             matchService.updateMatch(no, dto);
             response.put("apply", "success");
@@ -252,10 +284,10 @@ public class MatchController {
 
     @PostMapping("mysquad")
     public List<String> mySquad(@RequestBody MemberRequestDto dto){
-        String email = dto.getEmail();
-        //String email = "neymar@gmail.com";
+        //String email = dto.getEmail();
+        String email = "kevin@gmail.com";
         System.out.println(email);
-        List<Joining> list = joiningRepository.findByEmailAndState(email,"Y");
+        List<Joining> list = joiningRepository.findByEmailAndStateNot(email,"N");
         List<String> mySquadList = new ArrayList<>();
         for(Joining joining : list){
             System.out.println(joining);

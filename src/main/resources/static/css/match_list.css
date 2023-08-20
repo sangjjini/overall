@@ -1,97 +1,168 @@
-.container{
-    margin: 0 auto;
-    width: 80%;
-}
-
-#match_table_wrap{
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-top: 50px;
-    padding-bottom: 30px;
-}
-
-.match_table {
+.page_title{
+    height: 200px;
+    padding-left: 5%;
+    background: #92d5ff;
+    color: white;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    justify-content: center;
+    margin-bottom: 70px;
 }
-
-.match_table ul {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-bottom: 1px solid #282830;
-}
-
-.match_table ul li {
-    font-family: MBC1961GulimM;
-    width: 100%;
-}
-
-.match_table .table_attribute li{
-    text-align: center;
-    font-size: 10px;
-    padding: 5px 0;
-}
-
-.match_table .table_attribute li:first-child {
-    width: 50%;
-}
-
-.match_table .match_content li:first-child {
-    width: 50%;
-}
-
-.match_table .match_content li{
-    text-align: center;
-    font-size: 16px;
-    padding: 30px 0;
+.page_title>h1{
+    font-size: 35px;
+    font-weight: 800;
+    margin-bottom: 20px;
 }
 
 #lines{
     cursor: pointer;
 }
 
-#lines:first-child{
-    border-top: 1px solid #282830;
+.contents{
+    display: flex;
+    padding: 0 5%;
+    height: 100%;
 }
 
-.buttons{
-    /*position: fixed;*/
-    /*display: flex;*/
-    /*justify-content: flex-end;*/
-    position: fixed;
-    display: -webkit-box;
-    display: -ms-flexbox;
+.contents_left{
     display: flex;
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-    width: 80%;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    bottom: 16px;
-    padding-right: 16px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+    flex-direction: column;
+    /*padding: 70px 0;*/
+    width: 300px;
 }
-.buttons > a{
-    display: block;
-    position: relative;
-    background-color: black;
-    width: 48px;
-    height: 48px;
-    border: 1px solid black;
-    border-radius: 50%;
+
+.left_menu{
+    border-top: 10px solid #3e3d55;
+    border-bottom: 1px solid #3e3d55;
+    padding-top: 30px;
+    padding-right: 20px;
+}
+
+.make_btn{
+    border: none;
+    background: #3e3d55;
+    color: white;
+    width: 100%;
+    height: 50px;
+    margin: 0 auto;
     cursor: pointer;
 }
-
-.buttons > a > img{
+#show_make input, #squadA{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    width: 100%;
+    height: 40px;
+    padding-left: 10px;
+    margin-top: 20px;
+}
+.error_title, .error_squadA{
+    display: none;
+    color: red;
+    border: none;
+    padding-left: 10px;
+    margin-top: 10px;
+    outline: none;
+}
+.sub_section{
+    text-align: center;
+    display: flex;
+    margin-top: 20px;
+}
+.make_sub{
+    width: 50%;
+    margin: 0 auto;
+    border: none;
+    background: #3e3d55;
+    color: white;
+    height: 35px;
+    cursor: pointer;
+}
+.enter_btn{
+    background: #25c4f2;
+}
+.cancel_btn{
+    background: #3e3d55;
+}
+#my_match{
+    display: flex;
+    flex-direction: column;
+}
+#my_match>a{
+    margin-top: 30px;
+    padding-left: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#my_match>a:hover{
+    color: blue;
+}
+.contents_right{
+    width: 100%;
+    border-top: 10px solid #3e3d55;
+    /*margin-top: 70px;*/
+}
+#show_make, .hidden{
+    display: none;
+}
+.bar{
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    padding: 0 20px;
+    line-height: 70px;
+    border-bottom: 1px solid lightgray;
+    text-align: center;
+}
+.bar_date{
+    width: 37%;
+}
+.bar_title{
+    width: 15%;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.bar_content{
+    width: 38%;
+    text-align: center;
+    padding-left: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.bar_join{
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.join_btn{
+    border: none;
+    width: 35px;
+    height: 35px;
+    background: #25c7f5;
+    font-size: 20px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#applyContainer {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+#applyContent {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 46%;
-    height: auto;
-    transform: translate(-50%,-50%);
+    background-color: #ffffff;
+    width: 300px;
+    height: 150px;
+    padding: 15px;
 }

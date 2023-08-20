@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,47 +43,31 @@ public class MemberController {
         return member;
     }
 
-
-//    @PostMapping("/join")
-//    public Map join(@RequestBody MemberRequestDto memberDto) {
-//        JSONObject response = new JSONObject();
-//
-//        if (memberRepository.findByEmail(memberDto.getEmail()) == null) { // 기존 멤버를 조회하고, 기존 멤버가 없을 경우에만 새로운 멤버를 생성 후 저장한 후, "join" 값을 "success"로 설정.
-//            Member member = new Member(memberDto);
-//            memberRepository.save(member);
-//            response.put("join", "success");
-//        } else {
-//            response.put("join", "fail");
-//        }
-//
-//        return response.toMap();
-//    }
-
     @PostMapping("/join")
-    public Map join(@RequestBody MemberRequestDto userDto) {
-        JSONObject response = new JSONObject();
-        try {
-            memberService.getMemberByEmail(userDto.getEmail());
-            response.put("join", "fail");
-        } catch(IllegalArgumentException e) {
-            if (!memberService.isNicknameValid(userDto.getNickname())) {
-                response.put("join", "fail");
-                response.put("message","닉네임이 유효하지 않습니다");
-            } else {
-            memberService.createMember(userDto);
-            response.put("join", "success");
+    public Map<String, String> join(@RequestBody MemberRequestDto memberRequestDto) {
+//        JSONObject response = new JSONObject();
+            Map<String, String> response = new HashMap<>(); // 새로운 해쉬맵을 만듬.
+        try{
+            Map<String, String> result = memberService.createMember(memberRequestDto);
+            response.put("join", result.get("status"));
+
+            if (result.containsKey("message")) {
+                response.put("message", result.get("message"));
             }
+        } catch (Exception e) {
+            response.put("join", "error");
+            response.put("message", "요청을 처리하는 동안 오류가 발생했습니다.");
         }
-        return response.toMap();
+        return response;
     }
 
-//    @PostMapping("/emailConfirm")
-//    public String emailConfirm(@RequestParam String email) throws Exception {
-//
-//        String confirm = emailService.sendSimpleMessage(email);
-//
-//        return confirm;
-//    }
+    @PostMapping("/emailConfirm")
+    public String emailConfirm(@RequestParam String email) throws Exception {
+
+        String confirm = emailService.sendSimpleMessage(email);
+
+        return confirm;
+    }
 
     @DeleteMapping("member/{email}/leave")
     public Map leave(@PathVariable String email) {

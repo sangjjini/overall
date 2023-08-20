@@ -16,45 +16,62 @@
     <link rel="shortcut icon" href="/images/favicon.ico">
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="/script/squad_match.js"></script>
 </head>
 <body>
 <c:import url="header.jsp"/>
+    <div class="page_title">
+        <h1>매치 리스트</h1>
+        <p>OVERALL에서 자신의 스쿼드로 풋살매치를 즐기세요</p>
+<%--        <input type="hidden" id="log" value="${log}">        --%>
+        <input type="hidden" id="log" value="neymar@gmail.com">
+    </div>
     <div class="contents">
-        <div class="container">
-            <div class="sub_container">
-                <div id="match_table_wrap">
-                    <ul class="match_table">
-                        <%-- <li class="table_attribute_wrap">
-                            <ul class="table_attribute">
-                                <li>시간</li>
-                                <li>제목</li>
-                                <li>팀명</li>
-                                <li>아아</li>
-                            </ul>
-                        </li> --%>
-                        <li id="lines">
-                        </li>
-                        <li></li>
-                    </ul>
+        <div class="contents_left">
+            <div class="left_menu">
+                <button onclick="show_make()" class="make_btn">매치 만들기</button>
+                <div id="show_make">
+                    <input type="text" id="match_title" placeholder="매치 이름">
+                    <input class="error_title" readonly>
+                    <select name="squads" id="squadA" size="1">
+
+                    </select>
+                    <input class="error_squadA" readonly>
+                    <input type="datetime-local" id="startAt">
+                    <input type="datetime-local" id="endAt">
+                    <input class="error_squadA" readonly>
+                    <div class="sub_section">
+                        <input type="hidden" id="author">
+                        <button onclick="matchMake()" class="enter_btn make_sub">만들기</button>
+                        <button onclick="close_make()" class="cancel_btn make_sub">취소</button>
+                    </div>
                 </div>
-                <div class="buttons">
-                    <c:choose>
-                        <c:when test="${empty log}">
-                            <a href="/squad/match" class="new_match">
-                                <img src="/images/write_icon.png" alt="" class="icon">
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="/login" class="new_match">
-                                <img src="/images/write_icon.png" alt="" class="icon">
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                <div id="my_match"></div>
             </div>
         </div>
+        <div class="contents_right">
+            <div class="bar">
+                <div class="bar_date">일정</div>
+                <div class="bar_title">제목</div>
+                <div class="bar_content">소개</div>
+                <div class="bar_join">가입 신청</div>
+            </div>
+            <div id="lines"></div>
+        </div>
+<%--        <div id="applyContainer" class="hidden">--%>
+<%--            <div id="applyContent">--%>
+<%--                <div id="squad_container">--%>
+<%--                    <select name="squads" id="squadB" size="1">--%>
+
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--                <div>--%>
+<%--                    <button id="apply_btn" onclick="apply()">참가신청</button>--%>
+<%--                    <button id="modalCloseButton" onclick="modalClose()">닫기</button>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
     </div>
 <c:import url="footer.jsp"/>
 </body>
+<script src="/script/match_list.js"></script>
 </html>
