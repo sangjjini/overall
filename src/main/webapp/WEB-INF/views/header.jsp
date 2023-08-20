@@ -16,9 +16,9 @@
     <div class="main_nav">
         <div class="logo"><a href="/">LOGO</a></div>
         <div class="nav_wrap">
-            <div class="nav_list"><a href="introduce">오버롤소개</a></div>
-            <div class="nav_list"><a href="squad">스쿼드</a></div>
-            <div class="nav_list"><a href="squad/match">스쿼드매치</a></div>
+            <div class="nav_list"><a href="/introduce">오버롤소개</a></div>
+            <div class="nav_list"><a href="/squad">스쿼드</a></div>
+            <div class="nav_list"><a href="/squad/matchList">스쿼드매치</a></div>
         </div>
     </div>
     <div class="nav_right">

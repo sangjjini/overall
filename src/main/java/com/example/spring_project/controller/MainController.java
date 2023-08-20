@@ -25,8 +25,10 @@ public class MainController {
 
 //    @GetMapping("/squad/match")
 //    public String squadMatch(){ return "squad_match_form"; }
-    @GetMapping("/squad/matchRead")
-    public String squadMatchRead(){ return "squad_match_read"; }
+
+    @GetMapping("/squad/match")
+    public String match(){ return "squad_match"; }
+
 
     @GetMapping("/squad/matchList")
     public String squadMatchAll(){ return "squad_match_list"; }
@@ -59,7 +61,5 @@ public class MainController {
     @GetMapping("/overallUpdate")
     public String overallUpdate() {return "overall_update";}
 
-    @GetMapping("/squad/match")
-    public String match(){ return "squad_match"; }
     
 }
