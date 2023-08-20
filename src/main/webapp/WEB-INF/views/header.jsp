@@ -22,18 +22,18 @@
         </div>
     </div>
     <div class="nav_right">
-    <c:choose>
-        <c:when test="${empty log}">
+<%--    <c:choose>--%>
+<%--        <c:when test="${empty log}">--%>
             <div class="login_wrap">
                 <div class="login"><a href="/login">로그인</a></div>
             </div>
-        </c:when>
-        <c:otherwise>
+<%--        </c:when>--%>
+<%--        <c:otherwise>--%>
                 <div class="mypage_wrap">
                     <div class="mypage"><a href="/mypage">마이페이지</a></div>
                 </div>
-        </c:otherwise>
-    </c:choose>
+<%--        </c:otherwise>--%>
+<%--    </c:choose>--%>
     </div>
 </header>
 </body>
