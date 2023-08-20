@@ -28,8 +28,7 @@ public class SquadController {
     @PostMapping("squad/make")
     public Map makeSquad(WebRequest request, @RequestParam String name) {
         JSONObject response = new JSONObject();
-//        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "kevin@gmail.com";
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         SquadRequestDto squadRequestDto = new SquadRequestDto();
         // 스쿼드 이름 중복 검사
         if(squadRepository.findByName(name) == null){
@@ -39,7 +38,6 @@ public class SquadController {
             squadRequestDto.setMaking(log);
             // 스쿼드 생성
             Squad squad = new Squad(squadRequestDto);
-            // 이름 중복 검사 필요
             squadRepository.save(squad);
             Squad squadSave = squadRepository.findByMaking(log);
             // join 생성
@@ -72,20 +70,27 @@ public class SquadController {
     @PostMapping("squad/{no}/update")
     public Map updateSquad(@PathVariable long no, @RequestBody SquadRequestDto squadRequestDto) {
         JSONObject response = new JSONObject();
-        // 스쿼드 이름 중복 검사
-        if(squadRepository.findByName(squadRequestDto.getName()) == null){
+        Squad squad = squadRepository.findByNo(squadRequestDto.getNo());
+        squadRequestDto.setHost(squad.getHost());
+        // 스쿼드의 내용만 바꿨을 경우
+        if((squad.getName()).equals(squadRequestDto.getName())){
             squadService.updateSquad(no, squadRequestDto);
             response.put("update", "success");
-        } else{
-            response.put("update", "fail");
+        }else{
+            // 스쿼드 이름 중복 검사
+            if(squadRepository.findByName(squadRequestDto.getName()) == null){
+                squadService.updateSquad(no, squadRequestDto);
+                response.put("update", "success");
+            } else{
+                response.put("update", "fail");
+            }
         }
         return response.toMap();
     }
 
     @GetMapping("squad/my")
-    public List<SquadResponseDto> getMySquad(){
-        //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "kevin@gmail.com";
+    public List<SquadResponseDto> getMySquad(WebRequest request){
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         List<Joining> joiningList = joiningRepository.findAllByEmail(log);
         List<SquadResponseDto> squadResponseDtos = new ArrayList<>();
         for(int i=0; i<joiningList.size(); i++){

@@ -1,34 +1,40 @@
 package com.example.spring_project.controller;
 
-import com.example.spring_project.domain.joining.Joining;
-import com.example.spring_project.domain.joining.JoiningRepository;
-import com.example.spring_project.domain.match.Match;
-import com.example.spring_project.domain.match.MatchRepository;
-import com.example.spring_project.domain.matching.Matching;
-import com.example.spring_project.domain.matching.MatchingRepository;
-import com.example.spring_project.domain.mypage.Mypage;
-import com.example.spring_project.domain.mypage.MypageRepository;
-import com.example.spring_project.service.MypageService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import com.example.spring_project.domain.member.Member;
+import com.example.spring_project.domain.member.MemberRepository;
+import com.example.spring_project.domain.overall.Overall;
+import com.example.spring_project.domain.overall.OverallRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
+
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
 public class MypageController {
-    private final MypageRepository mypageRepository;
-    private final JoiningRepository joiningRepository;
-    private final MatchingRepository matchingRepository;
-    private final MatchRepository matchRepository;
+    private final OverallRepository overallRepository;
+    private final MemberRepository memberRepository;
     @GetMapping("mypage/overallList")
-    public List<Mypage> getMypageAll() {
-        List<Mypage> list = mypageRepository.findAll();
+    public Overall getOverallAll(WebRequest request) {
+
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+//        String log = "SIUUU@naver.com";
+        Overall list = overallRepository.findByEmail(log);
         return list;
     }
+
+    @GetMapping("mypage/overallList/nickname")
+    public Member GetNickname(WebRequest request){
+
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        Member member = memberRepository.findByEmail(log);
+        return member;
+    }
+
 
 
 

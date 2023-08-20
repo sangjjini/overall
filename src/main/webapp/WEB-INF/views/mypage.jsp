@@ -18,6 +18,7 @@ To change this template use File | Settings | File Templates.
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
+<input type="hidden" id="homin" value="${log}">
 <div class="wrap">
 <div class="contents">
 <div class="contents_menu">
@@ -29,19 +30,18 @@ To change this template use File | Settings | File Templates.
     <div class="overall">
         <div class="overall_left">
         <div class="nickname_wrap">
-            <div class="nickname">ronaldo</div>
+            <div class="nickname"></div>
         </div>
         <div class="overall_param">
         </div>
         <div class="position">
-                CF
         </div>
         </div>
         <div class="stats_wrap">
         </div>
         <div class="foot_wrap">
-            <div class="left_foot"><h3>5</h3></div>
-            <div class="right_foot"><h3>5</h3></div>
+            <div class="left_foot"><h3></h3></div>
+            <div class="right_foot"><h3></h3></div>
         </div>
 
     </div>

@@ -72,12 +72,12 @@ function all_squad(){
 
 function join(no){
     $.ajax({
-        url: "/joining/" + no + "/invite",
+        url: "/joining/" + no + "/apply",
         type: "post",
     }).done(function (response){
         const result = Object.values(response)[0];
         if(result === "already") {
-            alert("이미 가입신청이 완료된 회원입니다.");
+            alert("가입/신청이 완료된 스쿼드입니다.");
         }else{
             alert("신청이 완료되었습니다.");
         }

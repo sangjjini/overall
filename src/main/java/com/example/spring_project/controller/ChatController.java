@@ -24,9 +24,8 @@ public class ChatController {
 
     @PostMapping("chat/{no}/send")
     public Map sendChat(WebRequest request, @PathVariable long no, @RequestBody ChatRequestDto chatRequestDto){
-        //        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+                String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         JSONObject response = new JSONObject();
-        String log = "kevin@gmail.com";
         Member member = memberRepository.findByEmail(log);
         chatRequestDto.setNickname(member.getNickname());
         chatRequestDto.setEmail(log);

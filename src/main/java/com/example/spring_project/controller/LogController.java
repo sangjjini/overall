@@ -2,33 +2,36 @@ package com.example.spring_project.controller;
 
 import com.example.spring_project.domain.member.Member;
 import com.example.spring_project.domain.member.MemberRepository;
+import com.example.spring_project.domain.member.MemberRequestDto;
 import com.example.spring_project.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 
 @RestController// 현재 클래스를 스프링에서 관리하는 컨트롤러 bean 으로 생성.
-//@SessionAttributes({"log"})
-@SessionScope
+@SessionAttributes({"log"})
 @RequiredArgsConstructor
 public class LogController {
     private final MemberService memberService;
     private final MemberRepository memberRepository; //MemberRepository 주입
 
-
+    @SessionScope
     @PostMapping("/login")
     public String login(@RequestParam String email, @RequestParam String password, HttpSession session) {
         Member member = memberRepository.findByEmail(email);
 
-        if (member != null && member.getPassword().equals(password)) { //member가 null이거나, 비밀번호가 일치하지 않으면
-            session.setAttribute("log", member); // "log" 세션 속성에 회원 정보 저장
-            return "redirect:/"; // 인덱스 페이지로 리다이렉트
+        if (member != null && member.getPassword().equals(password)) {
+            session.setAttribute("log", member);
+            return "redirect:/";
         } else {
             return "login"; // 로그인 실패시 다시 로그인 페이지로 이동.
         }
@@ -70,14 +73,13 @@ public class LogController {
 //    return "redirect:/";
 
     // 사용자의 로그아웃을 처리하고 세션에서 "log" 속성을 삭제한 후 메인페이지로 리다이렉트.
-    @PostMapping("/logout")
-    public String logout(HttpSession session, SessionStatus status){
-        session.invalidate(); // 세션 무효화로 로그아웃 처리
+    @PostMapping("logout")
+    public void logout(WebRequest request, SessionStatus status){
+//        session.invalidate(); // 세션 무효화로 로그아웃 처리
         //우선 호출 후
         status.setComplete(); // 현재 세션 상태를 완료로 변경하여 세션 데이터 제거
         //세션 속성을 수정
-//        request.removeAttribute("log", WebRequest.SCOPE_SESSION); // "log" 세션 속성 제거
-        return "redirect:/"; // 메인페이지로 리다이렉트
+        request.removeAttribute("log", WebRequest.SCOPE_SESSION); // "log" 세션 속성 제거
     }
 
 //    @GetMapping("/")
@@ -94,5 +96,17 @@ public class LogController {
 //        memberRepository.save(member); // 엔티티 저장
 //    }
 
-
+    @SessionScope
+    @PostMapping("sign_in")
+    public Map sign_in(HttpSession session, @RequestBody MemberRequestDto memberRequestDto){
+        JSONObject response = new JSONObject();
+        Member member = memberRepository.findByEmail(memberRequestDto.getEmail());
+        if(member != null && member.getPassword().equals(memberRequestDto.getPassword())){
+            session.setAttribute("log", member.getEmail());
+            response.put("sign_in", "success");
+        }else{
+            response.put("sign_in", "fail");
+        }
+        return response.toMap();
+    }
 }

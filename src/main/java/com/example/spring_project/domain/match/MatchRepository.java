@@ -10,4 +10,8 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     public List<Match> findAllByTitleLike(String pattern);
     public List<Match> findAllByStartAtLike(String pattern);
 
+    public List<Match> findAllByMaking(String making);
+
+    public List<Match> findAllByAuthor(String log);
+
 }

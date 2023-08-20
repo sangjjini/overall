@@ -1,23 +1,29 @@
+let emailNo = $('#homin').val();
+// let emailNo = "SIUUU@naver.com";
 $(window).on('load', function () {
     //회원정보 호출 필요
     let sum = 0;
 
-
     //오버롤 호출
     $.ajax({
-        url: "/mypage/overallList",
+        url: "mypage/overallList",
         type: "get"
     }).done(function (response) {
-        response.forEach(over => {
-            const age = over.age;
-            const height = over.height;
-            const weight = over.weight;
+            const age = response.age;
+            const height = response.height;
+            const weight = response.weight;
+            const pos = response.pos;
+            const leftfoot = response.leftfoot;
+            const rightfoot = response.rightfoot;
+            const speed = response.speed;
             const physical = Math.round((height + weight) / (age / 10) + 30);
-            const speed = over.speed;
             const speedstat = Math.round(100 / speed * 9);
             const pPercent = physical * 100 / 150;
             const sPercent = speedstat * 100 / 150;
             sum = Math.round(speedstat + physical);
+        $('.position').append(`${pos}`);
+        $('.left_foot h3').append(`${leftfoot}`);
+        $('.right_foot h3').append(`${rightfoot}`);
             $('.stats_wrap').append(`<div id="stat" class="physical">
 <h1>피지컬</h1>
 <div class="physical_status">
@@ -40,16 +46,25 @@ $(window).on('load', function () {
             $('.speed_data').css("width", sPercent + "%");
         });
 
+        // 닉네임호출
+    $.ajax({
+        url:"mypage/overallList/nickname",
+        type:"get"
+    }).done(function(response){
+        const nick = response.nickname;
+        $('.nickname').append(`${nick}`);
+    });
+
         // 레이팅 호출
         $.ajax({
-            url: "/mypage/rating",
+            url: "mypage/overallList",
             type: "get"
         }).done(function (response) {
-            response.forEach(rate => {
-                const rating = rate.rating;
+                const rating = 5;
                 const ratingstat = rating * 10 + 50;
                 const rPercent = ratingstat * 100 / 150;
                 const overall = Math.round((sum + ratingstat) / 3);
+                const style = response.style;
                 $('.overall_param').append(`<div id="param"><h1>${overall}</h1></div>`);
                 $('.stats_wrap').append(`<div id="stat" class="rating">
 <h1>유저평가</h1>
@@ -61,12 +76,11 @@ $(window).on('load', function () {
 </div>
 </div></div>`);
                 $('.rating_data').css("width", rPercent + "%");
-                $('.style_wrap').append(`<div id="style">#${rate.style}</div>`);
+                // $('.style_wrap').append(`<div id="style">#${style}</div>`);
 
-            })
 
         });
-    }); //오버롤 종료
+  //오버롤 종료
 
 
 

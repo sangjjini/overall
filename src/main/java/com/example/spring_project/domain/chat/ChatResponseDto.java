@@ -1,7 +1,12 @@
 package com.example.spring_project.domain.chat;
 
+import com.example.spring_project.util.Timestamp;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.swing.text.DateFormatter;
+import java.text.DateFormat;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @NoArgsConstructor
@@ -12,6 +17,7 @@ public class ChatResponseDto {
     private String nickname;
     private String contents;
     private String notice;
+    private String createdAt;
 
     public ChatResponseDto(Chat chat){
         this.no = chat.getNo();
@@ -20,5 +26,6 @@ public class ChatResponseDto {
         this.nickname = chat.getNickname();
         this.contents = chat.getContents();
         this.notice = chat.getNotice();
+        this.createdAt = chat.getCreatedAt().format(DateTimeFormatter.ofPattern("MM-dd HH:mm"));
     }
 }

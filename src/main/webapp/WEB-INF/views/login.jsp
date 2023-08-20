@@ -22,7 +22,7 @@
                     <div class="logo">
                         <a href="/"><img src="/images/logo_black.png"></a>
                     </div>
-                    <form id="login" method="post" action="/login">
+                    <form id="login">
                         <div class="id_txt">이메일</div>
                         <div class="login-box">
                             <ion-icon name="person-outline"></ion-icon>
@@ -35,24 +35,24 @@
                             <input type="password" name="password" id="password"
                                    maxlength="30" autocapitalize="off">
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                <form:checkbox path="rememberId"/>아이디 저장
-                            </label>
-                        </div>
+<%--                        <div class="checkbox">--%>
+<%--                            <label>--%>
+<%--                                <form:checkbox path="rememberId"/>아이디 저장--%>
+<%--                            </label>--%>
+<%--                        </div>--%>
                         <input type="button" id="submit_button" value="login"
                                onclick="loginChk()">
-                        <div class="login_signup">
-                            <a href="/finduser" class="forget_password">아이디 / 비밀번호 찾기</a>
-                            <a href="/join">회원가입</a>
-                        </div>
+<%--                        <div class="login_signup">--%>
+<%--                            <a href="/finduser" class="forget_password">아이디 / 비밀번호 찾기</a>--%>
+<%--                            <a href="/join">회원가입</a>--%>
+<%--                        </div>--%>
                     </form>
                 </div>
             </section>
-            <script type="module"
-                    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-            <script nomodule
-                    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<%--            <script type="module"--%>
+<%--                    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>--%>
+<%--            <script nomodule--%>
+<%--                    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>--%>
         </div>
     </div>
 <jsp:include page="footer.jsp"></jsp:include>
