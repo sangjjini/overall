@@ -1,4 +1,5 @@
 let squadNo;
+const log = $('#log').val();
 
 $(window).on('load', function (){
     const urlParams = new URL(location.href).searchParams;
@@ -14,6 +15,7 @@ $(window).on('load', function (){
 
 let name_squad;
 let contents_squad;
+let host;
 function squad(){
     $.ajax({
         url: "squad/" + squadNo,
@@ -21,9 +23,16 @@ function squad(){
     }).done(function (response){
         $('#name').val(response.name);
         $('#contents').val(response.contents);
-        $('#host').val(response.host);
+        host = response.host;
+        $('#host').val(host);
         name_squad = response.name;
         contents_squad = response.contents;
+        if(log === host){
+            $('#edit_btn').append(
+                `<input type="hidden" id="host">
+             <button class="squad_edit" onclick="update()">정보 변경</button>`
+            );
+        }
     });
 }
 
@@ -32,29 +41,35 @@ function invited(){
         url: "joining/" + squadNo + "/invited",
         type: "get"
     }).done(function (response){
-        $('#invited').empty();
+        const invited = $('#invited');
+        invited.empty();
         response.forEach(members => {
-            // 방장 탈퇴 버튼 제거 필요
-            if(members.email === $('#host').val()){
-                $('#invited').append(
+            if(members.email === host){
+                invited.append(
                     `<div class="contents_member">
                         <div class="list_pos"></div>
                         <div class="list_name">${members.nickname}(방장)</div>
-                        <div class="list_out">
-                            <button onclick="out(this.id)" id="${members.code}" class="out_btn">방출</button>
-                        </div>
                     </div>`
                 );
             } else {
-                $('#invited').append(
-                    `<div class="contents_member">
-                        <div class="list_pos"></div>
-                        <div class="list_name">${members.nickname}</div>
-                        <div class="list_out">
-                            <button onclick="out(this.id)" id="${members.code}" class="out_btn">방출</button>
-                        </div>
-                    </div>`
-                );
+                if(log === host){
+                    invited.append(
+                        `<div class="contents_member">
+                            <div class="list_pos"></div>
+                            <div class="list_name">${members.nickname}</div>
+                            <div class="list_out">
+                                <button onClick="out(this.id)" id="${members.code}" class="out_btn">방출</button>
+                            </div>
+                        </div>`
+                    );
+                } else{
+                    invited.append(
+                        `<div class="contents_member">
+                            <div class="list_pos"></div>
+                            <div class="list_name">${members.nickname}</div>
+                        </div>`
+                    );
+                }
             }
         });
     });
@@ -92,20 +107,24 @@ function inviting(){
 
 function invite(){
     let email = $('#email').val();
-    $.ajax({
-        url: "joining/" + squadNo + "/invite?email=" + email,
-        type: "post",
-    }).done(function (response){
-        const result = Object.values(response)[0];
-        if(result === "fail"){
-            alert("존재하지 않는 회원입니다.");
-        }else if(result === "already"){
-            alert("이미 가입신청이 완료된 회원입니다.");
-        }else{
-            $('#email').val('');
-            inviting();
-        }
-    });
+    if(email !== ""){
+        $.ajax({
+            url: "joining/" + squadNo + "/invite?email=" + email,
+            type: "post",
+        }).done(function (response){
+            const result = Object.values(response)[0];
+            if(result === "fail"){
+                alert("존재하지 않는 회원입니다.");
+            }else if(result === "already"){
+                alert("이미 가입신청이 완료된 회원입니다.");
+            }else{
+                $('#email').val('');
+                inviting();
+            }
+        });
+    } else{
+        alert("이메일을 입력해주세요.")
+    }
 }
 
 function leave(){
@@ -189,10 +208,9 @@ function chat(){
         url:"chat/"+squadNo,
         type:"get"
     }).done(function (response){
-        let email = "kevin@gmail.com"
         $('#chat').empty();
         response.forEach(chat => {
-            if(chat.email === email){
+            if(chat.email === log){
                 $('#chat').append(
                     `<div class="myChat" id="${chat.no}">
                         <div class="chat_name">${chat.nickname}</div>
@@ -302,8 +320,9 @@ function get_position(){
         }).done(function (response){
             if(response.nickname != null){
                 $('#'+positions[i]).hide();
-                $('#sel_'+positions[i]).empty();
-                $('#sel_'+positions[i]).append(
+                const sel_pos = $('#sel_'+positions[i]);
+                sel_pos.empty();
+                sel_pos.append(
                     `<div class="pos_text">
                         ${response.nickname}
                     </div>
