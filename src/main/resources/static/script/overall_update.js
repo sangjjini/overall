@@ -1,5 +1,5 @@
 // let emailNo = $('#homin').val();
- let emailNo = "SIUUU@naver.com";
+let emailNo = "SIUUU@naver.com";
 
 $(window).on('load', function (){
     $.ajax({

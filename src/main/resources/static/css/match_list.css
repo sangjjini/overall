@@ -8,6 +8,7 @@
     justify-content: center;
     margin-bottom: 70px;
 }
+
 .page_title>h1{
     font-size: 35px;
     font-weight: 800;
@@ -34,8 +35,7 @@
 .left_menu{
     border-top: 10px solid #3e3d55;
     border-bottom: 1px solid #3e3d55;
-    padding-top: 30px;
-    padding-right: 20px;
+    padding: 30px 20px 20px 0;
 }
 
 .make_btn{
