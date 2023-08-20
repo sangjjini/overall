@@ -32,9 +32,7 @@ public class JoiningController {
 
     @DeleteMapping("joining/{no}/leave")
     public void leaveJoining(WebRequest request, @PathVariable long no) {
-//        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "kevin@gmail.com";
-
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         JoiningId joiningId = new JoiningId(log, no);
         joiningService.deleteJoining(joiningId);
         Squad squad = squadRepository.findByNo(no);
