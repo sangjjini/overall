@@ -3,19 +3,20 @@ package com.example.spring_project.controller;
 import com.example.spring_project.domain.member.Member;
 import com.example.spring_project.domain.member.MemberRepository;
 import com.example.spring_project.domain.member.MemberRequestDto;
-import com.example.spring_project.service.EmailService;
 import com.example.spring_project.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Controller
 @RequiredArgsConstructor
 @RestController
 @SessionAttributes("member")
@@ -23,7 +24,7 @@ import java.util.Map;
 @RequestMapping("api/v1/members")
 public class MemberController {
     private final MemberService memberService;
-    private final EmailService emailService;
+//    private final EmailService emailService;
     private final MemberRepository memberRepository;
 
     @GetMapping("test")                                               // size=3 : 한 페이지 당 3항목씩 보여줌.      //이름을 기준으로 내림차순 정렬
@@ -73,14 +74,6 @@ public class MemberController {
             response.put("join", "fail");
         }
         return response.toMap();
-    }
-
-    @PostMapping("/emailConfirm")
-    public String emailConfirm(@RequestParam String email) throws Exception {
-
-        String confirm = emailService.sendSimpleMessage(email);
-
-        return confirm;
     }
 
     @DeleteMapping("member/{email}/leave")

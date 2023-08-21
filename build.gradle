@@ -24,6 +24,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
@@ -48,9 +49,6 @@ dependencies {
 
     // EmailCode 의존성 추가
     implementation 'org.springframework.boot:spring-boot-starter-mail'
-
-    // 유효성 검사 의존성 추가
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {

@@ -10,7 +10,7 @@
 // })
 function logout(){
     $.ajax({
-        url:"logout",
+        url:"/logout",
         type:"post"
     }).done(function (){
         location.href = "/";

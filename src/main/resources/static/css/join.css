@@ -165,6 +165,20 @@ body {
     align-items: center;
 }
 
+/*#email_duplchk {background-color: GhostWhite; width: 15%; height: 40px;}*/
+/*.hint_email {color: red; font-style: Italic;}*/
+/*.hint_email {color: blue; font-style: Italic;}*/
+
+.email_ok_ok{
+    color:#008000;
+    display: none;
+}
+
+.email_already{
+    color:#6A82FB;
+    display: none;
+}
+
 #dup_btn {
     width: 100px;
     height:40px;
@@ -195,7 +209,7 @@ body {
     background:#d91950;
 }
 
-#verify_btn {
+#confirmBtn {
     width: 90px;
     height:40px;
     bvorder:0;
