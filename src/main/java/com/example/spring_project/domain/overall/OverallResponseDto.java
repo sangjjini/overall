@@ -18,6 +18,7 @@ public class OverallResponseDto {
     private int rightfoot;
     private int leftfoot;
     private String pos;
+    private int rating;
 
     public OverallResponseDto(Overall overall) {
         this.email = overall.getEmail();
@@ -28,5 +29,6 @@ public class OverallResponseDto {
         this.rightfoot = overall.getRightfoot();
         this.leftfoot = overall.getLeftfoot();
         this.pos = overall.getPos();
+        this.rating = overall.getRating();
     }
 }
