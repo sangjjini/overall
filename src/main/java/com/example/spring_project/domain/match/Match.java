@@ -63,7 +63,7 @@ public class Match{
         if(dto.getSquadB() != null)
             this.squadB = dto.getSquadB();
 
-        if(dto.getDeadline() >= '0' && dto.getDeadline() <= '2')
+        if(dto.getDeadline() != '\0')
             this.deadline = dto.getDeadline();
 
 
