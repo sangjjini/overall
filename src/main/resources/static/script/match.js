@@ -9,19 +9,35 @@ $(window).on('load', function (){
 function updateMatch(){
     const match_title = $('#title').val();
     const match_contents = $('#contents').val();
-    const error = $('.error_name');
+    const error = $('.error_title');
     if(match_title === ""){
         error.val("매치 제목을 입력해주세요.");
         error.show();
     }else{
         if(title === match_title && contents_squad === match_contents){
-            $.ajax({
-                url:"/squad/match"+ no + "/update",
-                type:"post"
-
-            });
+            alert("변경된 내용이 없습니다.")
         }else{
-
+            let obj = {
+                title: match_title,
+                contents : match_contents
+            };
+            $.ajax({
+                url:"/squad/match/"+ no + "/update",
+                type:"put",
+                dataType: "json",
+                contentType : "application/json",
+                data: JSON.stringify(obj)
+            }).done(function (response){
+                const result = Object.values(response)[0];
+                console.log(result);
+                if(result === "success"){
+                    alert("변경이 완료되었습니다.");
+                    error.hide();
+                    window.location.href = "/squad/match?no=" + no
+                }else{
+                    alert("변경이 실패되었습니다.");
+                }
+            });
         }
     }
 }
@@ -41,6 +57,13 @@ function deleteMatch(){
         }
     }
 }
+
+function leaveMatch(){
+    if(confirm("매치에서 퇴장하시겠습니까?")){
+        alert("퇴장하셨습니다.")
+    }
+}
+
 let match_title;
 let match_contents;
 
@@ -49,6 +72,7 @@ function match(){
         url:"/squad/match/"+ no,
         type: "get"
     }).done(function (response){
+        let log = $('#log').val();
         let startAt = response.startAt.substring(0,16);
         let endAt = response.endAt;
         if(startAt.substring(0,10) === endAt.substring(0,10)){
@@ -68,6 +92,27 @@ function match(){
         }else{
             endAt += ' PM';
         }
+
+        let update_btn = $('#update_btn');
+
+        if(log === response.author){
+            update_btn.text("정보 변경");
+            update_btn.attr({onclick:"updateMatch()"})
+        }else {
+            $('#delete_btn').hide();
+            update_btn.text("매치 퇴장");
+            update_btn.attr({onclick:"leaveMatch()"})
+        }
+
+        // else if(response.squadB !== null){
+        //     $('#delete_btn').hide();
+        //     update_btn.text("매치 퇴장");
+        //     update_btn.attr({onclick:"leaveMatch()"})
+        // }
+        // else {
+        //     $('#delete_btn').hide();
+        //     update_btn.text("매치 신청");
+        // }
 
         $('#title').val(response.title);
         $('#contents').val(response.contents);

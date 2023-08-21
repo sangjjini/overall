@@ -39,8 +39,8 @@ public class MatchController {
     @PostMapping("make")
     public Map makeMatch(WebRequest request, @RequestParam String title, @RequestParam String squadA, @RequestParam String startAt, @RequestParam String endAt){
         JSONObject response = new JSONObject();
-//        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "kevin@gmail.com";
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+//        String log = "kevin@gmail.com";
         MatchRequestDto matchRequestDto = new MatchRequestDto();
         matchRequestDto.setTitle(title);
         matchRequestDto.setContents("재밌게 풋살하실 분들 찾습니다!");
@@ -60,9 +60,9 @@ public class MatchController {
         return response.toMap();
     }
     @GetMapping("my")
-    public List<Match> getMyMatch(){
-//        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "kevin@gmail.com";
+    public List<Match> getMyMatch(WebRequest request){
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+//        String log = "kevin@gmail.com";
 //        String log = "neymar@gmail.com";
         List<Match> matchList = matchRepository.findAllByAuthor(log);
         return matchList;
@@ -153,27 +153,29 @@ public class MatchController {
     }
 
     @PutMapping(value = "{no}/update")
-    public Response update(@PathVariable long no, @RequestBody MatchRequestDto dto, WebRequest request){
-        //String log = (String)request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        //if(log.equals(dto.getAuthor())){
+    public Map update(@PathVariable long no, @RequestBody MatchRequestDto dto, WebRequest request){
+        JSONObject response = new JSONObject();
+        String log = (String)request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        if(log.equals(dto.getAuthor())){
             try {
                 matchService.updateMatch(no, dto);
-                return new Response("update", "success");
+                response.put("update", "success");
             } catch (Exception e){
                 e.printStackTrace();
-                return new Response("update", "fail");
+                response.put("update", "fail");
             }
-//        }else{
-//            return new Response("update", "작성자만 수정할 수 있습니다.");
-//        }
+        }else{
+            response.put("update", "fail");
+        }
+        return response.toMap();
     }
 
 
     @DeleteMapping("{no}/delete")
     public Map deleteMatchByNo(@PathVariable long no, WebRequest request){
         JSONObject response = new JSONObject();
-        //String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
-        String log = "kevin@gmail.com";
+        String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
+//        String log = "kevin@gmail.com";
         //String log = "neymar@gmail.com";
         try{
             Match match = matchRepository.findById(no).orElseThrow(
@@ -195,9 +197,9 @@ public class MatchController {
     // 매치 신청
     @PostMapping("{no}/apply")
     public Map applyMatch(@PathVariable long no, WebRequest request){
-        //String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
-        String log = "neymar@gmail.com";
         JSONObject response = new JSONObject();
+        String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
+//        String log = "neymar@gmail.com";
         //String email = response.getString("log");
 //        String applySquad = response.getString("applySquad");
 //        String host = response.getString("host");
@@ -219,11 +221,13 @@ public class MatchController {
     // 매치 퇴장
     @PostMapping("{no}/leave")
     public Map matchLeave(@PathVariable long no, WebRequest request, @RequestBody String name){
-        //String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
         JSONObject response = new JSONObject(name);
         Match match = matchRepository.getMatchByNo(no);
         // log
-        String log = "kevin@gmail.com";
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        //String log = "kevin@gmail.com";
+//        String log = "neymar@gmail.com";
         String squadName = response.getString("name");
 //        if(match.getAuthor().equals(response.getString("name"))){
 //            System.out.println("매치 만든놈이 도망간다!");
@@ -283,18 +287,27 @@ public class MatchController {
     }
 
     @PostMapping("mysquad")
-    public List<String> mySquad(@RequestBody MemberRequestDto dto){
+    public List<String> mySquad(@RequestBody MemberRequestDto dto, WebRequest request){
         //String email = dto.getEmail();
-        String email = "kevin@gmail.com";
-        System.out.println(email);
+        String email = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+//        String email = "kevin@gmail.com";
         List<Joining> list = joiningRepository.findByEmailAndStateNot(email,"N");
         List<String> mySquadList = new ArrayList<>();
         for(Joining joining : list){
-            System.out.println(joining);
-            long no = joining.getSquadNo();
-            Squad squad = squadRepository.findByNo(no);
-            mySquadList.add(squad.getName());
+            long cnt = joiningRepository.countBySquadNo(joining.getSquadNo());
+            if(cnt == 3){
+                long no = joining.getSquadNo();
+                Squad squad = squadRepository.findByNo(no);
+                mySquadList.add(squad.getName());
+            }
         }
+
+//        for(Joining joining : list){
+//            System.out.println(joining);
+//            long no = joining.getSquadNo();
+//            Squad squad = squadRepository.findByNo(no);
+//            mySquadList.add(squad.getName());
+//        }
         return mySquadList;
     }
 
