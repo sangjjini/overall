@@ -1,4 +1,11 @@
 function join(){
+    // $('#submit_btn').prop("disabled", true);
+    //
+    // setTimeout(function () {
+    //     $('#submit_btn').prop("disabled", false);
+    // }, 500);
+
+
     const data = {
         email: $("#email").val(),
         password: $("#password").val(),
@@ -34,9 +41,11 @@ function join(){
         });
 
         $("#email").click(function() {
-            $("hint_email").hide();
+            $("#hint_email").hide();
         });
     });
+
+
 
     $.ajax({
         // 회원가입 수행 요청
