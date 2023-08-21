@@ -16,7 +16,6 @@
 .contents{
     display: flex;
     padding: 0 5%;
-    height: 100%;
 }
 .contents_left{
     display: flex;

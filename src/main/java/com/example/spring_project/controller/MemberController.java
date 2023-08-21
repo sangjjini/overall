@@ -43,22 +43,36 @@ public class MemberController {
         return member;
     }
 
-    @PostMapping("/join")
-    public Map<String, String> join(@RequestBody MemberRequestDto memberRequestDto) {
-//        JSONObject response = new JSONObject();
-            Map<String, String> response = new HashMap<>(); // 새로운 해쉬맵을 만듬.
-        try{
-            Map<String, String> result = memberService.createMember(memberRequestDto);
-            response.put("join", result.get("status"));
+//    @PostMapping("/join")
+//    public Map<String, String> join(@RequestBody MemberRequestDto memberRequestDto) {
+////        JSONObject response = new JSONObject();
+//            Map<String, String> response = new HashMap<>(); // 새로운 해쉬맵을 만듬.
+//        try{
+//            Map<String, String> result = memberService.createMember(memberRequestDto);
+//            response.put("join", result.get("status"));
+//
+//            if (result.containsKey("message")) {
+//                response.put("message", result.get("message"));
+//            }
+//        } catch (Exception e) {
+//            response.put("join", "error");
+//            response.put("message", "요청을 처리하는 동안 오류가 발생했습니다.");
+//        }
+//        return response;
+//    }
 
-            if (result.containsKey("message")) {
-                response.put("message", result.get("message"));
-            }
-        } catch (Exception e) {
-            response.put("join", "error");
-            response.put("message", "요청을 처리하는 동안 오류가 발생했습니다.");
+        @PostMapping("/join")
+    public Map join(@RequestBody MemberRequestDto memberRequestDto) {
+        JSONObject response = new JSONObject();
+        Member member = memberRepository.findByEmail(memberRequestDto.getEmail());
+        if(member == null){
+            Member memberSave = new Member(memberRequestDto);
+            memberRepository.save(memberSave);
+            response.put("join", "success");
+        } else {
+            response.put("join", "fail");
         }
-        return response;
+        return response.toMap();
     }
 
     @PostMapping("/emailConfirm")
