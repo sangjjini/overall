@@ -10,34 +10,6 @@ function join(){
         city: $("#city").val(),
     };
 
-    $(document).ready(function(){
-        $('#div_code').hide();
-        $('.hint').hide();
-
-        $('input').focusin(function(){
-            $(this).parent().find('.hint').hide();
-            //$('.hint').hide();
-        });
-
-        $('#email').keyup(function(){
-            emailDupl = false;
-            ChkEmailDupl = false;
-            $("#hint_email").text("").css("color", "#ff3860");
-            $("#hint_email").hide();
-        });
-
-        $('#nickName').keyup(function(){
-            nickDupl = false;
-            ChkNickDupl = false;
-            $("#hint_nickName").text("").css("color", "#ff3860");
-            $("#hint_nickName").hide();
-        });
-
-        $("#email").click(function() {
-            $("hint_email").hide();
-        });
-    });
-
     $.ajax({
         // 회원가입 수행 요청
         type: "POST",
