@@ -276,17 +276,17 @@ public class MatchController {
         Squad squadA = squadRepository.findByName(sqA);
         Squad squadB = squadRepository.findByName(sqB);
 
-        if(squadA.getImageUrl() == null){
-            response.put("squadALogo","/images/noimage.jpeg");
-        }else{
-            response.put("squadALogo",squadA.getImageUrl());
-        }
-
-        if(squadB.getImageUrl() == null){
-            response.put("squadBLogo","/images/noimage.jpeg");
-        }else{
-            response.put("squadBLogo",squadB.getImageUrl());
-        }
+//        if(squadA.getImageUrl() == null){
+//            response.put("squadALogo","/images/noimage.jpeg");
+//        }else{
+//            response.put("squadALogo",squadA.getImageUrl());
+//        }
+//
+//        if(squadB.getImageUrl() == null){
+//            response.put("squadBLogo","/images/noimage.jpeg");
+//        }else{
+//            response.put("squadBLogo",squadB.getImageUrl());
+//        }
         return response.toMap();
     }
 
