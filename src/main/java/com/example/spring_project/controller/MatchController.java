@@ -203,18 +203,22 @@ public class MatchController {
         //String email = response.getString("log");
 //        String applySquad = response.getString("applySquad");
 //        String host = response.getString("host");
-        Squad squad = squadRepository.findByHost(log);
-        Match match = matchRepository.getMatchByNo(no);
+        try {
+            Squad squad = squadRepository.findByHost(log);
+            Match match = matchRepository.getMatchByNo(no);
 
-
-        if(match.getSquadB() != null){
+            if (match.getSquadB() != null) {
+                response.put("apply", "fail");
+            } else {
+                MatchRequestDto dto = new MatchRequestDto();
+                dto.setSquadB(squad.getName());
+                dto.setDeadline('1');
+                matchService.updateMatch(no, dto);
+                response.put("apply", "success");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
             response.put("apply", "fail");
-        }else {
-            MatchRequestDto dto = new MatchRequestDto();
-            dto.setSquadB(squad.getName());
-            dto.setDeadline('1');
-            matchService.updateMatch(no, dto);
-            response.put("apply", "success");
         }
         return response.toMap();
     }
