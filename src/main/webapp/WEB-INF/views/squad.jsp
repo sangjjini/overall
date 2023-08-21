@@ -30,7 +30,7 @@
                 <div class="contents_list">
                     <label for="name" class="small_title">스쿼드 이름</label>
                     <input type="text" id="name" class="input_area">
-                    <input type="text" class="error_name" readonly>
+                    <input type="text" class="error" id="error_name" readonly>
                 </div>
                 <div class="contents_list">
                     <label for="contents" class="small_title">스쿼드 소개</label>
@@ -54,9 +54,8 @@
                                 <input type="text" id="email">
                                 <button onclick="invite()" class="small_btn">초대</button>
                             </div>
-                            <div id="inviting" class="list_area">
-                                <input type="hidden" class="error_name" id="invite_error">
-                            </div>
+                            <input type="text" class="error" id="error_invite" readonly>
+                            <div id="inviting" class="list_area"></div>
                         </div>
                     </div>
                 </div>
@@ -85,33 +84,38 @@
                         </div>
                     </div>
                     <div class="position_area">
-                        <div class="area_img">
+                        <div class="area_img" id="area_A">
+                            <div class="pos_name small_title">PIVO</div>
                             <button class="position_add" id="A">+</button>
                             <div id="sel_A" class="sel_area"></div>
                         </div>
                     </div>
                     <div class="position_row">
                         <div class="position_area">
-                            <div class="area_img">
+                            <div class="area_img" id="area_B">
+                                <div class="pos_name small_title">ALA</div>
                                 <button class="position_add" id="B">+</button>
                                 <div id="sel_B" class="sel_area"></div>
                             </div>
                         </div>
                         <div class="position_area">
-                            <div class="area_img">
+                            <div class="area_img" id="area_C">
+                                <div class="pos_name small_title">ALA</div>
                                 <button class="position_add" id="C">+</button>
                                 <div id="sel_C" class="sel_area"></div>
                             </div>
                         </div>
                     </div>
                     <div class="position_area">
-                        <div class="area_img">
+                        <div class="area_img" id="area_D">
+                            <div class="pos_name small_title">FIXO</div>
                             <button class="position_add" id="D">+</button>
                             <div id="sel_D" class="sel_area"></div>
                         </div>
                     </div>
                     <div class="position_area">
-                        <div class="area_img">
+                        <div class="area_img" id="area_E">
+                            <div class="pos_name small_title">GOLEIRO</div>
                             <button class="position_add" id="E">+</button>
                             <div id="sel_E" class="sel_area"></div>
                         </div>
