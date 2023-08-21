@@ -8,7 +8,6 @@ $(window).on('load', function (){
     // 실시간 적용 필요
     chat();
     // read();
-    member_list();
 });
 
 let name_squad;
@@ -274,6 +273,7 @@ function read(){
 let position;
 $('.position_add').click(function (){
     position = $(this).attr("id");
+    member_list();
     $('#select_box').show();
     $('.shadow').show();
     close_invite();
