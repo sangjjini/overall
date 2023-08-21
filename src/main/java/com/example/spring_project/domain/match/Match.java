@@ -36,8 +36,7 @@ public class Match{
     private String squadA;
     @Column(name="squad_b")
     private String squadB;
-    @Column(name="making")
-    private String making;
+
 
   public Match(MatchRequestDto dto){
         this.title = dto.getTitle();
@@ -52,7 +51,6 @@ public class Match{
         }
         this.squadA = dto.getSquadA();
         this.squadB = dto.getSquadB();
-        this.making = dto.getMaking();
     }
 
     public void update(MatchRequestDto dto){

@@ -1,5 +1,5 @@
 let title;
-
+const log = $('#log').val();
 $(window).on('load', function (){
     const urlParams = new URL(location.href).searchParams;
     no = urlParams.get('no');
@@ -43,7 +43,7 @@ function updateMatch(){
 }
 
 function deleteMatch(){
-    const log = $('#log').val();
+    // const log = $('#log').val();
     const author = $('#author').val();
 
     if(log === author){
@@ -55,6 +55,8 @@ function deleteMatch(){
                 window.location.href = "/squad/matchList"
             });
         }
+    }else{
+        alert("방장만 가능합니다.")
     }
 }
 
@@ -62,6 +64,29 @@ function leaveMatch(){
     if(confirm("매치에서 퇴장하시겠습니까?")){
         alert("퇴장하셨습니다.")
     }
+}
+
+function resultMatch(){
+    const author = $('#author').val();
+    const winSquad = $('#win').val();
+    let obj = {name:winSquad};
+    if(log === author){s
+        $.ajax({
+            url:"/squad/match/" + no + "/matchResult",
+            type:"post",
+            dataType: "json",
+            contentType : "application/json",
+            data: JSON.stringify(obj)
+        }).done(function(response){
+            const result = Object.values(response)[0];
+            if(result !== "fail"){
+                alert(result + "님 승리 축하드립니다.")
+            }
+        });
+    }else{
+        alert("방장만 가능합니다.");
+    }
+
 }
 
 let match_title;
@@ -72,7 +97,7 @@ function match(){
         url:"/squad/match/"+ no,
         type: "get"
     }).done(function (response){
-        let log = $('#log').val();
+        // let log = $('#log').val();
         let startAt = response.startAt.substring(0,16);
         let endAt = response.endAt;
         if(startAt.substring(0,10) === endAt.substring(0,10)){
@@ -100,6 +125,7 @@ function match(){
             update_btn.attr({onclick:"updateMatch()"})
         }else {
             $('#delete_btn').hide();
+            $('#result_btn').hide();
             update_btn.text("매치 퇴장");
             update_btn.attr({onclick:"leaveMatch()"})
         }
