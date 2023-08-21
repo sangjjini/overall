@@ -12,8 +12,6 @@ public class SquadRequestDto {
     private String host;
     private String name;
     private String contents;
-    private String loadedFile;
-    private String imageUrl;
     private String making;
 
     public SquadRequestDto(Squad squad) {
@@ -21,7 +19,5 @@ public class SquadRequestDto {
         this.host = squad.getHost();
         this.name = squad.getName();
         this.contents = squad.getContents();
-        this.loadedFile = squad.getLoadedFile();
-        this.imageUrl = squad.getImageUrl();
     }
 }

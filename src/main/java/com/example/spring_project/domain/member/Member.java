@@ -27,8 +27,7 @@ public class Member {
     @Column(unique = true) //  중복된 값을 가지는 레코드가 삽입되거나 수정되지 않도록 보장됨.
     private String phone;
 
-    private String province;
-    private String city;
+    private int stats;
 
     public Member(String email){
         super();
@@ -42,8 +41,7 @@ public class Member {
         this.name = memberDto.getName();
         this.nickname = memberDto.getNickname();
         this.phone = memberDto.getPhone();
-        this.province = memberDto.getProvince();
-        this.city = memberDto.getCity();
+        this.stats = memberDto.getStats();
     }
 
     // update 메서드 추가
@@ -53,7 +51,6 @@ public class Member {
         this.name = requestDto.getName();
         this.nickname = requestDto.getNickname();
         this.phone = requestDto.getPhone();
-        this.province = requestDto.getProvince();
-        this.city = requestDto.getCity();
+        this.stats = requestDto.getStats();
     }
 }

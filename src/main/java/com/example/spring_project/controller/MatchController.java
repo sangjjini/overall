@@ -40,7 +40,6 @@ public class MatchController {
     public Map makeMatch(WebRequest request, @RequestParam String title, @RequestParam String squadA, @RequestParam String startAt, @RequestParam String endAt){
         JSONObject response = new JSONObject();
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-//        String log = "kevin@gmail.com";
         MatchRequestDto matchRequestDto = new MatchRequestDto();
         matchRequestDto.setTitle(title);
         matchRequestDto.setContents("재밌게 풋살하실 분들 찾습니다!");
@@ -48,25 +47,32 @@ public class MatchController {
         matchRequestDto.setSquadA(squadA);
         matchRequestDto.setStartAt(startAt);
         matchRequestDto.setEndAt(endAt);
-        matchRequestDto.setMaking(log);
         matchRequestDto.setDeadline('0');
+
+        Squad squad = squadRepository.findByName(matchRequestDto.getSquadA());
 
         Match match = new Match(matchRequestDto);
         matchRepository.save(match);
-        List<Match> matchSave = matchRepository.findAllByMaking(log);
+
+        Matching matching = new Matching(squad,match);
+        matchingRepository.save(matching);
+
+        List<Match> matchSave = matchRepository.findAllByAuthor(log);
         int cnt = matchSave.size();
+
         System.out.println(cnt);
         response.put("make", matchSave.get(cnt-1).getNo());
         return response.toMap();
     }
+
     @GetMapping("my")
     public List<Match> getMyMatch(WebRequest request){
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-//        String log = "kevin@gmail.com";
-//        String log = "neymar@gmail.com";
+
         List<Match> matchList = matchRepository.findAllByAuthor(log);
         return matchList;
     }
+
 //    @PostMapping(value="making")
 //    public Map making(@RequestBody MatchRequestDto dto, WebRequest request, @RequestParam String name){
 //        JSONObject response = new JSONObject();
@@ -175,8 +181,7 @@ public class MatchController {
     public Map deleteMatchByNo(@PathVariable long no, WebRequest request){
         JSONObject response = new JSONObject();
         String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
-//        String log = "kevin@gmail.com";
-        //String log = "neymar@gmail.com";
+
         try{
             Match match = matchRepository.findById(no).orElseThrow(
                     () -> new IllegalArgumentException("존재하지 않는 경기입니다.")
@@ -199,10 +204,7 @@ public class MatchController {
     public Map applyMatch(@PathVariable long no, WebRequest request){
         JSONObject response = new JSONObject();
         String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
-//        String log = "neymar@gmail.com";
-        //String email = response.getString("log");
-//        String applySquad = response.getString("applySquad");
-//        String host = response.getString("host");
+
         try {
             Squad squad = squadRepository.findByHost(log);
             Match match = matchRepository.getMatchByNo(no);
@@ -230,8 +232,7 @@ public class MatchController {
         Match match = matchRepository.getMatchByNo(no);
         // log
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        //String log = "kevin@gmail.com";
-//        String log = "neymar@gmail.com";
+
         String squadName = response.getString("name");
 //        if(match.getAuthor().equals(response.getString("name"))){
 //            System.out.println("매치 만든놈이 도망간다!");
@@ -250,45 +251,45 @@ public class MatchController {
         return response.toMap();
     }
 
-    @PostMapping("/getMatch")
-    public Map getTeam(@RequestBody String squad) throws UnsupportedEncodingException {
-        JSONObject response = new JSONObject();
-        String tmpA = squad.split("&")[0];
-        String tmpB = squad.split("&")[1];
-        String sqA = "";
-        String sqB = "";
-        int sqaIdx = tmpA.indexOf("=");
-        int sqbIdx = tmpB.indexOf("=");
+//    @PostMapping("/getMatch")
+//    public Map getTeam(@RequestBody String squad) throws UnsupportedEncodingException {
+//        JSONObject response = new JSONObject();
+//        String tmpA = squad.split("&")[0];
+//        String tmpB = squad.split("&")[1];
+//        String sqA = "";
+//        String sqB = "";
+//        int sqaIdx = tmpA.indexOf("=");
+//        int sqbIdx = tmpB.indexOf("=");
+//
+//        if(sqaIdx != -1){
+//            sqA = tmpA.substring(sqaIdx + 1);
+//            if(sqA.length() > 0){
+//                sqA = URLDecoder.decode(tmpA, StandardCharsets.UTF_8).split("=")[1];
+//            }
+//        }
+//        if(sqbIdx != -1){
+//            sqB = tmpB.substring(sqbIdx + 1);
+//            if(sqB.length() > 0){
+//                sqB = URLDecoder.decode(tmpB, StandardCharsets.UTF_8).split("=")[1];
+//            }
+//        }
+//
+//        Squad squadA = squadRepository.findByName(sqA);
+//        Squad squadB = squadRepository.findByName(sqB);
 
-        if(sqaIdx != -1){
-            sqA = tmpA.substring(sqaIdx + 1);
-            if(sqA.length() > 0){
-                sqA = URLDecoder.decode(tmpA, StandardCharsets.UTF_8).split("=")[1];
-            }
-        }
-        if(sqbIdx != -1){
-            sqB = tmpB.substring(sqbIdx + 1);
-            if(sqB.length() > 0){
-                sqB = URLDecoder.decode(tmpB, StandardCharsets.UTF_8).split("=")[1];
-            }
-        }
-
-        Squad squadA = squadRepository.findByName(sqA);
-        Squad squadB = squadRepository.findByName(sqB);
-
-        if(squadA.getImageUrl() == null){
-            response.put("squadALogo","/images/noimage.jpeg");
-        }else{
-            response.put("squadALogo",squadA.getImageUrl());
-        }
-
-        if(squadB.getImageUrl() == null){
-            response.put("squadBLogo","/images/noimage.jpeg");
-        }else{
-            response.put("squadBLogo",squadB.getImageUrl());
-        }
-        return response.toMap();
-    }
+//        if(squadA.getImageUrl() == null){
+//            response.put("squadALogo","/images/noimage.jpeg");
+//        }else{
+//            response.put("squadALogo",squadA.getImageUrl());
+//        }
+//
+//        if(squadB.getImageUrl() == null){
+//            response.put("squadBLogo","/images/noimage.jpeg");
+//        }else{
+//            response.put("squadBLogo",squadB.getImageUrl());
+//        }
+//        return response.toMap();
+//    }
 
     @PostMapping("mysquad")
     public List<String> mySquad(@RequestBody MemberRequestDto dto, WebRequest request){
@@ -324,5 +325,27 @@ public class MatchController {
         System.out.println(dto.getEndAt());
         System.out.println(dto.getSquadA());
         System.out.println(dto.getSquadB());
+    }
+
+    @PostMapping("{no}/matchResult")
+    public Map matchResult(@PathVariable long no, @RequestParam String name, WebRequest request){
+        JSONObject response = new JSONObject();
+        String log = (String)request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        Match match = matchRepository.getMatchByNo(no);
+        MatchRequestDto dto = new MatchRequestDto();
+
+        if(log.equals(match.getAuthor())) {
+            if (match.getSquadA().equals(name)) {
+                dto.setDeadline('W');
+            } else {
+                dto.setDeadline('L');
+            }
+            matchService.updateMatch(no, dto);
+            response.put("matchResult", name);
+        }else{
+            response.put("matchResult", "fail");
+        }
+        return response.toMap();
     }
 }
