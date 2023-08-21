@@ -19,5 +19,4 @@ public class MatchRequestDto {
     private char deadline;
     private String squadA;
     private String squadB;
-    private String making;
 }
