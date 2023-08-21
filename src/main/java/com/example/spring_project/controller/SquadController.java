@@ -91,7 +91,7 @@ public class SquadController {
     @GetMapping("squad/my")
     public List<SquadResponseDto> getMySquad(WebRequest request){
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        List<Joining> joiningList = joiningRepository.findAllByEmail(log);
+        List<Joining> joiningList = joiningRepository.findByEmailAndStateNot(log, "N");
         List<SquadResponseDto> squadResponseDtos = new ArrayList<>();
         for(int i=0; i<joiningList.size(); i++){
             Squad squad = squadRepository.findByNo(joiningList.get(i).getSquadNo());

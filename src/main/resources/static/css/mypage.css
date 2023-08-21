@@ -73,7 +73,7 @@ h1 {
 .mypage_contents .overall {
     display:flex;
     gap:40px;
-    font-family: "I AM A PLAYER" ,"Tenada";
+    font-family: "IAMAPLAYER" ,"Tenada";
 }
 
 .mypage_contents .overall h1 {
@@ -90,10 +90,13 @@ h1 {
     align-items: center;
     justify-content: center;
     gap:30px;
+    font-family: "IAMAPLAYER";
 }
 
 .overall .overall_left .nickname {
     font-size:36px;
+    font-family: "IAMAPLAYER" ,"Tenada";
+    white-space: nowrap;
 }
 
 .overall .overall_left .position {

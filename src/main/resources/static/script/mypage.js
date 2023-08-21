@@ -1,5 +1,5 @@
-// let emailNo = $('#homin').val();
-let emailNo = "SIUUU@naver.com";
+let emailNo = $('#homin').val();
+// let emailNo = "SIUUU@naver.com";
 $(window).on('load', function () {
     //회원정보 호출 필요
     let sum = 0;
@@ -15,8 +15,8 @@ $(window).on('load', function () {
             const pos = response.pos;
             const leftfoot = response.leftfoot;
             const rightfoot = response.rightfoot;
-            const physical = Math.round((height + weight) / (age / 10) + 30);
             const speed = response.speed;
+            const physical = Math.round((height + weight) / (age / 10) + 30);
             const speedstat = Math.round(100 / speed * 9);
             const pPercent = physical * 100 / 150;
             const sPercent = speedstat * 100 / 150;

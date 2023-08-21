@@ -18,8 +18,7 @@ button{
 }
 .contents_top{
     display: flex;
-    margin: 0 5%;
-    margin-top: 70px;
+    margin: 70px 5% 0 5%;
     border-top: 10px solid #3e3d55;
     padding-bottom: 70px;
     border-bottom: 1px solid #3e3d55;
@@ -69,20 +68,26 @@ button{
     height: 70px;
     padding-top: 10px;
 }
-.error_name{
+.error{
     color: red;
     margin-top: 10px;
     padding-left: 10px;
     font-size: 13px;
     outline: none;
     border: none;
+}
+#error_name{
     display: none;
+}
+#error_invite{
+    display: none;
+    background: #f6f6f6;
 }
 .invited_btn{
     border: none;
     background: #3e3d55;
     color: white;
-    width: 30%;
+    width: 90px;
     height: 35px;
     cursor: pointer;
 }
@@ -154,8 +159,6 @@ button{
 }
 .list_area{
     padding: 10px 0;
-    border-top: 1px solid;
-    margin: 20px 10px;
 }
 .inviting_list{
     line-height: 25px;
@@ -185,18 +188,24 @@ button{
     align-items: center;
 }
 .list_pos{
-    width: 20%;
+    width: 30%;
+}
+.pos_input{
+    border: none;
+    outline: none;
 }
 .list_name{
-    width: 60%;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .list_out{
     width: 20%;
     text-align: center;
 }
 .out_btn{
-    width: 100%;
-    margin: 0 auto;
+    width: 60px;
     border: none;
     background: #3e3d55;
     color: white;
@@ -246,11 +255,12 @@ button{
 .area_img{
     background-image: url("../images/pos_area.png");
     background-repeat: no-repeat;
-    width: 167px;
-    height: 211px;
+    width: 92px;
+    height: 143px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 .position_row{
     display: flex;
@@ -259,10 +269,13 @@ button{
     align-items: center;
     justify-content: center;
 }
+.pos_name{
+    margin-bottom: 10px;
+}
 .position_add{
     margin: 0 auto;
-    width: 75px;
-    height: 75px;
+    width: 55px;
+    height: 55px;
     border: none;
     border-radius: 50%;
     font-size: 50px;
@@ -299,7 +312,7 @@ button{
     align-items: center;
 }
 .pos_text{
-    margin: 20px 0;
+    margin-bottom:25px;
     font-weight: bold;
 }
 .pos_delete{

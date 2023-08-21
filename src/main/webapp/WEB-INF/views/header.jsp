@@ -17,7 +17,7 @@
         <div class="logo"><a href="/">LOGO</a></div>
         <div class="nav_wrap">
             <div class="nav_list"><a href="/introduce">오버롤소개</a></div>
-            <div class="nav_list"><a href="/squad">스쿼드</a></div>
+            <div class="nav_list"><a href="/squad/list">스쿼드</a></div>
             <div class="nav_list"><a href="/squad/matchList">스쿼드매치</a></div>
         </div>
     </div>
@@ -29,9 +29,13 @@
             </div>
         </c:when>
         <c:otherwise>
-            <div class="mypage_wrap">
-                <div class="mypage"><a href="/mypage">마이페이지</a></div>
-            </div>
+                <div class="mypage_wrap">
+                    <div class="mypage"><a href="/mypage">마이페이지</a></div>
+                </div>
+                <div class="logout_wrap">
+<%--                  <div class="logout"><a href="javascript:logout();" onclick="return false;">로그아웃</a></div>--%>
+                   <div class="logout"><a href="javascript:void(0);" onclick="logout()">로그아웃</a></div>
+                </div>
         </c:otherwise>
     </c:choose>
     </div>

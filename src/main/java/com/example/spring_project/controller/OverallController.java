@@ -8,6 +8,7 @@ import com.example.spring_project.service.OverallService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.Map;
 
@@ -20,10 +21,11 @@ public class OverallController {
 
 
     @GetMapping("overallUpdate/{email}")
-    public OverallResponseDto getOverallByEmail(@PathVariable String email){
+    public OverallResponseDto getOverallByEmail(WebRequest request){
         OverallResponseDto overallResponseDto = null;
-        if(overallRepository.findByEmail(email)!=null){
-        overallResponseDto = new OverallResponseDto(overallRepository.findByEmail(email));
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        if(overallRepository.findByEmail(log)!=null){
+        overallResponseDto = new OverallResponseDto(overallRepository.findByEmail(log));
             return overallResponseDto;
         } else {
           overallResponseDto = new OverallResponseDto();
@@ -32,18 +34,19 @@ public class OverallController {
         }
     }
 
-    @PostMapping("overallUpdate/{email}/update")
-    public Map updateOverall(@PathVariable String email, @RequestBody OverallRequestDto overallRequestDto){
+    @PostMapping("overallUpdate/update")
+    public Map updateOverall(WebRequest request, @RequestBody OverallRequestDto overallRequestDto){
         JSONObject response = new JSONObject();
-        if(overallRepository.findByEmail(email)!=null){
-            overallService.updateOverall(email, overallRequestDto);
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        if(overallRepository.findByEmail(log)!=null){
+            overallRequestDto.setEmail(log);
+            overallService.updateOverall(log, overallRequestDto);
 
         } else {
             Overall overall = new Overall(overallRequestDto);
             overallRepository.save(overall);
         }
         return response.toMap();
-
 
     }
 }
