@@ -12,8 +12,7 @@ public class MemberResponseDto {
     private String name;
     private String nickname;
     private String phone;
-    private String province;
-    private String city;
+    private int stats;
 
     public MemberResponseDto(Member member){
         this.code = member.getCode();
@@ -22,7 +21,6 @@ public class MemberResponseDto {
         this.name = member.getName();
         this.nickname = member.getNickname();
         this.phone = member.getPhone();
-        this.province = member.getProvince();
-        this.city = member.getCity();
+        this.stats = member.getStats();
     }
 }

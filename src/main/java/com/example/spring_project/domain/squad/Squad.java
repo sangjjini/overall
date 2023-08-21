@@ -21,19 +21,13 @@ public class Squad {
     private String name;
     @Column(nullable = false, length = 1000)
     private String contents;
-    @Column(length = 100)
-    private String loadedFile;
-    @Column(length = 200)
-    private String imageUrl;
-    @Column(length = 320, unique = true)
+    @Column(length = 320)
     private String making;
 
     public Squad(SquadRequestDto squadRequestDto) {
         this.host = squadRequestDto.getHost();
         this.name = squadRequestDto.getName();
         this.contents = squadRequestDto.getContents();
-        this.loadedFile = squadRequestDto.getLoadedFile();
-        this.imageUrl = squadRequestDto.getImageUrl();
         this.making = squadRequestDto.getMaking();
     }
 
@@ -41,8 +35,6 @@ public class Squad {
         this.host = squadRequestDto.getHost();
         this.name = squadRequestDto.getName();
         this.contents = squadRequestDto.getContents();
-        this.loadedFile = squadRequestDto.getLoadedFile();
-        this.imageUrl = squadRequestDto.getImageUrl();
         this.making = squadRequestDto.getMaking();
     }
 }

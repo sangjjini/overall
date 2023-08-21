@@ -42,10 +42,10 @@
 <%--                        </div>--%>
                         <input type="button" id="submit_button" value="login"
                                onclick="loginChk()">
-<%--                        <div class="login_signup">--%>
+                        <div class="login_signup">
 <%--                            <a href="/finduser" class="forget_password">아이디 / 비밀번호 찾기</a>--%>
-<%--                            <a href="/join">회원가입</a>--%>
-<%--                        </div>--%>
+                            <a href="/join">회원가입</a>
+                        </div>
                     </form>
                 </div>
             </section>

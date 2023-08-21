@@ -13,5 +13,4 @@ public class ChatRequestDto {
     private long squadNo;
     private String nickname;
     private String contents;
-    private String notice;
 }

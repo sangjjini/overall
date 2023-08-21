@@ -16,7 +16,6 @@ public class ChatResponseDto {
     private long squadNo;
     private String nickname;
     private String contents;
-    private String notice;
     private String createdAt;
 
     public ChatResponseDto(Chat chat){
@@ -25,7 +24,6 @@ public class ChatResponseDto {
         this.squadNo = chat.getSquadNo();
         this.nickname = chat.getNickname();
         this.contents = chat.getContents();
-        this.notice = chat.getNotice();
         this.createdAt = chat.getCreatedAt().format(DateTimeFormatter.ofPattern("MM-dd HH:mm"));
     }
 }
