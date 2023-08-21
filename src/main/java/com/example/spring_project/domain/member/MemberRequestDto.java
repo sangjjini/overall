@@ -17,6 +17,5 @@ public class MemberRequestDto {
     private String name;
     private String nickname;
     private String phone;
-    private String province;
-    private String city;
+    private int stats;
 }

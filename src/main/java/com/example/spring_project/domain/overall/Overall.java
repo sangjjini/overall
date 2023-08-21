@@ -35,6 +35,9 @@ public class Overall {
     private int leftfoot;
     @Column
     private String pos;
+    @Column(nullable = false)
+    private int rating;
+
     public Overall(OverallRequestDto overallRequestDto) {
         this.email = overallRequestDto.getEmail();
         this.age = overallRequestDto.getAge();
@@ -44,6 +47,7 @@ public class Overall {
         this.rightfoot = overallRequestDto.getRightfoot();
         this.leftfoot = overallRequestDto.getLeftfoot();
         this.pos = overallRequestDto.getPos();
+        this.rating = overallRequestDto.getRating();
     }
 
     public void update(OverallRequestDto overallRequestDto) {
@@ -55,6 +59,7 @@ public class Overall {
         this.rightfoot = overallRequestDto.getRightfoot();
         this.leftfoot = overallRequestDto.getLeftfoot();
         this.pos = overallRequestDto.getPos();
+        this.rating = overallRequestDto.getRating();
     }
 
 }

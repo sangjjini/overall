@@ -17,6 +17,7 @@ public class OverallRequestDto {
     private int rightfoot;
     private int leftfoot;
     private String pos;
+    private int rating;
 
     public OverallRequestDto(Overall overall) {
         this.no = overall.getNo();
@@ -28,5 +29,6 @@ public class OverallRequestDto {
         this.rightfoot = overall.getRightfoot();
         this.leftfoot = overall.getLeftfoot();
         this.pos = overall.getPos();
+        this.rating = overall.getRating();
     }
 }

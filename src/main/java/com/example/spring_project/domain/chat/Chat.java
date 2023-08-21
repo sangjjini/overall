@@ -22,7 +22,6 @@ public class Chat extends Timestamp{
     private long squadNo;
     @Column(length = 500, nullable = false)
     private String contents;
-    private String notice;
 
     public Chat(ChatRequestDto chatRequestDto){
         this.no = chatRequestDto.getNo();
@@ -30,6 +29,5 @@ public class Chat extends Timestamp{
         this.squadNo = chatRequestDto.getSquadNo();
         this.nickname = chatRequestDto.getNickname();
         this.contents = chatRequestDto.getContents();
-        this.notice = chatRequestDto.getNotice();
     }
 }
