@@ -22,8 +22,8 @@
     <div class="page_title">
         <h1>매치 리스트</h1>
         <p>OVERALL에서 자신의 스쿼드로 풋살매치를 즐기세요</p>
-<%--        <input type="hidden" id="log" value="${log}">        --%>
-        <input type="hidden" id="log" value="neymar@gmail.com">
+        <input type="hidden" id="log" value="${log}">
+<%--        <input type="hidden" id="log" value="neymar@gmail.com">--%>
     </div>
     <div class="contents">
         <div class="contents_left">

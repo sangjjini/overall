@@ -20,7 +20,8 @@
     <div class="page_title">
         <h1>매치 생성</h1>
         <p></p>
-        <input type="hidden" id="log" value="neymar@gmail.com">
+        <input type="hidden" id="log" value="${log}">
+<%--        <input type="hidden" id="log" value="neymar@gmail.com">--%>
 <%--        <input type="hidden" id="log" value="kevin@gmail.com">--%>
     </div>
     <div class="contents">

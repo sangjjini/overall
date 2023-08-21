@@ -98,11 +98,21 @@ function match(){
         if(log === response.author){
             update_btn.text("정보 변경");
             update_btn.attr({onclick:"updateMatch()"})
-        }else{
+        }else {
             $('#delete_btn').hide();
             update_btn.text("매치 퇴장");
             update_btn.attr({onclick:"leaveMatch()"})
         }
+
+        // else if(response.squadB !== null){
+        //     $('#delete_btn').hide();
+        //     update_btn.text("매치 퇴장");
+        //     update_btn.attr({onclick:"leaveMatch()"})
+        // }
+        // else {
+        //     $('#delete_btn').hide();
+        //     update_btn.text("매치 신청");
+        // }
 
         $('#title').val(response.title);
         $('#contents').val(response.contents);
