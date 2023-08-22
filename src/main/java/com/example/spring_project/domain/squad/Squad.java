@@ -22,10 +22,10 @@ public class Squad {
     @Column(nullable = false, length = 1000)
     private String contents;
 
-    public Squad(SquadRequestDto squadRequestDto) {
-        this.host = squadRequestDto.getHost();
-        this.name = squadRequestDto.getName();
-        this.contents = squadRequestDto.getContents();
+    public Squad(String host, String name, String contents) {
+        this.host = host;
+        this.name = name;
+        this.contents = contents;
     }
 
     public void update(SquadRequestDto squadRequestDto) {
