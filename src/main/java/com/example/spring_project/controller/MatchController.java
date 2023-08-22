@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 import lombok.val;
 import org.json.JSONObject;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -87,22 +88,48 @@ public class MatchController {
         List<List<Match>> matchList = new ArrayList<>();
 
         for(Squad squad : squadList){
+            System.out.println(squad.getName());
             String name = squad.getName();
             matchList.add(matchRepository.findAllBySquadB(name));
         }
 
         return matchList;
     }
-
     @GetMapping("list")
-    public List<Match> getMatchAll(@RequestParam(required = false)String keyword, @PageableDefault(size=3) Pageable pageable){
-        if(keyword != null && !keyword.equals("")){
-            String pattern = "%" + keyword + "%";
-            return matchRepository.findAllByTitleLike(pattern);
-        }else {
-            return matchRepository.findAll();
+    public List<Match> getMatchAll(@RequestParam(required = false) String sort){
+        if (sort.equals("title_desc")) {
+            return matchRepository.findByOrderByTitleDesc();
+        } else if (sort.equals("title_asc")) {
+            return matchRepository.findByOrderByTitleAsc();
+        } else if (sort.equals("date_desc")) {
+            return matchRepository.findByOrderByStartAtDesc();
+        } else if (sort.equals("date_asc")) {
+            return matchRepository.findByOrderByStartAtAsc();
         }
+//        else if (sort.equals("overall_asc")) {
+//
+//        } else if (sort.equals("overall_desc")) {
+//
+//        }
+        return matchRepository.findAll();
     }
+//    @GetMapping("list")
+//    public List<Match> getMatchAll(@RequestParam(required = false)String sort, @PageableDefault(size=3) Pageable pageable){
+////    public Page<Match> getMatchAll(@RequestParam(required = false) String sort, @PageableDefault(size=2) Pageable pageable){
+//        Page<Match> page = matchRepository.findByOrderByStartAtDesc(pageable);
+//        System.out.println(page.getTotalPages());
+//
+//        return matchRepository.findAll();
+//    }
+
+//    @GetMapping("list")
+//    public List<Match> getMatchAll(@RequestParam(required = false)String sort, @PageableDefault(size=3) Pageable pageable){
+//        if(sort.equals("title")){
+//            return matchRepository.findByOrderByTitleDesc();
+//        }else{
+//            return matchRepository.findAll();
+//        }
+//    }
 
     @GetMapping("{no}")
     public Match getMatchByNo(@PathVariable long no){
@@ -113,6 +140,7 @@ public class MatchController {
     public Map update(@PathVariable long no, @RequestBody MatchRequestDto dto, WebRequest request){
         JSONObject response = new JSONObject();
         String log = (String)request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
         if(log.equals(dto.getAuthor())){
             try {
                 matchService.updateMatch(no, dto);
@@ -185,16 +213,13 @@ public class MatchController {
         // log
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         String squadName = response.getString("name");
-        System.out.println(log);
-        System.out.println(match.getSquadB());
-        System.out.println(squadName);
+
 
         if(match.getAuthor().equals(log)){
             if(match.getSquadB() == null) {
                 matchService.deleteMatch(no);
                 response.put("leave", "delete");
             }else {
-                System.out.println("방장 튐");
                 Squad squad = squadRepository.findByName(match.getSquadB());
                 dto.setAuthor(squad.getHost());
                 dto.setDeadline('R');
@@ -266,7 +291,6 @@ public class MatchController {
         int idx = 1;
         for(Joining joining : list){
             long cnt = joiningRepository.countBySquadNoAndStateNotAndStateNot(joining.getSquadNo(), "N", "H");
-            System.out.println(idx++ + "번 : " + cnt);
 
             if(cnt == 2){
                 long no = joining.getSquadNo();
