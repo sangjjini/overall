@@ -9,7 +9,9 @@
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link type="text/css" href="/css/reset.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/login.css">
+    <link rel="shortcut icon" href="/images/favicon.ico">
     <script src="/script/login.js"></script>
     <title>로그인</title>
 </head>
@@ -25,34 +27,23 @@
                     <form id="login">
                         <div class="id_txt">이메일</div>
                         <div class="login-box">
-                            <ion-icon name="person-outline"></ion-icon>
                             <input type="text" name="email" id="email" maxlength="30"
                                    autocapitalize="off">
                         </div>
                         <div class="pw_txt">비밀번호</div>
                         <div class="login-box">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
                             <input type="password" name="password" id="password"
                                    maxlength="30" autocapitalize="off">
                         </div>
-<%--                        <div class="checkbox">--%>
-<%--                            <label>--%>
-<%--                                <form:checkbox path="rememberId"/>아이디 저장--%>
-<%--                            </label>--%>
-<%--                        </div>--%>
-                        <input type="button" id="submit_button" value="login"
+                        <input type="button" id="submit_button" value="로그인"
                                onclick="loginChk()">
                         <div class="login_signup">
-<%--                            <a href="/finduser" class="forget_password">아이디 / 비밀번호 찾기</a>--%>
+                            <h1>회원으로 이용을 하고싶으시다면 ?</h1>
                             <a href="/join">회원가입</a>
                         </div>
                     </form>
                 </div>
             </section>
-<%--            <script type="module"--%>
-<%--                    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>--%>
-<%--            <script nomodule--%>
-<%--                    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>--%>
         </div>
     </div>
 <jsp:include page="footer.jsp"></jsp:include>
