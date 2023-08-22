@@ -48,7 +48,7 @@ function show_alarm(){
 
 function accept_invite(id){
     $.ajax({
-        url: "joining/" + squadNo + "/accept?code=" + id,
+        url: "joining/" + id + "/accept",
         type: "post"
     }).done(function (){
         $("div").remove('#' + id);

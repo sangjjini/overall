@@ -99,8 +99,13 @@ public class JoiningController {
     }
 
     @PostMapping("joining/{no}/accept")
-    public void acceptJoining(@PathVariable long no, @RequestParam(required = false) long code) {
-        String email = memberRepository.findByCode(code).getEmail();
+    public void acceptJoining(WebRequest request,
+                              @PathVariable long no,
+                              @RequestParam(required = false) long code) {
+        String email = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        if(code != 0){
+            email = memberRepository.findByCode(code).getEmail();
+        }
         Joining joining = joiningRepository.findByEmailAndSquadNo(email, no);
         JoiningRequestDto joiningRequestDto = new JoiningRequestDto(joining);
         joiningRequestDto.setState("Y");
@@ -108,8 +113,13 @@ public class JoiningController {
     }
 
     @DeleteMapping("joining/{no}/refuse")
-    public void refuseJoining(@PathVariable long no, @RequestParam long code) {
-        String email = memberRepository.findByCode(code).getEmail();
+    public void refuseJoining(WebRequest request,
+                              @PathVariable long no,
+                              @RequestParam(required = false) long code) {
+        String email = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        if(code != 0){
+            email = memberRepository.findByCode(code).getEmail();
+        }
         JoiningId joiningId = new JoiningId(email, no);
         joiningService.deleteJoining(joiningId);
     }
