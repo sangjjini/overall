@@ -113,7 +113,7 @@ function signupChk() {
         return false;
     }
 
-    닉네임 유효성
+    // 닉네임 유효성
     if (!getNickName.test($("#nickName").val())) {
         // alert("사용할 수 없는 닉네임 입니다");
         $("#hint_nickName").text("최소 2자리 이상 8자리 이하 한글, 영문, 숫자만 입력해야 합니다").css("color", "#ff3860");

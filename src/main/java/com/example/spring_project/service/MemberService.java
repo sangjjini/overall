@@ -83,4 +83,10 @@ public class MemberService {
         member.update(memberDto);
     }
 
+    @Transactional
+    public void updateOverall(String email, MemberRequestDto memberRequestDto){
+        Member member = memberRepository.findByEmail(email);
+        member.update(memberRequestDto);
+    }
+
 }
