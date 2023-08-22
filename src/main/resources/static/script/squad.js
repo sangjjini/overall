@@ -23,6 +23,7 @@ function squad(){
         $('#contents').val(response.contents);
         host = response.host;
         $('#host').val(host);
+        $('#ovr').val(response.stats);
         name_squad = response.name;
         contents_squad = response.contents;
         if(log === host){
@@ -49,7 +50,10 @@ function invited(){
                         <div class="list_pos">
                             <input type="text" class="pos_input" id="pos_${members.code}" readonly>
                         </div>
-                        <div class="list_name">${members.nickname}(방장)</div>
+                        <div class="list_name">
+                            <div class="list_over">${members.stats}</div>
+                            <div>${members.nickname}(방장)</div>
+                        </div>
                     </div>`
                 );
             } else {
@@ -59,8 +63,13 @@ function invited(){
                             <div class="list_pos">
                                 <input type="text" class="pos_input" id="pos_${members.code}" readonly>
                             </div>
-                            <div class="list_name">${members.nickname}
-                            <button onclick="out(this.id)" id="${members.code}" class="out_btn">방출</button></div>
+                            <div class="list_out">
+                                <div class="list_name">
+                                    <div class="list_over">${members.stats}</div>
+                                    <div>${members.nickname}</div>
+                                </div>
+                                <button onclick="out(this.id)" id="${members.code}" class="out_btn">방출</button>
+                            </div>
                         </div>`
                     );
                 } else{
@@ -69,7 +78,10 @@ function invited(){
                             <div class="list_pos">
                                 <input type="text" class="pos_input" id="pos_${members.code}" readonly>
                             </div>
-                            <div class="list_name">${members.nickname}</div>
+                            <div class="list_name">
+                                <div class="list_over">${members.stats}</div>
+                                <div>${members.nickname}</div>
+                            </div>
                         </div>`
                     );
                 }
@@ -94,13 +106,18 @@ function inviting(){
         url: "joining/" + squadNo + "/inviting",
         type: "get"
     }).done(function (response){
-        $('#inviting').empty();
         response.forEach(members => {
             $('#inviting').append(
                 `<div id="${members.code}" class="inviting_list">
-                    - ${members.nickname}(${members.email})
-                    <button onclick="refuse(this.id)" id="${members.code}" 
-                    class="answer_btn refuse_btn">X</button>
+                    <div class="inviting_left">
+                        <div class="inviting_num">${members.stats}</div>
+                        <div class="inviting_name">${members.nickname}(${members.email})</div>
+                    </div>
+                    <div>
+                        <button onclick="refuse(this.id)" id="${members.code}" 
+                        class="answer_btn refuse_btn">X</button>
+                    </div>
+                    
                 </div>`
             );
         });
@@ -116,11 +133,16 @@ function applying(){
         response.forEach(members => {
             $('#inviting').append(
                 `<div id="${members.code}" class="inviting_list">
-                    - ${members.nickname}(${members.email})
-                    <button onclick="refuse(this.id)" id="${members.code}" 
-                    class="answer_btn refuse_btn">X</button>
-                    <button onclick="accept(this.id)" id="${members.code}" 
-                    class="answer_btn accept_btn">V</button>
+                    <div class="inviting_left">
+                        <div class="inviting_num">${members.stats}</div>
+                        <div class="inviting_name">${members.nickname}(${members.email})</div>
+                    </div>
+                    <div>
+                        <button onclick="refuse(this.id)" id="${members.code}" 
+                        class="answer_btn refuse_btn">X</button>
+                        <button onclick="accept(this.id)" id="${members.code}" 
+                        class="answer_btn accept_btn">V</button>
+                    </div>
                 </div>`
             );
             apply_cnt++;
@@ -162,7 +184,7 @@ function leave(){
             url: "joining/" + squadNo + "/leave",
             type: "delete"
         }).done(function (){
-           location.href = "squad_list"
+           location.href = "squad/list"
         });
     }
 }
@@ -183,7 +205,6 @@ function refuse(id){
         type: "delete"
     }).done(function (){
         $("div").remove('#' + id);
-        invited();
     });
 }
 
@@ -194,6 +215,7 @@ function out(id){
             type: "delete"
         }).done(function (){
             invited();
+            squad();
         });
     }
 }

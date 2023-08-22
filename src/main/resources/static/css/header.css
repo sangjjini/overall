@@ -178,6 +178,7 @@
     color: white;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 #alarm_area{
     padding: 10px 0;
@@ -198,6 +199,8 @@
 .inviting_list{
     line-height: 25px;
     margin: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 .team_name{
     color: #0077ff;

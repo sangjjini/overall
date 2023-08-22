@@ -10,11 +10,13 @@ public class SquadResponseDto {
     private String host;
     private String name;
     private String contents;
+    private int stats;
 
     public SquadResponseDto(Squad squad) {
         this.no = squad.getNo();
         this.host = squad.getHost();
         this.name = squad.getName();
         this.contents = squad.getContents();
+        this.stats = squad.getStats();
     }
 }
