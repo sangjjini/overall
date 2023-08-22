@@ -171,34 +171,33 @@ function join(){
 }
 
 // 이메일 인증번호
-$sendCode.click(function() {
+$checkEmail.click(function() {
     $.ajax({
         type : "POST",
         url : "login/mailConfirm",
         data : {
-            "email" : $memail.val()
+            "email" : $email.val()
         },
         success : function(data){
             alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
             console.log("data : "+data);
-            chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt);
+            chkEmailConfirm(data, $verify_btn, $memailconfirmTxt);
         }
     })
 })
 
 // 이메일 인증번호 체크 함수
-function chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt){
-    $memailconfirm.on("keyup", function(){
-        if (data != $memailconfirm.val()) { //
+function chkEmailConfirm(data, $verify_btn, $memailconfirmTxt){
+    $verify_btn.on("keyup", function(){
+        if (data != $verify_btn.val()) { //
             emconfirmchk = false;
             $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
             $("#emconfirmchk").css({
                 "color" : "#FA3E3E",
                 "font-weight" : "bold",
                 "font-size" : "10px"
-
             })
-            //console.log("중복아이디");
+            console.log("중복아이디");
         } else { // 아니면 중복아님
             emconfirmchk = true;
             $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
@@ -233,29 +232,6 @@ function nickDuplChk() {
         error: function(error) {
             console.error("닉네임 중복 확인 실패:", error);
             alert("닉네임을 먼저 입력해 주세요.");
-        }
-    });
-}
-
-function emailDuplChk() {
-    var email = $('#email').val();
-
-    $.ajax({
-        type: "GET",
-        url: "/api/v1/members/checkEmail/" + email,
-        success: function(response) {
-            if (response === true) {
-                // 이메일 중복됨
-                $("#hint_email").text("이미 사용 중인 이메일입니다").css("color", "#ff3860");
-            } else {
-                // 이메일 사용 가능
-                $("#hint_email").text("사용 가능한 이메일입니다").css("color", "green");
-            }
-            $("#hint_email").show();
-        },
-        error: function(error) {
-            console.error("이메일 중복 확인 실패:", error);
-            alert("이메일을 먼저 입력해 주세요.");
         }
     });
 }

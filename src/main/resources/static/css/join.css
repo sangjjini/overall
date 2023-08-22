@@ -89,10 +89,75 @@ color:#fff;
 cursor:pointer;
 }
 
+.input-control.success input {
+    border-color: #09c372;
+}
+
+.input-control.error input {
+    border-color: #ff3860;
+}
+
+.input-control .error {
+    color: #ff3860;
+    font-size: 9px;
+    height: 13px;
+}
+
+.input-control>.hint {
+    color: #ff3860;
+}
+
 .input_and_button {
     display:flex;
     align-items: center;
     gap:10px;
+}
+
+#dup_btn {
+    width: 100px;
+    height:40px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    background:#fff;
+    padding:5px;
+}
+
+#dup_btn:hover{
+    cursor:pointer;
+    color:#fff;
+    background:#d91950;
+}
+
+#send_btn {
+    width: 100px;
+    height:40px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    background:#fff;
+    padding:5px;
+}
+
+#send_btn:hover{
+    cursor:pointer;
+    color:#fff;
+    background:#d91950;
+}
+
+#verify_btn {
+    width: 90px;
+    height:40px;
+    bvorder:0;
+    border-radius:10px;
+    background:#fff;
+    padding:5px;
+
+}
+
+#verify_btn:hover{
+    cursor:pointer;
+    color:#fff;
+    background:#d91950;
+
 }
 
 #submit_btn {

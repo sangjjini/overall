@@ -27,16 +27,16 @@
                         <h2>OVERALL</h2>
                     </div>
                         <div class="input-control">
-                            <label class="label" for="email">이메일</label>
+                            <label class="label" for="email" id="mailTxt">이메일</label>
                             <div class="input_and_button">
                                 <input id="email" name="email" type="email" placeholder="예)email2023@domain.com" maxlength="40">
-                                <button id="send_btn" type="button" value="send_code" class="send_code" onclick="sendCode()">인증번호 발송
+                                <button id="send_btn" type="button" value="send_code" class="send_code" onclick="checkEmail()">인증번호 발송
                                 </button>
                             </div>
                             <small class="small hint" id="hint_email">이메일이 인증되지 않았습니다</small>
                         </div>
                         <div id="div_code" class="input-control">
-                            <label class="label" for="verify_btn">인증번호 입력</label>
+                            <label class="label" id="memailconfirmTxt" for="verify_btn">인증번호 입력</label>
                             <input id="code" name="code" type="number" maxlength="6">
                             <button id="verify_btn" type="button" value="verify" class="verify" onclick="verify()">인증하기</button>
                         </div>
@@ -63,11 +63,6 @@
                                 <button id="dup_btn" type="button" value="중복확인" class="dup" onclick="nickDuplChk()">중복 확인</button>
                             </div>
                             <small class="small hint" id="hint_nickName">최소 2자리 이상 8자리 이하 한글, 영문, 숫자만 입력해야 합니다</small>
-                        </div>
-                        <div class="input-control_stats">
-                            <label class="label" for="nickName">내 스탯</label>
-                            <input id="stats" name="stats" type="text" maxlength="13" placeholder="내 스탯 설정">
-                            <small class="small hint" id="hint_stats">스탯을 입력해 주세요</small>
                         </div>
                         <div class="input-control_phone">
                             <label class="label" for="phone-first">휴대폰 번호</label><br>
