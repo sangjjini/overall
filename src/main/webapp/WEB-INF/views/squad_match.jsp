@@ -17,6 +17,7 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
+<div class="shadow"></div>
 <div class="page_title">
     <h1>매치 생성</h1>
     <p></p>
@@ -27,6 +28,16 @@
 <div class="contents">
     <div class="content">
         <div class="contents_left">
+<%--            <div id="select_team">--%>
+<%--                <div class="popup_area">--%>
+<%--                    <div>--%>
+<%--                        <button onclick="close_select()" class="cancel_btn">X</button>--%>
+<%--                    </div>--%>
+<%--                    <div class="invite_title small_title">승리한 팀 선택</div>--%>
+<%--                    <div id="squad_list" class="list_area"></div>--%>
+<%--                    <button class="select_winner" id="win" onclick="resultMatch()">선택</button>--%>
+<%--                </div>--%>
+<%--            </div>--%>
             <div class="contents_list">
                 <label for="title" class="small_title">방제</label>
                 <input type="text" id="title" class="input_area">
@@ -58,7 +69,10 @@
                 <button class="squad_edit" id="delete_btn" onclick="deleteMatch()">매치 삭제</button>
             </div>
             <div class="contents_list">
-                <button class="squad_edit" id="result_btn" onclick="resultMatch()">매치결과 수정</button>
+                <select id="select_squad">
+
+                </select>
+                <button class="squad_edit" id="result_btn" onclick="resultMatch()">매치결과</button>
             </div>
             <div class="contents_list"></div>
         </div>

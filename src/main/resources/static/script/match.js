@@ -4,6 +4,7 @@ $(window).on('load', function (){
     const urlParams = new URL(location.href).searchParams;
     no = urlParams.get('no');
     match();
+    squad_list();
 });
 
 function updateMatch(){
@@ -66,11 +67,26 @@ function leaveMatch(){
     }
 }
 
+function squad_list(){
+    $.ajax({
+        url: "/squad/match/" + no,
+        type: "get"
+    }).done(function(response){
+        let select = $('#select_squad')
+        select.empty();
+        select.append(
+             `<option value="${response.squadA}">${response.squadA}</option>
+              <option value="${response.squadB}">${response.squadB}</option>`
+
+        );
+    });
+}
+
 function resultMatch(){
     const author = $('#author').val();
-    const winSquad = $('#win').val();
+    const winSquad = $('#select_squad').val();
     let obj = {name:winSquad};
-    if(log === author){s
+    if(log === author){
         $.ajax({
             url:"/squad/match/" + no + "/matchResult",
             type:"post",
@@ -80,7 +96,7 @@ function resultMatch(){
         }).done(function(response){
             const result = Object.values(response)[0];
             if(result !== "fail"){
-                alert(result + "님 승리 축하드립니다.")
+                alert("경기결과가 저장되었습니다.")
             }
         });
     }else{
@@ -125,6 +141,7 @@ function match(){
             update_btn.attr({onclick:"updateMatch()"})
         }else {
             $('#delete_btn').hide();
+            $('#select_squad').hide();
             $('#result_btn').hide();
             update_btn.text("매치 퇴장");
             update_btn.attr({onclick:"leaveMatch()"})

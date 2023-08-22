@@ -328,24 +328,29 @@ public class MatchController {
     }
 
     @PostMapping("{no}/matchResult")
-    public Map matchResult(@PathVariable long no, @RequestParam String name, WebRequest request){
-        JSONObject response = new JSONObject();
-        String log = (String)request.getAttribute("log", WebRequest.SCOPE_SESSION);
+    public Map matchResult(@PathVariable long no, @RequestBody String name, WebRequest request){
+        JSONObject response = new JSONObject(name);
+        //String log = (String)request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        String squadName = response.getString("name");
 
         Match match = matchRepository.getMatchByNo(no);
-        MatchRequestDto dto = new MatchRequestDto();
 
-        if(log.equals(match.getAuthor())) {
-            if (match.getSquadA().equals(name)) {
-                dto.setDeadline('W');
-            } else {
-                dto.setDeadline('L');
-            }
-            matchService.updateMatch(no, dto);
-            response.put("matchResult", name);
-        }else{
-            response.put("matchResult", "fail");
+        MatchRequestDto dto = new MatchRequestDto();
+        dto.setSquadB(match.getSquadB());
+
+        if (match.getSquadA().equals(name)) {
+            dto.setDeadline('W');
+            System.out.println("여기 들감?");
+        } else {
+            dto.setDeadline('L');
+            System.out.println("여기 들어감?");
         }
+
+        System.out.println("왜이럴까 : " + dto.getDeadline());
+        matchService.updateMatch(no, dto);
+
+        response.put("matchResult", name);
+
         return response.toMap();
     }
 }
