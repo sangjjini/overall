@@ -124,3 +124,98 @@
     color: #fff;
     font-size: 28px;
 }
+
+/*알림창 관련 css*/
+.alarm_area{
+    position: relative;
+}
+.alarm{
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    display: block;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 28px;
+    background: black;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+}
+#alarm_cnt{
+    color: white;
+    border: none;
+    border-radius: 50%;
+    background: #0077ff;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    text-align: center;
+    display: none;
+}
+#alarm_popup{
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: -150px;
+    background-color: #f6f6f6;
+    border: 1px solid lightgray;
+    width: 330px;
+    padding: 5px 5px 0 5px;
+    font-size: 15px;
+    z-index: 1;
+}
+.cancel_btn{
+    float: right;
+    border: none;
+    width: 20px;
+    height: 20px;
+    background: #25c7f5;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 15px;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+#alarm_area{
+    padding: 10px 0;
+}
+#popup_cnt{
+    border: none;
+    background: none;
+    font-family : MBC1961GulimM;
+    color: #0077ff;
+    font-size: 15px;
+}
+.alarm_one{
+    display: flex;
+}
+.invite_title{
+    margin: 10px 10px 0 10px;
+}
+.inviting_list{
+    line-height: 25px;
+    margin: 10px;
+}
+.team_name{
+    color: #0077ff;
+}
+.answer_btn{
+    float: right;
+    border: none;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 15px;
+}
+.accept_btn{
+    background: #25c7f5;
+    color: white;
+}
+.refuse_btn{
+    background: white;
+    color: gray;
+    border: 1px solid lightgray;
+}

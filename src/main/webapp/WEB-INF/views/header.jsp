@@ -10,11 +10,6 @@
 <head>
     <link type="text/css" href="/css/header.css" rel="stylesheet" />
     <script src="/script/header.js"></script>
-    <style>
-        #alarm_popup{
-            display: none;
-        }
-    </style>
 </head>
 <body>
 <header id = "header">
@@ -34,9 +29,19 @@
             </div>
         </c:when>
         <c:otherwise>
-                <div>
-                    <button class="alarm" onclick="show_alarm()">알람</button>
+                <div class="alarm_area">
+                    <button class="alarm" onclick="show_alarm()">
+                        <div>
+                            <img src="/images/alarm.png">
+                            <input type="text" id="alarm_cnt" class="alarm_num">
+                        </div>
+                    </button>
                     <div id="alarm_popup">
+                        <button onclick="close_alarm()" class="cancel_btn">X</button>
+                        <div class="invite_title">
+                            새로운 알람 :
+                            <input type="text" class="alarm_num" id="popup_cnt">
+                        </div>
                         <div id="alarm_area"></div>
                     </div>
                 </div>

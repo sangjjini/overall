@@ -18,7 +18,7 @@ button{
 }
 .contents_top{
     display: flex;
-    margin: 70px 5% 0 5%;
+    margin: 70px 150px 0 150px;
     border-top: 10px solid #3e3d55;
     padding-bottom: 70px;
     border-bottom: 1px solid #3e3d55;
@@ -28,8 +28,8 @@ button{
 .contents_left{
     display: flex;
     flex-direction: column;
-    padding: 40px 2%;
-    margin: 0 3%;
+    padding: 40px 50px;
+    margin: 0 40px;
     width: 300px;
     border-bottom: 1px solid #3e3d55;
     height: 100%;
@@ -51,6 +51,18 @@ button{
     display: flex;
     flex-direction: column;
     margin-top: 20px;
+}
+#invite_list{
+    display: none;
+    position: absolute;
+    top: 830px;
+    left: 210px;
+    background-color: #f6f6f6;
+    border: 1px solid lightgray;
+    width: 350px;
+    padding: 5px 5px 0 5px;
+    font-size: 15px;
+    z-index: 1;
 }
 .contents_list>label{
     padding-left: 10px;
@@ -97,24 +109,11 @@ button{
     border: 3px solid #3e3d55;
     padding-left: 10px;
 }
-#invite_list{
-    display: none;
-    position: absolute;
-    left: 90px;
-    top: 760px;
-    background-color: #f6f6f6;
-    border: 1px solid lightgray;
-    width: 330px;
-    padding: 5px 5px 0 5px;
-    font-size: 15px;
-}
+
 .popup_area{
     display: flex;
     flex-direction: column;
     padding-left: 5px;
-}
-.invite_title{
-    margin: 10px 10px 0 10px;
 }
 #email{
     width: 75%;
@@ -122,17 +121,7 @@ button{
     border: 1px solid gray;
     padding-left: 10px;
 }
-.cancel_btn{
-    float: right;
-    border: none;
-    width: 20px;
-    height: 20px;
-    background: #25c7f5;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 15px;
-    color: white;
-}
+
 .small_btn{
     width: 20%;
     border: none;
@@ -159,27 +148,6 @@ button{
 }
 .list_area{
     padding: 10px 0;
-}
-.inviting_list{
-    line-height: 25px;
-    margin: 10px;
-}
-.answer_btn{
-    float: right;
-    border: none;
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    font-size: 15px;
-}
-.accept_btn{
-    background: #25c7f5;
-    color: white;
-}
-.refuse_btn{
-    background: white;
-    color: gray;
-    border: 1px solid lightgray;
 }
 .contents_member{
     display: flex;
@@ -292,7 +260,7 @@ button{
     width: 300px;
     height: 300px;
     top: 85%;
-    right: 25%;
+    right: 30%;
 }
 #A{
     color: #bc0f0f;
