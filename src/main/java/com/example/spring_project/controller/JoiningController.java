@@ -43,7 +43,7 @@ public class JoiningController {
                 squadService.deleteSquad(no);
             } else {
                 SquadRequestDto squadRequestDto = new SquadRequestDto(squad);
-                String host = joiningRepository.findAllBySquadNoAndStateNot(no, "N").get(0).getEmail();
+                String host = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(no, "N", "H").get(0).getEmail();
                 squadRequestDto.setHost(host);
                 squadService.updateSquad(no, squadRequestDto);
             }
@@ -64,7 +64,7 @@ public class JoiningController {
             JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
             joiningRequestDto.setEmail(log);
             joiningRequestDto.setSquadNo(no);
-            joiningRequestDto.setState("N");
+            joiningRequestDto.setState("H");
             Joining joining = new Joining(joiningRequestDto);
             joiningRepository.save(joining);
             response.put("apply", "success");
@@ -87,7 +87,7 @@ public class JoiningController {
             }else{
                 joiningRequestDto.setEmail(email);
                 joiningRequestDto.setSquadNo(no);
-                joiningRequestDto.setState("Y");
+                joiningRequestDto.setState("H");
                 Joining joining = new Joining(joiningRequestDto);
                 joiningRepository.save(joining);
                 response.put("invite", "success");
@@ -99,8 +99,13 @@ public class JoiningController {
     }
 
     @PostMapping("joining/{no}/accept")
-    public void acceptJoining(@PathVariable long no, @RequestParam(required = false) long code) {
-        String email = memberRepository.findByCode(code).getEmail();
+    public void acceptJoining(WebRequest request,
+                              @PathVariable long no,
+                              @RequestParam(required = false) long code) {
+        String email = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        if(code != 0){
+            email = memberRepository.findByCode(code).getEmail();
+        }
         Joining joining = joiningRepository.findByEmailAndSquadNo(email, no);
         JoiningRequestDto joiningRequestDto = new JoiningRequestDto(joining);
         joiningRequestDto.setState("Y");
@@ -108,14 +113,32 @@ public class JoiningController {
     }
 
     @DeleteMapping("joining/{no}/refuse")
-    public void refuseJoining(@PathVariable long no, @RequestParam long code) {
-        String email = memberRepository.findByCode(code).getEmail();
+    public void refuseJoining(WebRequest request,
+                              @PathVariable long no,
+                              @RequestParam(required = false) long code) {
+        String email = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        if(code != 0){
+            email = memberRepository.findByCode(code).getEmail();
+        }
         JoiningId joiningId = new JoiningId(email, no);
         joiningService.deleteJoining(joiningId);
     }
 
     @GetMapping("joining/{no}/inviting")
     public List<MemberResponseDto> getUserAllInviting(@PathVariable long no) {
+        List<MemberResponseDto> members = new ArrayList<>();
+        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, "H");
+        for(int i=0; i<joiningList.size(); i++) {
+            String email = joiningList.get(i).getEmail();
+            Member member = memberRepository.findByEmail(email);
+            MemberResponseDto memberResponseDto = new MemberResponseDto(member);
+            members.add(memberResponseDto);
+        }
+        return members;
+    }
+
+    @GetMapping("joining/{no}/applying")
+    public List<MemberResponseDto> getUserAllApplying(@PathVariable long no) {
         List<MemberResponseDto> members = new ArrayList<>();
         List<Joining> joiningList = joiningRepository.findAllBySquadNoAndState(no, "N");
         for(int i=0; i<joiningList.size(); i++) {
@@ -130,7 +153,7 @@ public class JoiningController {
     @GetMapping("joining/{no}/invited")
     public List<MemberResponseDto> getUserAllInvited(@PathVariable long no) {
         List<MemberResponseDto> members = new ArrayList<>();
-        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndStateNot(no, "N");
+        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(no, "N", "H");
         for(int i=0; i<joiningList.size(); i++) {
             String email = joiningList.get(i).getEmail();
             Member member = memberRepository.findByEmail(email);
@@ -184,5 +207,16 @@ public class JoiningController {
             memberResponseDto = new MemberResponseDto(member);
         }
         return memberResponseDto;
+    }
+
+    @GetMapping("joining/alarm")
+    public List<Squad> getSquadInvite(WebRequest request){
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        List<Joining> list = joiningRepository.findByEmailAndState(log, "H");
+        List<Squad> squads = new ArrayList<>();
+        for(int i=0; i<list.size(); i++){
+            squads.add(squadRepository.findByNo(list.get(i).getSquadNo()));
+        }
+        return squads;
     }
 }

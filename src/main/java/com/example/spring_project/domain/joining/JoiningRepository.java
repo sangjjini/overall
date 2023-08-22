@@ -12,4 +12,6 @@ public interface JoiningRepository extends JpaRepository<Joining, JoiningId> {
     List<Joining> findAllBySquadNoAndStateNot(long no, String state);
     List<Joining> findAllByEmail(String email);
     List<Joining> findByEmailAndStateNot(String email, String state);
+    List<Joining> findByEmailAndState(String email, String state);
+    List<Joining> findAllBySquadNoAndStateNotAndStateNot(long no, String state_a, String state_b);
 }

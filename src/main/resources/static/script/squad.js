@@ -1,11 +1,12 @@
 let squadNo;
 const log = $('#log').val();
-
+let apply_cnt = 0;
 $(window).on('load', function (){
     const urlParams = new URL(location.href).searchParams;
     squadNo = urlParams.get('no');
     squad();
     // 실시간 적용 필요
+    applying();
     chat();
     // read();
 });
@@ -59,7 +60,7 @@ function invited(){
                                 <input type="text" class="pos_input" id="pos_${members.code}" readonly>
                             </div>
                             <div class="list_name">${members.nickname}
-                            <button onClick="out(this.id)" id="${members.code}" class="out_btn">방출</button></div>
+                            <button onclick="out(this.id)" id="${members.code}" class="out_btn">방출</button></div>
                         </div>`
                     );
                 } else{
@@ -80,7 +81,6 @@ function invited(){
 
 function show_invite(){
     $('#invite_list').show();
-    inviting();
 }
 
 function close_invite(){
@@ -101,11 +101,31 @@ function inviting(){
                     - ${members.nickname}(${members.email})
                     <button onclick="refuse(this.id)" id="${members.code}" 
                     class="answer_btn refuse_btn">X</button>
+                </div>`
+            );
+        });
+    });
+}
+
+function applying(){
+    $.ajax({
+        url: "joining/" + squadNo + "/applying",
+        type: "get"
+    }).done(function (response){
+        $('#inviting').empty();
+        response.forEach(members => {
+            $('#inviting').append(
+                `<div id="${members.code}" class="inviting_list">
+                    - ${members.nickname}(${members.email})
+                    <button onclick="refuse(this.id)" id="${members.code}" 
+                    class="answer_btn refuse_btn">X</button>
                     <button onclick="accept(this.id)" id="${members.code}" 
                     class="answer_btn accept_btn">V</button>
                 </div>`
             );
+            apply_cnt++;
         });
+        inviting();
     });
 }
 
@@ -127,8 +147,7 @@ function invite(){
             }else{
                 error.hide();
                 $('#email').val("");
-                invited();
-                alert("초대가 완료되었습니다.");
+                inviting();
             }
         });
     } else{
@@ -142,6 +161,8 @@ function leave(){
         $.ajax({
             url: "joining/" + squadNo + "/leave",
             type: "delete"
+        }).done(function (){
+           location.href = "squad_list"
         });
     }
 }

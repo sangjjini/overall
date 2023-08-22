@@ -10,6 +10,11 @@
 <head>
     <link type="text/css" href="/css/header.css" rel="stylesheet" />
     <script src="/script/header.js"></script>
+    <style>
+        #alarm_popup{
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <header id = "header">
@@ -29,6 +34,12 @@
             </div>
         </c:when>
         <c:otherwise>
+                <div>
+                    <button class="alarm" onclick="show_alarm()">알람</button>
+                    <div id="alarm_popup">
+                        <div id="alarm_area"></div>
+                    </div>
+                </div>
                 <div class="mypage_wrap">
                     <div class="mypage"><a href="/mypage">마이페이지</a></div>
                 </div>
