@@ -23,44 +23,65 @@ function logout(){
 
 function alarm(){
     $.ajax({
-        url:"joining/alarm",
+        url:"/joining/alarm",
         type:"get"
     }).done(function (response){
         $('#alarm_area').empty();
         response.forEach(squads => {
             $('#alarm_area').append(
-                `<div>
-                    <div>${squads.name} 초대</div>
+                `<div id="${squads.no}" class="inviting_list">
+                    팀 <span class="team_name">${squads.name}</span> 초대
                     <button onclick="refuse_invite(this.id)" id="${squads.no}" 
                     class="answer_btn refuse_btn">X</button>
                     <button onclick="accept_invite(this.id)" id="${squads.no}" 
-                    class="answer_btn accept_btn">V</button>               
+                    class="answer_btn accept_btn">V</button>
                 </div>`
             );
             alarm_check++;
         });
+        alarm_show();
     })
 }
 
 function show_alarm(){
-    $('#alarm_popup').show();
+    $('#alarm_popup').toggle();
+}
+
+function close_alarm(){
+    $('#alarm_popup').hide();
 }
 
 function accept_invite(id){
     $.ajax({
-        url: "joining/" + id + "/accept",
+        url: "/joining/" + id + "/accept",
         type: "post"
     }).done(function (){
         $("div").remove('#' + id);
+        alarm_check--;
+        alarm_show();
     });
 }
 
 function refuse_invite(id){
     $.ajax({
-        url: "joining/" + squadNo + "/refuse?code=" + id,
+        url: "/joining/" + id + "/refuse",
         type: "delete"
     }).done(function (){
         $("div").remove('#' + id);
+        alarm_check--;
+        alarm_show();
     });
 }
+
+function alarm_show(){
+    const alarm_cnt = $('#alarm_cnt');
+    const alarm_num = $('.alarm_num');
+    alarm_num.val(alarm_check);
+    if(alarm_check !== 0){
+        alarm_cnt.show();
+    }else{
+        alarm_cnt.hide();
+    }
+}
+
 

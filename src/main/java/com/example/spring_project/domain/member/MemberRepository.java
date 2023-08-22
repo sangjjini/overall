@@ -22,6 +22,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     //주어진 이메일에 해당하는 회원을 조회(주어진 이메일에 해당하는 회원을 찾아 반환함)
     public Member findByEmail(String email);
 
+    // 닉네임.
+    boolean existsByNickname(String nickname);
+
     //주어진 이메일에 해당하는 회원을 조회(결과 반환 x , 사용자가 입력한 이메일에 해당하는 회원의 존재 여부를 확인하는 용도)
 // public void getMemberByEmail(String eamil);
 
