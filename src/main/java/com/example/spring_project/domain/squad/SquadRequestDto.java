@@ -12,7 +12,6 @@ public class SquadRequestDto {
     private String host;
     private String name;
     private String contents;
-    private String making;
 
     public SquadRequestDto(Squad squad) {
         this.no = squad.getNo();

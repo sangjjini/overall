@@ -21,20 +21,16 @@ public class Squad {
     private String name;
     @Column(nullable = false, length = 1000)
     private String contents;
-    @Column(length = 320)
-    private String making;
 
     public Squad(SquadRequestDto squadRequestDto) {
         this.host = squadRequestDto.getHost();
         this.name = squadRequestDto.getName();
         this.contents = squadRequestDto.getContents();
-        this.making = squadRequestDto.getMaking();
     }
 
     public void update(SquadRequestDto squadRequestDto) {
         this.host = squadRequestDto.getHost();
         this.name = squadRequestDto.getName();
         this.contents = squadRequestDto.getContents();
-        this.making = squadRequestDto.getMaking();
     }
 }
