@@ -32,34 +32,50 @@
                 <div class="update_contents_wrap">
                     <div class="update_contents">
                         <div class="txt">당신은 50m달리기가 몇초입니까?</div>
-                        <input type="text" id="speed">
+                        <input type="text" id="speed" placeholder="시간 입력">
                     </div>
                     <div class="update_contents">
                         <div class="txt">나이를 입력해주세요</div>
-                        <input type="text" id="age">
+                        <input type="text" id="age" placeholder="나이 입력">
                     </div>
                     <div class="update_contents">
                         <div class="txt">키를 입력해주세요</div>
-                        <input type="text" id="height">
+                        <input type="text" id="height" placeholder="키 입력">
                     </div>
                     <div class="update_contents">
                         <div class="txt">몸무게를 입력해주세요</div>
-                        <input type="text" id="weight">
+                        <input type="text" id="weight" placeholder="몸무게 입력">
                     </div>
                     <div class="update_contents">
                         <div class="txt">당신의 발 숙련도를 입력해주세요</div>
-                        <input type="text" id="rightfoot">
-                        <input type="text" id="leftfoot">
+                        <h2>왼발</h2>
+                        <input type="text" id="rightfoot" placeholder="왼발수치(1~5)">
+                        <h2>오른발</h2>
+                        <input type="text" id="leftfoot" placeholder="오른발수치(1~5)">
                     </div>
-<%--                    <div class="update_contents">--%>
-<%--                        <div class="txt">당신의 플레이스타일은?</div>--%>
-<%--                        <select>--%>
-<%--                            <option value="메짤라">메짤라</option>--%>
-<%--                        </select>--%>
-<%--                    </div>--%>
+                    <div class="update_contents">
+                        <div class="txt">당신의 플레이스타일은?</div>
+                        <div class="playstyle_wrap">
+                        <label class="playstyle_label" for="playstyle">플레이스타일</label>
+                        <select id ="playstyle">
+                            <option value="타겟터">타겟터</option>
+                            <option value="플레이메이커">플레이메이커</option>
+                            <option value="인버티드풀백">인버티드 풀백</option>
+                            <option value="메짤라">메짤라</option>
+                        </select>
+                        </div>
+                    </div>
                     <div class="update_contents">
                         <div class="txt">당신의 포지션은 어디입니까</div>
-                            <input type="text" id="pos">
+                        <div class="pos_wrap">
+                            <label class="pos_label" for="pos">포지션</label>
+                        <select id="pos">
+                            <option value="FW">FW</option>
+                            <option value="MF">MF</option>
+                            <option value="DF">DF</option>
+                        </select>
+                        </div>
+
                     </div>
                     <div class="update_contents">
                     <div class="button">

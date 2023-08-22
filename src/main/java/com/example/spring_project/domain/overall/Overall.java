@@ -34,6 +34,8 @@ public class Overall {
     @Column
     private int leftfoot;
     @Column
+    private String playstyle;
+    @Column
     private String pos;
     @Column(nullable = false)
     private int rating;
@@ -47,6 +49,7 @@ public class Overall {
         this.rightfoot = overallRequestDto.getRightfoot();
         this.leftfoot = overallRequestDto.getLeftfoot();
         this.pos = overallRequestDto.getPos();
+        this.playstyle = overallRequestDto.getPlaystyle();
         this.rating = overallRequestDto.getRating();
     }
 
@@ -58,6 +61,7 @@ public class Overall {
         this.speed = overallRequestDto.getSpeed();
         this.rightfoot = overallRequestDto.getRightfoot();
         this.leftfoot = overallRequestDto.getLeftfoot();
+        this.playstyle = overallRequestDto.getPlaystyle();
         this.pos = overallRequestDto.getPos();
         this.rating = overallRequestDto.getRating();
     }
