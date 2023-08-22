@@ -30,15 +30,14 @@
                             <label class="label" for="email" id="mailTxt">이메일</label>
                             <div class="input_and_button">
                                 <input id="email" name="email" type="email" placeholder="예)email2023@domain.com" maxlength="40">
-                                <button id="send_btn" type="button" value="send_code" class="send_code" onclick="checkEmail()">인증번호 발송
-                                </button>
+                                <button id="checkEmail" type="button" class="send_code">인증번호</button>
                             </div>
                             <small class="small hint" id="hint_email">이메일이 인증되지 않았습니다</small>
                         </div>
                         <div id="div_code" class="input-control">
                             <label class="label" id="memailconfirmTxt" for="verify_btn">인증번호 입력</label>
                             <input id="code" name="code" type="number" maxlength="6">
-                            <button id="verify_btn" type="button" value="verify" class="verify" onclick="verify()">인증하기</button>
+                            <button id="verify_btn" type="button" class="verify">인증하기</button>
                         </div>
                         <div class="input-control_password">
                             <label class="label" for="password">비밀번호</label>

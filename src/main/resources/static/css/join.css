@@ -114,12 +114,13 @@ cursor:pointer;
 }
 
 #dup_btn {
-    width: 100px;
+    width: 110px;
     height:40px;
     border:1px solid #ddd;
     border-radius:10px;
     background:#fff;
     padding:5px;
+    color: #000000;
 }
 
 #dup_btn:hover{
@@ -128,16 +129,17 @@ cursor:pointer;
     background:#d91950;
 }
 
-#send_btn {
-    width: 100px;
+#checkEmail {
+    width: 110px;
     height:40px;
     border:1px solid #ddd;
     border-radius:10px;
     background:#fff;
     padding:5px;
+    color: #000000;
 }
 
-#send_btn:hover{
+#checkEmail:hover{
     cursor:pointer;
     color:#fff;
     background:#d91950;

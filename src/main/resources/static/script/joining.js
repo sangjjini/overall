@@ -47,7 +47,6 @@ function join(){
     var phoneFirst = $('#phone-first').val();
     var phoneSecond = $('#phone-second').val();
     var phoneThird = $('#phone-third').val();
-    // var regPhone = /(01[0|1|6|9|7])[-](\d{3}|\d{4})[-](\d{4}$)/g;
     var getPhone = regExp = /^01(?:0|1|[6-9])-?([0-9]{3,4})-?([0-9]{4})$/;
     var phone = phoneFirst + '-' + phoneSecond + '-' + phoneThird;
 
@@ -66,6 +65,12 @@ function join(){
         $("#hint_email").text("이메일 형식에 맞지 않습니다");
         $("#hint_email").show();
         $("#email").val("");
+        return false;
+    }
+
+    if(!verified){
+        $("#hint_email").text("이메일이 인증되지 않았습니다.");
+        $("#hint_email").show();
         return false;
     }
 
@@ -122,15 +127,6 @@ function join(){
         return false;
     }
 
-    //스탯 공백 확인
-    if ($("#stats").val() == "") {
-        // alert("이메일 형식에 맞게 작성해 주세요");
-        $("#hint_stats").text("스탯을 입력해 주세요");
-        $("#hint_stats").show();
-        $("#stats").val("");
-        return false;
-    }
-
     // 휴대폰 번호 유효성
     if (!getPhone.test(phone)) {
         alert('잘못된 휴대폰 번호입니다');
@@ -151,37 +147,39 @@ function join(){
 
     // console.log("email:" + formData.email);
 
-    // $.ajax({
-    //     // 회원가입 수행 요청
-    //     type: "POST",
-    //     url: "api/v1/members/join",
-    //     data: JSON.stringify(data), // http body 데이터
-    //     contentType: "application/json; charset=utf-8", // body 데이터가 어떤 타입인지 (MIME)
-    //     dataType: "json" // 요청을 서버로 해서 응답이 왔을 때 기본적으로 모든 것이 String(문자열), 만약 생긴게 json이라면 javascript 오브젝트로 변경
-    // }).done(function (response) {
-    //     const result = Object.values(response)[0];
-    //     if(result === "success"){
-    //         alert("회원가입이 완료되었습니다.");
-    //         location.href = "/login";
-    //     }else{
-    //         $("#hint_email").text("중복된 이메일입니다.").css("color", "red");
-    //         $("#hint_email").show();
-    //     }
-    // });
+    $.ajax({
+        // 회원가입 수행 요청
+        type: "POST",
+        url: "api/v1/members/join",
+        data: JSON.stringify(data), // http body 데이터
+        contentType: "application/json; charset=utf-8", // body 데이터가 어떤 타입인지 (MIME)
+        dataType: "json" // 요청을 서버로 해서 응답이 왔을 때 기본적으로 모든 것이 String(문자열), 만약 생긴게 json이라면 javascript 오브젝트로 변경
+    }).done(function (response) {
+        const result = Object.values(response)[0];
+        if(result === "success"){
+            alert("회원가입이 완료되었습니다.");
+            location.href = "/login";
+        }else{
+            $("#hint_email").text("중복된 이메일입니다.").css("color", "red");
+            $("#hint_email").show();
+        }
+    });
 }
 
 // 이메일 인증번호
-$checkEmail.click(function() {
+$("#checkEmail").click(function() {
+    // const addr = $('#email').val();
+    // console.log();
     $.ajax({
         type : "POST",
         url : "login/mailConfirm",
         data : {
-            "email" : $email.val()
+            "email" : $("#email").val()
         },
         success : function(data){
             alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
             console.log("data : "+data);
-            chkEmailConfirm(data, $verify_btn, $memailconfirmTxt);
+            chkEmailConfirm(data, $("#verify_btn"), $("#memailconfirmTxt"));
         }
     })
 })
@@ -189,7 +187,7 @@ $checkEmail.click(function() {
 // 이메일 인증번호 체크 함수
 function chkEmailConfirm(data, $verify_btn, $memailconfirmTxt){
     $verify_btn.on("keyup", function(){
-        if (data != $verify_btn.val()) { //
+        if (data !== $verify_btn.val()) { //
             emconfirmchk = false;
             $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
             $("#emconfirmchk").css({
