@@ -35,22 +35,23 @@ public class SquadController {
             squadRequestDto.setName(name);
             squadRequestDto.setContents("안녕하세요! "+name+" 입니다.");
             squadRequestDto.setHost(log);
-            squadRequestDto.setMaking(log);
+//            squadRequestDto.setMaking(log);
             // 스쿼드 생성
             Squad squad = new Squad(squadRequestDto);
             squadRepository.save(squad);
-            Squad squadSave = squadRepository.findByMaking(log);
+//            Squad squadSave = squadRepository.findByMaking(log);
             // join 생성
             JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
             joiningRequestDto.setEmail(log);
-            joiningRequestDto.setSquadNo(squadSave.getNo());
+//            joiningRequestDto.setSquadNo(squadSave.getNo());
             joiningRequestDto.setState("Y");
             Joining joining = new Joining(joiningRequestDto);
             joiningRepository.save(joining);
             // making 제거
-            squadRequestDto.setMaking(null);
-            squadService.updateSquad(squadSave.getNo(), squadRequestDto);
-            response.put("save", squadSave.getNo());
+//            squadRequestDto.setMaking(null);
+//            squadService.updateSquad(squadSave.getNo(), squadRequestDto);
+//            response.put("save", squadSave.getNo());
+            response.put("save", "success");
         } else {
             response.put("save", "fail");
         }

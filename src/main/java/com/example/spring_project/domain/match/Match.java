@@ -38,7 +38,7 @@ public class Match{
     private String squadB;
 
 
-  public Match(MatchRequestDto dto){
+    public Match(MatchRequestDto dto){
         this.title = dto.getTitle();
         this.contents = dto.getContents();
         this.author = dto.getAuthor();
@@ -60,14 +60,25 @@ public class Match{
         if(dto.getContents() != null)
             this.contents = dto.getContents();
 
-        if(dto.getSquadB() != null)
-            this.squadB = dto.getSquadB();
+        if(dto.getAuthor() != null)
+            this.author = dto.getAuthor();
 
+        if(dto.getSquadA() != null)
+            this.squadA = dto.getSquadA();
+
+
+        if(dto.getSquadB() != null) {
+            if (dto.getSquadB().equals("")) {
+                this.squadB = null;
+            }else {
+                this.squadB = dto.getSquadB();
+            }
+        }
         if(dto.getDeadline() != '\0')
             this.deadline = dto.getDeadline();
 
 
-        this.squadB = dto.getSquadB();
+//        this.squadB = dto.getSquadB();
 
     }
 }

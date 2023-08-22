@@ -57,6 +57,9 @@ input{
     flex-direction: column;
     margin-top: 20px;
 }
+.contents_list:last-child{
+    flex-direction: row;
+}
 .small_title{
     width: 25%;
 }
@@ -93,17 +96,8 @@ textarea{
     margin: 0 auto;
     justify-content: flex-end;
 }
-#select_team{
-    display: none;
-    position: absolute;
-    background-color: #f6f6f6;
-    border: 1px solid lightgray;
-    padding: 5px 5px 20px 5px;
-    font-size: 15px;
-    width: 300px;
-    height: 300px;
-    top: 85%;
-    right: 25%;
+#a_win, #draw, #b_win{
+    width: 33%;
 }
 .shadow{
     position: fixed;

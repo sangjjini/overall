@@ -12,10 +12,12 @@
     <title>경기 목록</title>
     <link rel="stylesheet" href="/css/reset.css" type="text/css">
     <link rel="stylesheet" href="/css/match_list.css" type="text/css">
+    <link rel="stylesheet" href="/css/test.css" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
     <link rel="shortcut icon" href="/images/favicon.ico">
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="/script/test.js"></script>
 </head>
 <body>
 <c:import url="header.jsp"/>
@@ -24,28 +26,45 @@
         <p>OVERALL에서 자신의 스쿼드로 풋살매치를 즐기세요</p>
         <input type="hidden" id="log" value="${log}">
 <%--        <input type="hidden" id="log" value="neymar@gmail.com">--%>
+<%--                    <input type="hidden" id="log" value="kevin@gmail.com">--%>
     </div>
     <div class="contents">
         <div class="contents_left">
             <div class="left_menu">
-                <button onclick="show_make()" class="make_btn">매치 만들기</button>
-                <div id="show_make">
-                    <input type="text" id="match_title" placeholder="매치 이름">
-                    <input class="error_title" readonly>
-                    <select name="squads" id="squadA" size="1">
-
-                    </select>
-                    <input class="error_squadA" readonly>
-                    <input type="datetime-local" id="startAt">
-                    <input type="datetime-local" id="endAt">
-                    <input class="error_squadA" readonly>
-                    <div class="sub_section">
-                        <input type="hidden" id="author">
-                        <button onclick="matchMake()" class="enter_btn make_sub">만들기</button>
-                        <button onclick="close_make()" class="cancel_btn make_sub">취소</button>
+                    <button onclick="show_make()" class="make_btn">매치 만들기</button>
+                    <div id="show_make">
+                        <input type="text" id="match_title" placeholder="매치 이름">
+                        <input class="error_title" readonly>
+                        <select name="squads" id="squadA" size="1">
+                        </select>
+                        <input class="error_squadA" readonly>
+                        <input type="datetime-local" id="startAt">
+                        <input type="datetime-local" id="endAt">
+                        <input class="error_squadA" readonly>
+                        <div class="sub_section">
+                            <input type="hidden" id="author">
+                            <button onclick="matchMake()" class="enter_btn make_sub">만들기</button>
+                            <button onclick="close_make()" class="cancel_btn make_sub">취소</button>
+                        </div>
                     </div>
+                    <div class="make_list">
+                        <div class="list_title">
+                            <h1>만든 매치</h1>
+                        </div>
+                        <div id="my_match"></div>
+                    </div>
+                <div class="division_line"></div>
+                <div class="dropdown">
+                    <button class="drop_btn" onclick="dropdown()">
+                        <span>참가 중인 매치</span>
+                    </button>
+<%--                    <div class="apply_list">--%>
+<%--                        <div class="list_title">--%>
+<%--                            <h1>참가 중인 매치</h1>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+                    <div class="dropdown-content" id="apply_list"></div>
                 </div>
-                <div id="my_match"></div>
             </div>
         </div>
         <div class="contents_right">

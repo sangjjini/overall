@@ -83,18 +83,18 @@
 .cancel_btn{
     background: #3e3d55;
 }
-#my_match{
+#my_match, #apply_list{
     display: flex;
     flex-direction: column;
 }
-#my_match>a{
+#my_match>a, #apply_list>a{
     margin-top: 30px;
     padding-left: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-#my_match>a:hover{
+#my_match>a:hover, #apply_list>a:hover{
     color: blue;
 }
 .contents_right{
@@ -165,4 +165,13 @@
     width: 300px;
     height: 150px;
     padding: 15px;
+}
+.division_line{
+    height: 1px;
+    border-top: 1px solid lightgray;
+    margin-top: 25px;
+}
+.list_title{
+    margin: 20px 0 0 5px;
+    font-size: 15pt;
 }
