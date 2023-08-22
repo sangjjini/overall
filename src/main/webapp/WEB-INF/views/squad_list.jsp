@@ -39,6 +39,7 @@
         <div class="contents_right">
             <div class="bar">
                 <div class="bar_num">번호</div>
+                <div class="bar_over">OVERALL</div>
                 <div class="bar_name">이름</div>
                 <div class="bar_content">소개</div>
                 <div class="bar_join">가입 신청</div>

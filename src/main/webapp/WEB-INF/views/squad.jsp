@@ -72,7 +72,10 @@
             <div class="center_line"></div>
 
             <div class="right_area">
-                <div class="formation">포메이션 1-2-1</div>
+                <div class="formation_top">
+                    <div>평균 OVR : <input type="text" id="ovr" readonly></div>
+                    <div class="formation">포메이션 1-2-1</div>
+                </div>
                 <div class="contents_right">
                     <div id="select_box">
                         <div class="popup_area">

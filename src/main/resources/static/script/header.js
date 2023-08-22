@@ -30,11 +30,15 @@ function alarm(){
         response.forEach(squads => {
             $('#alarm_area').append(
                 `<div id="${squads.no}" class="inviting_list">
-                    팀 <span class="team_name">${squads.name}</span> 초대
-                    <button onclick="refuse_invite(this.id)" id="${squads.no}" 
-                    class="answer_btn refuse_btn">X</button>
-                    <button onclick="accept_invite(this.id)" id="${squads.no}" 
-                    class="answer_btn accept_btn">V</button>
+                    <div>
+                        팀 <span class="team_name">${squads.name}</span> 초대
+                    </div>
+                    <div>
+                        <button onclick="refuse_invite(this.id)" id="${squads.no}" 
+                        class="answer_btn refuse_btn">X</button>
+                        <button onclick="accept_invite(this.id)" id="${squads.no}" 
+                        class="answer_btn accept_btn">V</button>
+                    </div>
                 </div>`
             );
             alarm_check++;

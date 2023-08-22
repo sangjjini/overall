@@ -64,6 +64,12 @@ button{
     font-size: 15px;
     z-index: 1;
 }
+.inviting_left{
+    display: flex;
+}
+.inviting_num{
+    margin-right: 15px;
+}
 .contents_list>label{
     padding-left: 10px;
     height: 40px;
@@ -156,21 +162,24 @@ button{
     align-items: center;
 }
 .list_pos{
-    width: 30%;
+    width: 20%;
 }
 .pos_input{
     border: none;
     outline: none;
 }
 .list_name{
-    width: 70%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    margin-left: 10px;
+    width: 80%;
+}
+.list_over{
+    width: 40px;
 }
 .list_out{
-    width: 20%;
-    text-align: center;
+    display: flex;
+    width: 100%;
 }
 .out_btn{
     width: 60px;
@@ -189,6 +198,13 @@ button{
 /*포지션*/
 .right_area{
     margin: 0 auto;
+}
+.formation_top{
+    display: flex;
+    align-items: center;
+}
+#ovr{
+    border: none;
 }
 .formation{
     width: 180px;

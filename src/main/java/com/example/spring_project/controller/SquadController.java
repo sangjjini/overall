@@ -2,7 +2,8 @@ package com.example.spring_project.controller;
 
 import com.example.spring_project.domain.joining.Joining;
 import com.example.spring_project.domain.joining.JoiningRepository;
-import com.example.spring_project.domain.joining.JoiningRequestDto;
+import com.example.spring_project.domain.member.Member;
+import com.example.spring_project.domain.member.MemberRepository;
 import com.example.spring_project.domain.squad.Squad;
 import com.example.spring_project.domain.squad.SquadRepository;
 import com.example.spring_project.domain.squad.SquadRequestDto;
@@ -24,15 +25,16 @@ public class SquadController {
     private final SquadRepository squadRepository;
     private final JoiningRepository joiningRepository;
     private final SquadService squadService;
+    private final MemberRepository memberRepository;
 
     @PostMapping("squad/make")
     public Map makeSquad(WebRequest request, @RequestParam String name) {
         JSONObject response = new JSONObject();
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        SquadRequestDto squadRequestDto = new SquadRequestDto();
         // 스쿼드 이름 중복 검사
         if(squadRepository.findByName(name) == null){
-            Squad squad = new Squad(log, name, "안녕하세요! "+name+" 입니다.");
+            Member member = memberRepository.findByEmail(log);
+            Squad squad = new Squad(log, name, "안녕하세요! "+name+" 입니다.", member.getStats());
             squadRepository.save(squad);
             // join 생성
             Joining joining = new Joining(log, squad.getNo(), "Y", 0);
@@ -97,5 +99,17 @@ public class SquadController {
             squadResponseDtos.add(squadResponseDto);
         }
         return squadResponseDtos;
+    }
+
+    @GetMapping("squad/overall/{no}")
+    public int getOverall(@PathVariable long no){
+        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(no, "N", "H");
+        int sum = 0;
+        for(int i=0; i<joiningList.size(); i++){
+            Member member = memberRepository.findByEmail(joiningList.get(i).getEmail());
+            sum += member.getStats();
+        }
+        sum = sum / joiningList.size();
+        return sum;
     }
 }

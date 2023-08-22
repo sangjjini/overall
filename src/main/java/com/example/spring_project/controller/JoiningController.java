@@ -39,12 +39,16 @@ public class JoiningController {
         // 스쿼드의 방장이 나갔을 경우
         if(squad.getHost().equals(log)) {
             // 스쿼드에 아무도 없을 경우
-            if(joiningRepository.countBySquadNo(no) == 0) {
+            int count = joiningRepository.countBySquadNoAndStateNotAndStateNot(no, "N", "H");
+            if(count == 0) {
                 squadService.deleteSquad(no);
             } else {
                 SquadRequestDto squadRequestDto = new SquadRequestDto(squad);
                 String host = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(no, "N", "H").get(0).getEmail();
                 squadRequestDto.setHost(host);
+                // overall 수정
+                int stats = (squadRequestDto.getStats() - memberRepository.findByEmail(log).getStats()) / 2;
+                squadRequestDto.setStats(stats);
                 squadService.updateSquad(no, squadRequestDto);
             }
         }
@@ -64,7 +68,7 @@ public class JoiningController {
             JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
             joiningRequestDto.setEmail(log);
             joiningRequestDto.setSquadNo(no);
-            joiningRequestDto.setState("H");
+            joiningRequestDto.setState("N");
             Joining joining = new Joining(joiningRequestDto);
             joiningRepository.save(joining);
             response.put("apply", "success");
@@ -110,6 +114,11 @@ public class JoiningController {
         JoiningRequestDto joiningRequestDto = new JoiningRequestDto(joining);
         joiningRequestDto.setState("Y");
         joiningService.updateJoining(email, no, joiningRequestDto);
+        // overall 변경
+        SquadRequestDto squadRequestDto = new SquadRequestDto(squadRepository.findByNo(no));
+        int stats = (squadRequestDto.getStats() + memberRepository.findByEmail(email).getStats()) / 2;
+        squadRequestDto.setStats(stats);
+        squadService.updateSquad(no, squadRequestDto);
     }
 
     @DeleteMapping("joining/{no}/refuse")
@@ -119,6 +128,9 @@ public class JoiningController {
         String email = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         if(code != null){
             email = memberRepository.findByCode(code).getEmail();
+            SquadRequestDto squadRequestDto = new SquadRequestDto(squadRepository.findByNo(no));
+            int stats = (squadRequestDto.getStats() - memberRepository.findByEmail(email).getStats()) / 2;
+            squadRequestDto.setStats(stats);
         }
         JoiningId joiningId = new JoiningId(email, no);
         joiningService.deleteJoining(joiningId);
