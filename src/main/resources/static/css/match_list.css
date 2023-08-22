@@ -102,17 +102,28 @@
     border-top: 10px solid #3e3d55;
     /*margin-top: 70px;*/
 }
+/*.select_sort{*/
+/*    display: flex;*/
+/*    justify-content: flex-end;*/
+/*}*/
 #show_make, .hidden{
     display: none;
 }
 .bar{
     display: flex;
     flex-direction: row;
-    height: 70px;
+    /*height: 70px;*/
     padding: 0 20px;
     line-height: 70px;
     border-bottom: 1px solid lightgray;
     text-align: center;
+}
+.bar:first-child{
+    justify-content: flex-end;
+
+}
+#sorts{
+    height: 40%;
 }
 .bar_date{
     width: 37%;

@@ -12,6 +12,7 @@ function updateMatch(){
     const match_title = $('#title').val();
     const match_contents = $('#contents').val();
     const error = $('.error_title');
+
     if(match_title === ""){
         error.val("매치 제목을 입력해주세요.");
         error.show();
@@ -20,6 +21,7 @@ function updateMatch(){
             alert("변경된 내용이 없습니다.")
         }else{
             let obj = {
+                author:log,
                 title: match_title,
                 contents : match_contents
             };

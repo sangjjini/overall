@@ -1,16 +1,20 @@
 let author;
 const log = $('#log').val();
+
 if(log === ''){
     $(".division_line").hide();
     $(".list_title").hide();
 }
+
 $(window).on('load', function(){
+    $('#applyContainer').hide();
+
     my_match();
     my_partIn_match();
     mySquad();
+    squads();
     all_match();
 });
-
 function show_make(){
     $('#show_make').show();
 }
@@ -82,11 +86,15 @@ function my_partIn_match(){
     });
 }
 function all_match(){
+    let sort = $('#sorts').val();
+    let obj = {sort:sort};
     $.ajax({
-       url:"/squad/match/list",
-       type:"get"
+        url:"/squad/match/list?sort=" + sort,
+        type:"get"
     }).done(function (response) {
         let no = 1;
+
+        $('#lines').empty();
         response.forEach(match=>{
             let dates = new Date();
             let currentYear = dates.getFullYear();
@@ -97,8 +105,6 @@ function all_match(){
             let startAt = match.startAt.substring(11,16);
             let endAt = match.endAt;
             let deadline = match.deadline;
-
-            console.log(now <= date);
 
             if(date === endAt.substring(0,10)){
                 endAt = match.endAt.substring(11,16);
@@ -130,8 +136,8 @@ function all_match(){
                         <div class="bar_title">${match.title}</div>
                         <div class="bar_content">${match.contents}</div>
                         <div class="bar_join">
-                            <button onclick="partIn(this.id)" id="${match.no}" class="join_btn">+</button>
-    <!--                        <button onclick="modalAction()" id="${match.no}" class="join_btn">+</button>-->
+<!--                            <button onclick="partIn(this.id)" id="${match.no}" class="join_btn">+</button>-->
+                            <button onclick="modalAction(this.id)" id="${match.no}" class="join_btn">+</button>
                         </div>
                     </div>`
                 );
@@ -140,6 +146,10 @@ function all_match(){
         });
     })
 }
+// function input_sort(id){
+//     $('#sort').val(id);
+//     console.log(id)
+// }
 function readMatch(div){
     const no = $(div).find('input').val()
     console.log(no);
@@ -178,7 +188,8 @@ function mySquad(){
         }
     })
 }
-function partIn(no){
+function partIn(){
+    let no = $('#no_temp').val();
     $.ajax({
         url:"/squad/match/"+no+"/partIn",
         type:"post"
@@ -192,10 +203,12 @@ function partIn(no){
        }
     });
 }
-function modalAction(){
+function modalAction(no){
     $('#applyContainer').show();
+    $('#no_temp').val(no);
 }
 
 function modalClose(){
     $('#applyContainer').hide();
+    $('#no_temp').val("");
 }

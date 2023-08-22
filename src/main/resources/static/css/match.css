@@ -89,8 +89,6 @@ textarea{
 .contents_right{
     display: flex;
     flex-direction: column;
-    background-image: url("../images/soccer_field.png");
-    background-repeat: no-repeat;
     height: 852px;
     width: 602px;
     margin: 0 auto;
