@@ -76,11 +76,11 @@ function signupChk() {
     //     return false;
     // }
     //
-    // if (emailDupl) {
-    //     $("#hint_email").text("중복된 이메일 입니다");
-    //     $("#hint_email").show();
-    //     return false;
-    // }
+    if (emailDupl) {
+        $("#hint_email").text("중복된 이메일 입니다");
+        $("#hint_email").show();
+        return false;
+    }
 
     //비밀번호 유효성 검사
     if (!getPw.test($("#password").val())) {
@@ -113,15 +113,15 @@ function signupChk() {
         return false;
     }
 
-    // 닉네임 유효성
-    // if (!getNickName.test($("#nickName").val())) {
-    //     // alert("사용할 수 없는 닉네임 입니다");
-    //     $("#hint_nickName").text("최소 2자리 이상 8자리 이하 한글, 영문, 숫자만 입력해야 합니다").css("color", "#ff3860");
-    //     $("#hint_nickName").show();
-    //     $("#nickName").val("");
-    //     //$("#nickName").focus();
-    //     return false;
-    // }
+    닉네임 유효성
+    if (!getNickName.test($("#nickName").val())) {
+        // alert("사용할 수 없는 닉네임 입니다");
+        $("#hint_nickName").text("최소 2자리 이상 8자리 이하 한글, 영문, 숫자만 입력해야 합니다").css("color", "#ff3860");
+        $("#hint_nickName").show();
+        $("#nickName").val("");
+        //$("#nickName").focus();
+        return false;
+    }
 
     // if (!ChkNickDupl) {
     //     $("#hint_nickName").text("닉네임 중복체크를 해야합니다");

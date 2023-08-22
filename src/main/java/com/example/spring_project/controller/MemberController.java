@@ -12,7 +12,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,26 +42,7 @@ public class MemberController {
         Member member = memberService.getMemberByEmail(email); //해당 이메일에 해당하는 회원 정보를 가져온다.
         return member;
     }
-
-//    @PostMapping("/join")
-//    public Map<String, String> join(@RequestBody MemberRequestDto memberRequestDto) {
-////        JSONObject response = new JSONObject();
-//            Map<String, String> response = new HashMap<>(); // 새로운 해쉬맵을 만듬.
-//        try{
-//            Map<String, String> result = memberService.createMember(memberRequestDto);
-//            response.put("join", result.get("status"));
-//
-//            if (result.containsKey("message")) {
-//                response.put("message", result.get("message"));
-//            }
-//        } catch (Exception e) {
-//            response.put("join", "error");
-//            response.put("message", "요청을 처리하는 동안 오류가 발생했습니다.");
-//        }
-//        return response;
-//    }
-
-        @PostMapping("/join")
+    @PostMapping("/join")
     public Map join(@RequestBody MemberRequestDto memberRequestDto) {
         JSONObject response = new JSONObject();
         Member member = memberRepository.findByEmail(memberRequestDto.getEmail());
