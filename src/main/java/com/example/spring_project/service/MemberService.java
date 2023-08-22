@@ -30,7 +30,7 @@ public class MemberService {
         return list;
     }
 
-    public Member getMemberByEmail(String email) {
+    public Member findByEmail(String email) {
         Member member = memberRepository.findById(Long.valueOf(email)).orElseThrow( // Repository에서 회원 정보를 찾아옴
                 () -> new IllegalArgumentException("존재하지 않는 사용자입니다.") // 예외처리
         );
@@ -79,8 +79,11 @@ public class MemberService {
 
     @Transactional
     public void updateUser(String email, MemberRequestDto memberDto) {
-        Member member = getMemberByEmail(email);
+        Member member = findByEmail(email);
         member.update(memberDto);
     }
 
+    public Boolean checkNicknameDuplicate(String nickname) {
+        return memberRepository.existsByNickname(nickname);
+    }
 }

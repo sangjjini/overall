@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,7 @@ public class MemberController {
 
     @GetMapping("member/{email}")
     public Member getUserById(@PathVariable String email) { //어노테이션을 통해 URL 경로에서 추출한 email 값을 받아온다.
-        Member member = memberService.getMemberByEmail(email); //해당 이메일에 해당하는 회원 정보를 가져온다.
+        Member member = memberService.findByEmail(email); //해당 이메일에 해당하는 회원 정보를 가져온다.
         return member;
     }
     @PostMapping("/join")
@@ -76,6 +77,11 @@ public class MemberController {
         JSONObject response = new JSONObject();
         response.put("update", "success");
         return response.toMap();
+    }
+
+    @GetMapping("/checkNickname")
+    public ResponseEntity<Boolean> checkNicknameDuplicate(@PathVariable String nickname){
+        return ResponseEntity.ok(memberService.checkNicknameDuplicate(nickname));
     }
 
 }

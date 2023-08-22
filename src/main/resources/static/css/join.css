@@ -54,6 +54,7 @@ body {
 }
 
 .label {
+    display: flex;
     font-size: 22px;
     color:#ffffff;
     cursor: default;
@@ -70,56 +71,6 @@ body {
 
 }
 
-.input #email {
-    width: 100%;
-}
-
-.input-control_name{
-    display: flex;
-    /*justify-content: center;*/
-    align-items: center;
-    width: 100%;
-    padding: 5px 0;
-    color: white;
-    margin-bottom: 15px;
-    margin: 15px;
-}
-
-.input-control_nickname{
-    display: flex;
-    /*justify-content: center;*/
-    align-items: center;
-    width: 100%;
-    padding: 5px 0;
-    color: white;
-    margin-left: 15px;
-}
-
-.input-control_addr{
-    display: flex;
-    /*justify-content: center;*/
-    align-items: center;
-    width: 100%;
-    padding: 5px 0;
-    color: white;
-    margin: 15px;
-}
-
-.input-control_phone{
-    display: flex;
-    /*justify-content: center;*/
-    color: white;
-    width: 100%;
-    margin: 15px;
-}
-
-.input_and_button {
-    display:flex;
-    align-items: center;
-    width: 90%;
-    gap:10px;
-}
-
 .input-control #email {
     width: 100%;
     padding: 10px;
@@ -131,6 +82,165 @@ body {
     outline: none;
     color: #fff;
     font-size: 1em;
+}
+
+.input-control_password{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding: 5px 0;
+    color: white;
+    margin-left: 13px;
+}
+
+.input-control_password #password {
+    width: 78%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #1d2b3a;
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+}
+
+.input-control_password #passwordChk {
+    width: 78%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #1d2b3a;
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+}
+
+.input-control_name #name {
+    width: 20%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #1d2b3a;
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+}
+
+.input-control_name {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding: 5px 0;
+    color: white;
+    margin-left: 13px;
+
+}
+
+.input-control_nickname #nickName {
+    width: 30%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #1d2b3a;
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+}
+
+.input-control_nickname {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding: 5px 0;
+    color: white;
+    margin-left: 13px;
+
+}
+
+.input-control_stats #stats {
+    width: 30%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #1d2b3a;
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+}
+
+.input-control_stats {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding: 5px 0;
+    color: white;
+    margin-left: 13px;
+}
+
+.input-control_phone #phone-first {
+    width: 10%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #1d2b3a;
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+}
+
+.input-control_phone #phone-second {
+    width: 10%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #1d2b3a;
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+}
+
+.input-control_phone #phone-third {
+    width: 10%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #1d2b3a;
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+}
+
+.input-control_phone{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding: 5px 0;
+    color: white;
+    margin-left: 13px;
+}
+
+.input_and_button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 90%;
+    gap:10px;
 }
 
 .input-control input:valid,
@@ -152,11 +262,15 @@ body {
 
 .input-control .error {
     color: #ff3860;
-    font-size: 5px;
+    font-size: 9px;
     height: 13px;
 }
 
 .input-control>.hint {
+    color: #ff3860;
+}
+
+#hint_passwordChk {
     color: #ff3860;
 }
 
@@ -169,15 +283,15 @@ body {
 /*.hint_email {color: red; font-style: Italic;}*/
 /*.hint_email {color: blue; font-style: Italic;}*/
 
-.email_ok_ok{
-    color:#008000;
-    display: none;
-}
+/*.email_ok_ok{*/
+/*    color:#008000;*/
+/*    display: none;*/
+/*}*/
 
-.email_already{
-    color:#6A82FB;
-    display: none;
-}
+/*.email_already{*/
+/*    color:#6A82FB;*/
+/*    display: none;*/
+/*}*/
 
 #dup_btn {
     width: 100px;
