@@ -20,7 +20,6 @@ $(window).on('load', function (){
 
 function overallupdate() {
     const data = {
-        overall : 98,
         speed : $('#speed').val(),
         age : $('#age').val(),
         height : $('#height').val(),
