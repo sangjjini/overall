@@ -20,7 +20,10 @@ $(window).on('load', function () {
             const speedstat = Math.round(100 / speed * 9);
             const pPercent = physical * 100 / 150;
             const sPercent = speedstat * 100 / 150;
-            sum = Math.round(speedstat + physical);
+            const rating = response.rating;
+            const ratingstat = rating * 10 + 50;
+            const rPercent = ratingstat * 100 / 150;
+            const overall = Math.round((speedstat + physical + ratingstat) / 3);
         $('.position').append(`${pos}`);
         $('.left_foot h3').append(`${leftfoot}`);
         $('.right_foot h3').append(`${rightfoot}`);
@@ -41,9 +44,17 @@ $(window).on('load', function () {
                     <div id="data_result" class="speed_data" data="${speedstat}">2
                     </div>
                     </div>
+                    <div class="rating_status">
+<h2>${ratingstat}</h2>
+</div>
+                    <div class="graph_wrap">
+<div id="data_result" class="rating_data" data="${ratingstat}">3
+</div>
+</div>
                     </div>`);
             $('.physical_data').css("width", pPercent + "%");
             $('.speed_data').css("width", sPercent + "%");
+            $('.rating_data').css("width", rPercent + "%");
         });
 
         // 닉네임호출
@@ -55,31 +66,6 @@ $(window).on('load', function () {
         $('.nickname').append(`${nick}`);
     });
 
-        // 레이팅 호출
-        $.ajax({
-            url: "mypage/overallList",
-            type: "get"
-        }).done(function (response) {
-                const rating = 5;
-                const ratingstat = rating * 10 + 50;
-                const rPercent = ratingstat * 100 / 150;
-                const overall = Math.round((sum + ratingstat) / 3);
-                const style = response.style;
-                $('.overall_param').append(`<div id="param"><h1>${overall}</h1></div>`);
-                $('.stats_wrap').append(`<div id="stat" class="rating">
-<h1>유저평가</h1>
-<div class="rating_status">
-<h2>${ratingstat}</h2>
-</div>
-<div class="graph_wrap">
-<div id="data_result" class="rating_data" data="${ratingstat}">3
-</div>
-</div></div>`);
-                $('.rating_data').css("width", rPercent + "%");
-                // $('.style_wrap').append(`<div id="style">#${style}</div>`);
-
-
-        });
   //오버롤 종료
 
 
