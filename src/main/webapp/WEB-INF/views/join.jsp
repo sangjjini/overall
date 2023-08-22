@@ -64,6 +64,7 @@
                         <div class="input-control_stats">
                             <label class="label" for="nickName">내 스탯</label>
                             <input id="stats" name="stats" type="text" maxlength="13" placeholder="내 스탯 설정">
+                            <small class="small hint" id="hint_stats">스탯을 입력해 주세요</small>
                         </div>
                         <div class="input-control_phone">
                             <label class="label" for="phone-first">휴대폰 번호</label><br>

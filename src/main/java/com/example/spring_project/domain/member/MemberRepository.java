@@ -22,8 +22,11 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     //주어진 이메일에 해당하는 회원을 조회(주어진 이메일에 해당하는 회원을 찾아 반환함)
     public Member findByEmail(String email);
 
-    // 닉네임.
+    // 닉네임 중복
     boolean existsByNickname(String nickname);
+
+    //이메일 중복
+    boolean existsByEmail(String email);
 
     //주어진 이메일에 해당하는 회원을 조회(결과 반환 x , 사용자가 입력한 이메일에 해당하는 회원의 존재 여부를 확인하는 용도)
 // public void getMemberByEmail(String eamil);
@@ -50,6 +53,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE members SET password = :password WHERE name = :name AND email = :email")
     void updateMemberPassword(@Param("name") String name, @Param("email") String email, @Param("password") String password);
+
 
 //    void deleteByEmail(String email); // 물어볼것.
 //

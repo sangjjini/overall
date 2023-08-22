@@ -79,9 +79,20 @@ public class MemberController {
         return response.toMap();
     }
 
-    @GetMapping("/checkNickname")
+    @GetMapping("/checkNickname/{nickname}")
     public ResponseEntity<Boolean> checkNicknameDuplicate(@PathVariable String nickname){
         return ResponseEntity.ok(memberService.checkNicknameDuplicate(nickname));
+    }
+
+//    @GetMapping("/checkNickname/{nickname}")
+//    public Boolean checkNicknameDuplicate(@PathVariable String nickname) {
+//        System.out.println("Checking nickname duplicate for: " + nickname);
+//        return memberRepository.existsByNickname(nickname);
+//    }
+
+    @GetMapping("/checkEmail/{email}")
+    public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email) {
+        return ResponseEntity.ok(memberService.checkEmailDuplicate(email));
     }
 
 }

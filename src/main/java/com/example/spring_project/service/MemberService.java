@@ -86,10 +86,14 @@ public class MemberService {
     public Boolean checkNicknameDuplicate(String nickname) {
         return memberRepository.existsByNickname(nickname);
     }
+
     @Transactional
     public void updateOverall(String email, MemberRequestDto memberRequestDto){
         Member member = memberRepository.findByEmail(email);
         member.update(memberRequestDto);
     }
 
+    public Boolean checkEmailDuplicate(String email) {
+        return memberRepository.existsByEmail(email);
+    }
 }

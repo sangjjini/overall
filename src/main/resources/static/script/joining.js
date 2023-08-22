@@ -54,7 +54,7 @@ function join(){
     //이메일 공백 확인
     if ($("#email").val() == "") {
         // alert("이메일 형식에 맞게 작성해 주세요");
-        $("#hint_email").text("올바른 이메일을 입력해 주세요");
+        $("#hint_email").text("이메일을 입력해 주세요");
         $("#hint_email").show();
         $("#email").val("");
         return false;
@@ -119,6 +119,15 @@ function join(){
     if (nickDupl) {
         $("#hint_nickName").text("중복된 닉네임 입니다");
         $("#hint_nickName").show();
+        return false;
+    }
+
+    //스탯 공백 확인
+    if ($("#stats").val() == "") {
+        // alert("이메일 형식에 맞게 작성해 주세요");
+        $("#hint_stats").text("스탯을 입력해 주세요");
+        $("#hint_stats").show();
+        $("#stats").val("");
         return false;
     }
 
@@ -211,22 +220,44 @@ function nickDuplChk() {
 
     $.ajax({
         type: "GET",
-        url: "/api/v1/members/checkNickname",
+        url: "/api/v1/members/checkNickname/" + nickName, // nickName을 실제 값으로 대체
         success: function(response) {
+            console.log(response)
             if (response === true) {
-                nickDupl = true;
-                $("#hint_nickName").text("사용 가능한 닉네임입니다").css("color", "green");
-                $("#hint_nickName").show();
+                //닉네임이 중복되는 경우에 실행
+                $("#hint_nickName").text("이미 사용중인 닉네임입니다").css("color", "#ff3860");
             } else {
-                nickDupl = false;
-                $("#hint_nickName").text("이미 사용 중인 닉네임입니다").css("color", "#ff3860");
-                $("#hint_nickName").show();
+                $("#hint_nickName").text("사용 가능한 닉네임입니다").css("color", "green");
             }
-            ChkNickDupl = true;
+            $("#hint_nickName").show();
         },
         error: function(error) {
             console.error("닉네임 중복 확인 실패:", error);
             alert("닉네임 중복 확인에 실패했습니다. 다시 시도해주세요.");
+        }
+    });
+}
+
+function emailDuplChk() {
+    var email = $('#email').val();
+
+    $.ajax({
+        type: "GET",
+        url: "/api/v1/members/checkEmail/" + email,
+        success: function(response) {
+            if (response === true) {
+                // 이메일 중복됨
+                $("#hint_email").text("이미 사용 중인 이메일입니다").css("color", "#ff3860");
+                $("#hint_email").show();
+            } else {
+                // 이메일 사용 가능
+                $("#hint_email").text("사용 가능한 이메일입니다").css("color", "green");
+                $("#hint_email").show();
+            }
+        },
+        error: function(error) {
+            console.error("이메일 중복 확인 실패:", error);
+            alert("이메일 중복 확인에 실패했습니다. 다시 시도해주세요.");
         }
     });
 }
