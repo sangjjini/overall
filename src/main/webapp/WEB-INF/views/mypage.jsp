@@ -46,7 +46,6 @@ To change this template use File | Settings | File Templates.
 
     </div>
     <div class="style_wrap">
-
     </div>
 </div>
 

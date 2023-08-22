@@ -17,6 +17,7 @@ public class OverallRequestDto {
     private int rightfoot;
     private int leftfoot;
     private String pos;
+    private String playstyle;
     private int rating;
 
     public OverallRequestDto(Overall overall) {
@@ -28,6 +29,7 @@ public class OverallRequestDto {
         this.speed = overall.getSpeed();
         this.rightfoot = overall.getRightfoot();
         this.leftfoot = overall.getLeftfoot();
+        this.playstyle = overall.getPlaystyle();
         this.pos = overall.getPos();
         this.rating = overall.getRating();
     }

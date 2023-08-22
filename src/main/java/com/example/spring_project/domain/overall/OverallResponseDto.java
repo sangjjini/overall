@@ -18,6 +18,7 @@ public class OverallResponseDto {
     private int rightfoot;
     private int leftfoot;
     private String pos;
+    private String playstyle;
     private int rating;
 
     public OverallResponseDto(Overall overall) {
@@ -30,5 +31,6 @@ public class OverallResponseDto {
         this.leftfoot = overall.getLeftfoot();
         this.pos = overall.getPos();
         this.rating = overall.getRating();
+        this.playstyle = overall.getPlaystyle();
     }
 }

@@ -18,4 +18,15 @@ public class MemberRequestDto {
     private String nickname;
     private String phone;
     private int stats;
+
+    public MemberRequestDto(Member member) {
+        this.email = member.getEmail();
+        this.password = member.getPassword();
+        this.name = member.getName();
+        this.nickname = member.getNickname();
+        this.phone = member.getPhone();
+        this.stats = member.getStats();
+
+    }
 }
+

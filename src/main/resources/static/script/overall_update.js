@@ -1,6 +1,18 @@
 let emailNo = $('#homin').val();
  // let emailNo = "SIUUU@naver.com";
 
+
+// 셀렉트버튼
+$(document).ready(function() {
+    var selectTarget = $('select');
+
+    selectTarget.change(function(){
+        var select_name = $(this).children('option:selected').text();
+        $(this).siblings('label').text(select_name);
+    });
+});
+
+
 $(window).on('load', function (){
     $.ajax({
         url:"overallUpdate/"+emailNo,
@@ -13,20 +25,27 @@ $(window).on('load', function (){
         $('#weight').val(response.weight);
         $('#leftfoot').val(response.leftfoot);
         $('#rightfoot').val(response.rightfoot);
-        $('#pos').val(response.pos);
+        $('#playstyle').val(response.playstyle).prop("selected", true);
+        if(response.playstyle!==null){
+        $('.playstyle_label').html(response.playstyle);
+        }
+        $('#pos').val(response.pos).prop("selected", true);
+        if(response.pos!==null){
+        $('.pos_label').html(response.pos);
+        }
         }
     });
 });
 
 function overallupdate() {
     const data = {
-        overall : 98,
         speed : $('#speed').val(),
         age : $('#age').val(),
         height : $('#height').val(),
         weight : $('#weight').val(),
         leftfoot : $('#leftfoot').val(),
         rightfoot : $('#rightfoot').val(),
+        playstyle : $('#playstyle').val(),
         pos : $('#pos').val()
     }
     $.ajax({
