@@ -92,7 +92,7 @@ public class SquadController {
 
     @GetMapping("squad/all")
     public List<SquadResponseDto> getAllSquad(){
-        List<Squad> squads = squadRepository.findAll();
+        List<Squad> squads = squadRepository.findAllByOrderByNoDesc();
         List<SquadResponseDto> squadResponseDtos = new ArrayList<>();
         for(int i=0; i<squads.size(); i++){
             SquadResponseDto squadResponseDto = new SquadResponseDto(squads.get(i));

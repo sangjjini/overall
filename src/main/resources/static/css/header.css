@@ -189,6 +189,7 @@
     font-family : MBC1961GulimM;
     color: #0077ff;
     font-size: 15px;
+    outline: none;
 }
 .alarm_one{
     display: flex;

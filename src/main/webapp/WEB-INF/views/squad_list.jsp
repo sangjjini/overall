@@ -21,6 +21,9 @@
         <h1>스쿼드 리스트</h1>
         <p>OVERALL에서 다양한 스쿼드에 참여하거나 직접 만들어보세요</p>
     </div>
+    <div>
+        <button id="qwer">버튼</button>
+    </div>
     <div class="contents">
         <div class="contents_left">
             <div class="left_menu">
@@ -38,9 +41,8 @@
         </div>
         <div class="contents_right">
             <div class="bar">
-                <div class="bar_num">번호</div>
-                <div class="bar_over">OVERALL</div>
                 <div class="bar_name">이름</div>
+                <div class="bar_over">OVR(평균)</div>
                 <div class="bar_content">소개</div>
                 <div class="bar_join">가입 신청</div>
             </div>
