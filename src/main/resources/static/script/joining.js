@@ -170,48 +170,47 @@ function join(){
     // });
 }
 
-function sendCode() {
-    var email = $("#email").val();
-
-    // 서버에 이메일 발송 요청을 보내는 AJAX 요청
+// 이메일 인증번호
+$sendCode.click(function() {
     $.ajax({
-        type: "POST",
-        url: "/join/mailConfirm",
-        data: { email: email },
-        success: function(response) {
-            console.log("인증 코드 발송 성공:", response);
-            alert("인증 코드가 이메일로 발송되었습니다.");
+        type : "POST",
+        url : "login/mailConfirm",
+        data : {
+            "email" : $memail.val()
         },
-        error: function(error) {
-            console.error("인증 코드 발송 실패:", error);
-            alert("인증 코드 발송에 실패했습니다. 다시 시도해주세요.");
+        success : function(data){
+            alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+            console.log("data : "+data);
+            chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt);
         }
-    });
-}
+    })
+})
 
-function verify() {
-    var code = $("#code").val();
+// 이메일 인증번호 체크 함수
+function chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt){
+    $memailconfirm.on("keyup", function(){
+        if (data != $memailconfirm.val()) { //
+            emconfirmchk = false;
+            $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
+            $("#emconfirmchk").css({
+                "color" : "#FA3E3E",
+                "font-weight" : "bold",
+                "font-size" : "10px"
 
-    // 서버에 인증 코드 확인 요청을 보내는 AJAX 요청
-    $.ajax({
-        type: "POST",
-        url: "/verifyCode",
-        data: { code: code },
-        success: function(response) {
-            if (response === "success") {
-                console.log("인증 코드 확인 성공");
-                alert("이메일 인증이 완료되었습니다!");
-                // 이후 회원가입 버튼 활성화 등 추가 작업 수행
-            } else {
-                console.error("인증 코드 확인 실패:", response);
-                alert("인증 코드가 일치하지 않습니다. 다시 확인해주세요.");
-            }
-        },
-        error: function(error) {
-            console.error("인증 코드 확인 실패:", error);
-            alert("인증 코드 확인에 실패했습니다. 다시 시도해주세요.");
+            })
+            //console.log("중복아이디");
+        } else { // 아니면 중복아님
+            emconfirmchk = true;
+            $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
+
+            $("#emconfirmchk").css({
+                "color" : "#0D6EFD",
+                "font-weight" : "bold",
+                "font-size" : "10px"
+
+            })
         }
-    });
+    })
 }
 
 // 클라이언트에서 닉네임 중복 확인 버튼을 누를 때 실행되는 함수
@@ -233,7 +232,7 @@ function nickDuplChk() {
         },
         error: function(error) {
             console.error("닉네임 중복 확인 실패:", error);
-            alert("닉네임 중복 확인에 실패했습니다. 다시 시도해주세요.");
+            alert("닉네임을 먼저 입력해 주세요.");
         }
     });
 }
@@ -248,16 +247,15 @@ function emailDuplChk() {
             if (response === true) {
                 // 이메일 중복됨
                 $("#hint_email").text("이미 사용 중인 이메일입니다").css("color", "#ff3860");
-                $("#hint_email").show();
             } else {
                 // 이메일 사용 가능
                 $("#hint_email").text("사용 가능한 이메일입니다").css("color", "green");
-                $("#hint_email").show();
             }
+            $("#hint_email").show();
         },
         error: function(error) {
             console.error("이메일 중복 확인 실패:", error);
-            alert("이메일 중복 확인에 실패했습니다. 다시 시도해주세요.");
+            alert("이메일을 먼저 입력해 주세요.");
         }
     });
 }

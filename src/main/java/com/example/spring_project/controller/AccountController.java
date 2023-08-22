@@ -1,6 +1,6 @@
 package com.example.spring_project.controller;
 
-import com.example.spring_project.service.EmailService;
+import com.example.spring_project.service.RegisterMail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AccountController {
 
-    private final EmailService emailService;
+    private RegisterMail registerMail;
 
-    @PostMapping("join/mailConfirm")
+    // 이메일 인증
+    @PostMapping("login/mailConfirm")
     @ResponseBody
-    public String mailConfirm(@RequestParam String email)throws Exception {
-        String code = emailService.sendSimpleMessage(email);
-        log.info("인증코드 : " + code);
+    String mailConfirm(@RequestParam("email") String email) throws Exception {
+
+        String code = registerMail.sendSimpleMessage(email);
+        System.out.println("인증코드 : " + code);
         return code;
     }
 }
