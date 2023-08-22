@@ -9,7 +9,9 @@
     <html>
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="/css/reset.css">
         <link rel="stylesheet" href="/css/join.css">
+        <link rel="shortcut icon" href="/images/favicon.ico">
         <script src="/script/joining.js"></script>
         <title>회원가입</title>
     </head>
@@ -20,8 +22,9 @@
             <div class="join_container">
                 <form id="form" class="sign" action="/join" method="post">
                     <div class="signup_container">
-                    <div id="h1">
-                    <h1> 풋살이 하고싶을 땐<br>OverAll</h1>
+                    <div id="title">
+                    <h1> 풋살이 하고싶을 땐</h1>
+                        <h2>OVERALL</h2>
                     </div>
                         <div class="input-control">
                             <label class="label" for="email">이메일</label>
@@ -70,9 +73,9 @@
                             <label class="label" for="phone-first">휴대폰 번호</label><br>
                             <div class="input_and_button">
                                 <input type="text" class="aa" id="phone-first" name="phone-first" maxlength="3">
-                                <span class="spans">&nbsp;&nbsp;-</span>&nbsp;
+                                <span class="spans">-</span>
                                 <input type="text" class="aa" id="phone-second" name="phone-second" maxlength="4">
-                                <span class="spans">&nbsp;&nbsp;-</span>&nbsp;
+                                <span class="spans">-</span>
                                 <input type="text" class="aa" id="phone-third" name="phone-third" maxlength="4">
                             </div>
                         </div>
