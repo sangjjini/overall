@@ -1,6 +1,12 @@
 let author;
+const log = $('#log').val();
+if(log === ''){
+    $(".division_line").hide();
+    $(".list_title").hide();
+}
 $(window).on('load', function(){
     my_match();
+    my_partIn_match();
     mySquad();
     all_match();
 });
@@ -16,28 +22,33 @@ function close_make(){
 }
 
 function matchMake(){
-    const title = $('#match_title').val();
-    const squadA = $('#squadA').val();
-    const startAt = $('#startAt').val();
-    const endAt = $('#endAt').val();
-    const error = $('.error_title');
+    if(log === ''){
+        alert("로그인 후 이용해주세요.")
+        window.location.href="/login";
+    }else {
+        const title = $('#match_title').val();
+        const squadA = $('#squadA').val();
+        const startAt = $('#startAt').val();
+        const endAt = $('#endAt').val();
+        const error = $('.error_title');
 
-    if(title === ""){
-        error.show();
-        error.val("이름을 입력해주세요.");
-    }else{
-        $.ajax({
-            url:"/squad/match/make?title="+title+"&squadA="+squadA+"&startAt="+startAt+"&endAt="+endAt,
-            type:"post"
-        }).done(function(response){
-            const result = Object.values(response)[0];
-            if(result === "fail"){
-                console.log(result);
-            }else {
-                console.log("success");
-                location.href = "/squad/match?no=" + result;
-            }
-        });
+        if (title === "") {
+            error.show();
+            error.val("이름을 입력해주세요.");
+        } else {
+            $.ajax({
+                url: "/squad/match/make?title=" + title + "&squadA=" + squadA + "&startAt=" + startAt + "&endAt=" + endAt,
+                type: "post"
+            }).done(function (response) {
+                const result = Object.values(response)[0];
+                if (result === "fail") {
+                    console.log(result);
+                } else {
+                    console.log("success");
+                    location.href = "/squad/match?no=" + result;
+                }
+            });
+        }
     }
 }
 
@@ -54,7 +65,22 @@ function my_match(){
        })
     });
 }
-
+function my_partIn_match(){
+    $.ajax({
+        url:"/squad/match/partInList",
+        type:"get"
+    }).done(function(response){
+        for(let i = 0; i < response.length; i++){
+            let row = response[i];
+            for(let j = 0; j < row.length; j++){
+                console.log(row[j].title);
+                $('#apply_list').append(
+                    `<a href="/squad/match?no=${row[j].no}">- ${row[j].title}</a>`
+                );
+            }
+        }
+    });
+}
 function all_match(){
     $.ajax({
        url:"/squad/match/list",
@@ -70,6 +96,7 @@ function all_match(){
             let date = match.startAt.substring(0,10);
             let startAt = match.startAt.substring(11,16);
             let endAt = match.endAt;
+            let deadline = match.deadline;
 
             console.log(now <= date);
 
@@ -95,7 +122,7 @@ function all_match(){
                 date += "(토)"
             }
 
-            if(now <= date) {
+            if(now <= date && (deadline === 'R')) {
                 $('#lines').append(
                     `<div class="bar">   
                         <div class="bar_date" onclick="readMatch(this)">` + date + ` ` + startAt + ` ~ ` + endAt + `
@@ -103,7 +130,7 @@ function all_match(){
                         <div class="bar_title">${match.title}</div>
                         <div class="bar_content">${match.contents}</div>
                         <div class="bar_join">
-                            <button onclick="apply(this.id)" id="${match.no}" class="join_btn">+</button>
+                            <button onclick="partIn(this.id)" id="${match.no}" class="join_btn">+</button>
     <!--                        <button onclick="modalAction()" id="${match.no}" class="join_btn">+</button>-->
                         </div>
                     </div>`
@@ -151,9 +178,9 @@ function mySquad(){
         }
     })
 }
-function apply(no){
+function partIn(no){
     $.ajax({
-        url:"/squad/match/"+no+"/apply",
+        url:"/squad/match/"+no+"/partIn",
         type:"post"
     }).done(function(response){
        const result = Object.values(response)[0];

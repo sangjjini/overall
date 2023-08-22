@@ -4,7 +4,8 @@ $(window).on('load', function (){
     const urlParams = new URL(location.href).searchParams;
     no = urlParams.get('no');
     match();
-    squad_list();
+
+    ///squad_list();
 });
 
 function updateMatch(){
@@ -62,30 +63,51 @@ function deleteMatch(){
 }
 
 function leaveMatch(){
+    let squadB = $('#squadB').val();
+    let obj = {name:squadB}
     if(confirm("매치에서 퇴장하시겠습니까?")){
-        alert("퇴장하셨습니다.")
+        $.ajax({
+            url:"/squad/match/" + no + "/leave",
+            type:"post",
+            dataType: "json",
+            contentType : "application/json",
+            data: JSON.stringify(obj)
+        }).done(function (response){
+            alert("퇴장하셨습니다.")
+            window.location.href = "/squad/matchList"
+        });
     }
 }
 
-function squad_list(){
-    $.ajax({
-        url: "/squad/match/" + no,
-        type: "get"
-    }).done(function(response){
-        let select = $('#select_squad')
-        select.empty();
-        select.append(
-             `<option value="${response.squadA}">${response.squadA}</option>
-              <option value="${response.squadB}">${response.squadB}</option>`
+// function squad_list(){
+//     $.ajax({
+//         url: "/squad/match/" + no,
+//         type: "get"
+//     }).done(function(response){
+//         let select = $('#select_squad')
+//         select.empty();
+//         select.append(
+//              `<option value="${response.squadA}">${response.squadA}</option>
+//               <option value="${response.squadB}">${response.squadB}</option>`
+//
+//         );
+//     });
+// }
 
-        );
-    });
-}
+function resultMatch(button){
+    let result = $(button).val()
+    let winner;
 
-function resultMatch(){
+    if(result === 'A'){
+        winner = $("#squadA").val();
+    }else if(result === 'B'){
+        winner = $("#squadB").val();
+    }else{
+        winner = "Draw"
+    }
+
     const author = $('#author').val();
-    const winSquad = $('#select_squad').val();
-    let obj = {name:winSquad};
+    let obj = {name:winner};
     if(log === author){
         $.ajax({
             url:"/squad/match/" + no + "/matchResult",
@@ -136,21 +158,40 @@ function match(){
 
         let update_btn = $('#update_btn');
 
-        if(log === response.author){
-            update_btn.text("정보 변경");
-            update_btn.attr({onclick:"updateMatch()"})
+        // if(log === "" || response.squadB === null){
+        if(log === "") {
+            $('#leave_btn').hide();
+            $('.contents_list:last-child').hide();
+            update_btn.text("매치 참가");
+            update_btn.attr({onclick: "partInMatch()"})
         }else {
-            $('#delete_btn').hide();
-            $('#select_squad').hide();
-            $('#result_btn').hide();
-            update_btn.text("매치 퇴장");
-            update_btn.attr({onclick:"leaveMatch()"})
+            if (log === response.author) {
+                update_btn.text("정보 변경");
+                update_btn.attr({onclick: "updateMatch()"})
+                if(response.squadB === null){
+                    $('.contents_list:last-child').hide();
+                }
+                // if(response.squadB === null){
+                //     update_btn.hide();
+                //     $('#leave_btn').text("매치 신청")
+                //     $('#leave_btn').attr({onclick:"applyMatch()"})
+                //     $('.contents_list:last-child').hide();
+                // }
+            } else{
+                update_btn.hide()
+                $('.contents_list:last-child').hide();
+                if(response.squadB === null){
+                    $('#leave_btn').text("매치 신청")
+                    $('#leave_btn').attr({onclick:"partInMatch()"})
+                }
+            }
         }
 
-        // else if(response.squadB !== null){
-        //     $('#delete_btn').hide();
-        //     update_btn.text("매치 퇴장");
-        //     update_btn.attr({onclick:"leaveMatch()"})
+        // if(response.squadB === null){
+        //     $('#leave_btn').hide();
+        //     $('.contents_list:last-child').hide();
+        //     update_btn.text("매치 참가");
+        //     update_btn.attr({onclick:"applyMatch()"})
         // }
         // else {
         //     $('#delete_btn').hide();
@@ -173,6 +214,24 @@ function match(){
         match_title = response.title;
         match_contents = response.contents;
     })
+}
+function partInMatch(){
+    if(log === ''){
+        window.location.href="/login";
+    }else {
+        $.ajax({
+            url: "/squad/match/" + no + "/partIn",
+            type: "post"
+        }).done(function (response) {
+            const result = Object.values(response)[0];
+            if (result === "fail") {
+                alert("이미 참가신청을 했거나 신청할 수 없는 매치입니다.")
+            } else {
+                alert("신청이 완료되었습니다.")
+                window.location.href = "/squad/match?no=" + no;
+            }
+        });
+    }
 }
 // function mySquad(){
 //     const author = document.getElementById("author").value.split(":")[1];
