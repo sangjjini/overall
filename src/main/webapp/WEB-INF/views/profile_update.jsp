@@ -14,7 +14,7 @@
     <link type="text/css" href="/css/reset.css" rel="stylesheet" />
     <link type="text/css" href="/css/profile_update.css" rel="stylesheet" />
     <link rel="shortcut icon" href="/images/favicon.ico">
-    <script src="/script/mypage.js"></script>
+    <script src="/script/profile_update.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
@@ -24,6 +24,7 @@
             <div class="menu"><a href="mypage"><h1>오버롤</h1></a></div>
             <div class="menu on"><a href="/profileUpdate"><h1>프로필 수정</h1></a></div>
             <div class="menu"><a href="/overallUpdate"><h1>오버롤 설정</h1></a></div>
+
         </div>
         <div class="profile_contents">
             <div class="profile_update">
@@ -31,14 +32,16 @@
                 <div class="update_contents_wrap">
                     <div class="update_contents">
                         <div class="txt">변경하실 비밀번호를 입력해주세요</div>
-                        <input type="text">
-                        <div class="button"><a href="#">비밀번호 변경</a></div>
+                        <input type="password" id="newPassword">
+                        <div class="button"><a href="/profileUpdate" onclick="changePasswordBtn()">비밀번호 변경</a></div>
                     </div>
+                    <small class="small_hint" id="hint_newPassword">이메일이 인증되지 않았습니다</small>
                     <div class="update_contents">
                         <div class="txt">변경하실 닉네임을 입력해주세요</div>
                         <input type="text">
                         <div class="button"><a href="#">닉네임 변경</a></div>
                     </div>
+                    <small class="small_hint" id="hint_newNickname">이메일이 인증되지 않았습니다</small>
                 </div>
             </div>
         </div>

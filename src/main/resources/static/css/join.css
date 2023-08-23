@@ -109,12 +109,11 @@ cursor:pointer;
     height: 13px;
 }
 
-.input-control>.hint {
+.input-control .small_hint {
     color: #ff3860;
 }
 
-#hint_email_validation {
-    color: #FA3E3E;
+#email-validation {
     font-weight: bold;
     font-size: 13px;
 }

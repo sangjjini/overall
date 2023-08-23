@@ -7,7 +7,7 @@ var Chkverified = false;
 
 $(document).ready(function(){
     $('#div_code').hide();
-    $('.hint').hide();
+    $('.small_hint').hide();
 
     $('input').focusin(function(){
         $(this).parent().find('.hint').hide();
@@ -26,6 +26,21 @@ $(document).ready(function(){
         ChkNickDupl = false;
         $("#hint_nickName").text("").css("color", "#ff3860");
         $("#hint_nickName").hide();
+    });
+
+    $('#password').keyup(function(){
+        $("#hint_password").text("").css("color", "#ff3860");
+        $("#hint_password").hide();
+    });
+
+    $('#passwordChk').keyup(function(){
+        $("#hint_passwordChk").text("").css("color", "#ff3860");
+        $("#hint_passwordChk").hide();
+    });
+
+    $('#name').keyup(function(){
+        $("#hint_name").text("").css("color", "#ff3860");
+        $("#hint_name").hide();
     });
 
     $("#email").click(function() {
@@ -53,7 +68,7 @@ function join(){
     //이메일 공백 확인
     if ($("#email").val() == "") {
         // alert("이메일 형식에 맞게 작성해 주세요");
-        $("#hint_email").text("이메일을 입력해 주세요");
+        $("#hint_email").text("이메일 인증이 필요합니다");
         $("#hint_email").show();
         $("#email").val("");
         return false;
@@ -68,9 +83,12 @@ function join(){
         return false;
     }
 
-    if(!verified){
-        $("#hint_email").text("이메일이 인증되지 않았습니다.");
-        $("#hint_email").show();
+    //이메일 인증번호 입력칸
+    if ($("#code").val() == "") {
+        // alert("이메일 형식에 맞게 작성해 주세요");
+        $("#email-validation").text("인증번호를 입력해 주세요");
+        $("#email-validation").show();
+        $("#code").val("");
         return false;
     }
 
@@ -86,13 +104,9 @@ function join(){
     //비밀번호 똑같은지 재확인
     else if ($("#password").val() !== $("#passwordChk").val()) {
         if ($("#passwordChk").val() !== "") {
-            // alert("비밀번호가 일치하지 않습니다.");
             $("#password").val("");
-            //$("#password").focus();
-        } else {
-            //alert("비밀번호 확인을 입력해 주세요.");
         }
-        $("#hint_passwordChk").show();
+        $("#hint_passwordChk").text("비밀번호가 일치하지 않습니다.").css("color", "#ff3860").show();
         return false;
     }
 
@@ -115,17 +129,17 @@ function join(){
         return false;
     }
 
-    if (!ChkNickDupl) {
-        $("#hint_nickName").text("닉네임 중복체크를 해야합니다");
-        $("#hint_nickName").show();
-        return false;
-    }
+    // if (!ChkNickDupl) {
+    //     $("#hint_nickName").text("닉네임 중복체크를 해야합니다");
+    //     $("#hint_nickName").show();
+    //     return false;
+    // }
 
-    if (nickDupl) {
-        $("#hint_nickName").text("중복된 닉네임 입니다");
-        $("#hint_nickName").show();
-        return false;
-    }
+    // if (nickDupl) {
+    //     $("#hint_nickName").text("중복된 닉네임 입니다");
+    //     $("#hint_nickName").show();
+    //     return false;
+    // }
 
     // 휴대폰 번호 유효성
     if (!getPhone.test(phone)) {
@@ -160,8 +174,7 @@ function join(){
             alert("회원가입이 완료되었습니다.");
             location.href = "/login";
         }else{
-            $("#hint_email").text("중복된 이메일입니다.").css("color", "red");
-            $("#hint_email").show();
+            alert("이미 존재하는 회원입니다.");
         }
     });
 }
@@ -170,6 +183,12 @@ function join(){
 // 이메일 인증번호
 function checkEmail(){
     const addr = $('#email').val();
+
+    if (!addr) {
+        $("#hint_email").text("이메일을 입력해 주세요").css("color", "#ff3860").show();
+        return;
+    }
+
     $.ajax({
         type : "POST",
         url : "login/mailConfirm?email=" + addr,
@@ -194,6 +213,7 @@ function checkEmail(){
 // 클라이언트 사이드 코드
 function chkEmailConfirm() {
     var enteredCode = $("#code").val();
+    console.log("Entered Code: " + enteredCode); // 로그 추가
 
     // 서버로 전송할 JSON 데이터 생성
     var requestData = {
@@ -208,41 +228,22 @@ function chkEmailConfirm() {
         dataType: "json",
         success: function(response) {
             console.log("서버전송완료");
-            if (response.result === true) {
-                $("#verify_btn").prop("disabled", true);
+            if(response.result === true) {
+                // $("#verify_btn").prop("disabled", true);
                 console.log("인증 전송 완료");
+                $("#email-validation").text("인증이 완료되었습니다.").css({ color: "#37db25"});
+                $("#email-validation").show();
             } else {
-                console/log("인증 전송 실패");
+                console.log("인증 전송 실패");
+                $("#email-validation").text("인증번호가 틀렸습니다. 다시 시도해주세요.").css({color: "#ff0303"});
+                $("#email-validation").show();
             }
         },
-        // error: function(error) {
-        //     console.error("Error:", error);
-        // }
+        error: function(error) {
+            console.error("Error:", error); // 에러 출력
+        }
     });
 }
-
-// function chkEmailConfirm(data, $verify_btn, $memailconfirmTxt){
-//     var code = $("#code").val(); // 사용자가 입력한 인증코드 가져오기
-//         if (data !== $verify_btn.val()) { //
-//             emconfirmchk = false;
-//             $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
-//             $("#emconfirmchk").css({
-//                 "color" : "#FA3E3E",
-//                 "font-weight" : "bold",
-//                 "font-size" : "10px"
-//             })
-//         } else {
-//             emconfirmchk = true;
-//             $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
-//
-//             $("#emconfirmchk").css({
-//                 "color" : "#0D6EFD",
-//                 "font-weight" : "bold",
-//                 "font-size" : "10px"
-//
-//             })
-//         }
-// }
 
 // 클라이언트에서 닉네임 중복 확인 버튼을 누를 때 실행되는 함수
 function nickDuplChk() {
@@ -257,7 +258,7 @@ function nickDuplChk() {
                 //닉네임이 중복되는 경우에 실행
                 $("#hint_nickName").text("이미 사용중인 닉네임입니다").css("color", "#ff3860");
             } else {
-                $("#hint_nickName").text("사용 가능한 닉네임입니다").css("color", "green");
+                $("#hint_nickName").text("사용 가능한 닉네임입니다").css({ color: "#37db25"});
             }
             $("#hint_nickName").show();
         },

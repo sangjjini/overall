@@ -1,5 +1,6 @@
 package com.example.spring_project.service;
 
+import com.example.spring_project.controller.AccountController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -93,6 +94,7 @@ public class RegisterMail implements MailServiceInter {
         MimeMessage message = createMessage(to); // 메일 발송
         try {// 예외처리
             emailsender.send(message);
+            AccountController.setSavedEmailConfirmationCode(ePw);
         } catch (MailException es) {
             es.printStackTrace();
             throw new IllegalArgumentException();

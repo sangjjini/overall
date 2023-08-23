@@ -90,9 +90,4 @@ public class MemberController {
 //        return memberRepository.existsByNickname(nickname);
 //    }
 
-    @GetMapping("/checkEmail/{email}")
-    public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email) {
-        return ResponseEntity.ok(memberService.checkEmailDuplicate(email));
-    }
-
 }

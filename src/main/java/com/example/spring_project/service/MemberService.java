@@ -96,4 +96,15 @@ public class MemberService {
     public Boolean checkEmailDuplicate(String email) {
         return memberRepository.existsByEmail(email);
     }
+
+    public boolean changePassword(String email, String newPassword){
+        Member member = memberRepository.findByEmail(email);
+
+        if(member != null){
+            member.setPassword(newPassword);
+            memberRepository.save(member);
+            return true;
+        }
+        return false;
+    }
 }

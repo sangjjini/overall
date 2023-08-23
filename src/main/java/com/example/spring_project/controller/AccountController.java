@@ -15,8 +15,11 @@ import java.util.Map;
 public class AccountController {
 
     private final RegisterMail registerMail;
-    private String savedEmailConfirmationCode; // 이전에 발송된 인증코드를 저장하는 변수
+    private static String savedEmailConfirmationCode; // 이전에 발송된 인증코드를 저장하는 변수
 
+    public static void setSavedEmailConfirmationCode(String code) {
+        savedEmailConfirmationCode = code;
+    }
     // 이메일 인증
     @PostMapping("login/mailConfirm")
     public String mailConfirm(@RequestParam String email) {
@@ -37,6 +40,8 @@ public class AccountController {
     public Map<String, Object> checkEmailConfirm(@RequestBody Map<String, String> requestData) {
         Map<String, Object> resultMap = new HashMap<>();
         String enteredCode = requestData.get("code"); // 클라이언트에서 전송한 인증코드
+
+        System.out.println("Entered Code: " + enteredCode);
 
         if (enteredCode.equals(savedEmailConfirmationCode)) { // 이전에 저장한 인증코드와 비교
             resultMap.put("result", true); // 인증 성공
