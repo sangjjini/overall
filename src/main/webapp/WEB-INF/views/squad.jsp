@@ -57,7 +57,10 @@
                 <div class="contents_list">
                     <div class="squad_member">
                         <div class="small_title">스쿼드 멤버</div>
-                        <button onclick="show_invite()" class="invited_btn">초대하기</button>
+                        <button onclick="show_invite()" class="invited_btn">
+                            초대하기
+                            <input type="text" id="invite_cnt" readonly>
+                        </button>
                     </div>
                 </div>
                 <div class="contents_member">
@@ -137,7 +140,7 @@
         </div>
 
         <div class="contents_bottom">
-            <div class="chat_title">스쿼드 대화</div>
+            <div class="chat_title">스쿼드 공지</div>
             <div class="chat_area">
                 <div id="chat"></div>
                 <div class="send_area">

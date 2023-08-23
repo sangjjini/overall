@@ -33,7 +33,7 @@
                     <button class="alarm" onclick="show_alarm()">
                         <div>
                             <img src="/images/alarm.png">
-                            <input type="text" id="alarm_cnt" class="alarm_num">
+                            <input type="text" id="alarm_cnt" class="alarm_num" readonly>
                         </div>
                     </button>
                     <div id="alarm_popup">

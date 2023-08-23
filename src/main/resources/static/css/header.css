@@ -143,16 +143,17 @@
     cursor: pointer;
 }
 #alarm_cnt{
-    color: white;
+    display: none;
     border: none;
-    border-radius: 50%;
+    outline: none;
+    color: white;
     background: #0077ff;
     width: 20px;
     height: 20px;
     position: absolute;
     top: 0;
     text-align: center;
-    display: none;
+    border-radius: 50%;
 }
 #alarm_popup{
     display: none;
