@@ -39,10 +39,14 @@
                 <input type="text" id="author" class="input_area" readonly>
             </div>
             <div class="contents_list squad">
+                <div class="div_team">
                 <label for="squadA" class="small_title">A팀</label>
                 <input type="text" id="squadA" class="input_area" readonly>
+                </div>
+                <div class="div_team">
                 <label for="squadB" class="small_title">B팀</label>
                 <input type="text" id="squadB" class="input_area" readonly>
+                </div>
             </div>
             <div class="contents_list date">
                 <label for="time" class="small_title">시간</label>
