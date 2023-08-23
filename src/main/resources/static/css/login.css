@@ -90,3 +90,13 @@ input {
     color: #2c9ae1;
 }
 
+#hint_password {
+    /*font-size: 15px;*/
+    color: #ff3860;
+}
+
+#hint_email {
+    /*font-size: 15px;*/
+    color: #ff3860;
+}
+

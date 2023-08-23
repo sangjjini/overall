@@ -30,11 +30,15 @@
                             <input type="text" name="email" id="email" maxlength="30"
                                    autocapitalize="off">
                         </div>
+                        <small class="small_hint" id="hint_email">이메일을 입력해 주세요</small>
+
                         <div class="pw_txt">비밀번호</div>
                         <div class="login-box">
                             <input type="password" name="password" id="password"
                                    maxlength="30" autocapitalize="off">
                         </div>
+                        <small class="small_hint" id="hint_password">비밀번호를 입력해 주세요</small>
+
                         <input type="button" id="submit_button" value="로그인"
                                onclick="loginChk()">
                         <div class="login_signup">

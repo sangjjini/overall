@@ -17,6 +17,7 @@ function logout(){
         url:"/logout",
         type:"post"
     }).done(function (){
+        alert("로그아웃 완료");
         location.href = "/";
     });
 }
