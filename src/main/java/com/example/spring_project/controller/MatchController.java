@@ -83,12 +83,13 @@ public class MatchController {
         for(Joining joining : joiningList){
             long no = joining.getSquadNo();
             Squad squad = squadRepository.findByNo(no);
-            squadList.add(squad);
+            if(squad != null) {
+                squadList.add(squad);
+            }
         }
         List<List<Match>> matchList = new ArrayList<>();
 
         for(Squad squad : squadList){
-            System.out.println(squad.getName());
             String name = squad.getName();
             matchList.add(matchRepository.findAllBySquadB(name));
         }
@@ -96,23 +97,117 @@ public class MatchController {
         return matchList;
     }
     @GetMapping("list")
-    public List<Match> getMatchAll(@RequestParam(required = false) String sort){
-        if (sort.equals("title_desc")) {
-            return matchRepository.findByOrderByTitleDesc();
-        } else if (sort.equals("title_asc")) {
-            return matchRepository.findByOrderByTitleAsc();
-        } else if (sort.equals("date_desc")) {
-            return matchRepository.findByOrderByStartAtDesc();
-        } else if (sort.equals("date_asc")) {
-            return matchRepository.findByOrderByStartAtAsc();
+    public Map getMatchAll(@RequestParam(required = false) String sort, @RequestParam(required = false) String keyword){
+        JSONObject response = new JSONObject();
+        List<Match> list = new ArrayList<>();
+
+        if(keyword != null && !keyword.equals("")) {
+            String pattern = "%" + keyword + "%";
+            if(sort != null){
+                if (sort.equals("title_asc")) {
+                    list = matchRepository.findAllByTitleLikeOrderByTitleAsc(pattern);
+                    response.put("list", list);
+                }
+//                else if (sort.equals("title_desc")) {
+//                    return matchRepository.findByOrderByTitleDesc();
+//                }
+                else if (sort.equals("date_asc")) {
+                    list = matchRepository.findAllByTitleLikeOrderByStartAtAsc(pattern);
+                    response.put("list", list);
+                }
+//                else if (sort.equals("date_desc")) {
+//                    return matchRepository.findByOrderByStartAtDesc();
+//                }
+                else if (sort.equals("overall_asc")) {
+                    list = matchRepository.findSquadMatchOrderByAscSquadStats(keyword);
+                    response.put("list", list);
+                }
+                else if (sort.equals("overall_desc")) {
+                    list = matchRepository.findSquadMatchOrderByDescSquadStats(keyword);
+                    response.put("list", list);
+                }
+            }else{
+                list = matchRepository.findAllByTitleLike(pattern);
+                response.put("list", list);
+            }
+        }else{
+            if (sort.equals("title_desc")) {
+                list = matchRepository.findByOrderByTitleDesc();
+                response.put("list", list);
+            } else if (sort.equals("title_asc")) {
+                list = matchRepository.findByOrderByTitleAsc();
+                response.put("list", list);
+            } else if (sort.equals("date_desc")) {
+                list = matchRepository.findByOrderByStartAtDesc();
+                response.put("list", list);
+            } else if (sort.equals("date_asc")) {
+                list = matchRepository.findByOrderByStartAtAsc();
+                response.put("list", list);
+            } else if (sort.equals("overall_asc")) {
+                list = matchRepository.findSquadMatchOrderByAscSquadStats();
+                response.put("list", list);
+            } else if (sort.equals("overall_desc")) {
+                list = matchRepository.findSquadMatchOrderByDescSquadStats();
+                response.put("list", list);
+            } else{
+                list = matchRepository.findAll();
+                response.put("list", list);
+            }
         }
-//        else if (sort.equals("overall_asc")) {
-//
-//        } else if (sort.equals("overall_desc")) {
-//
-//        }
-        return matchRepository.findAll();
+
+        List<Integer> stats = new ArrayList<>();
+        for(Match match : list){
+            String squadA = match.getSquadA();
+            Squad squad = squadRepository.findByName(squadA);
+            stats.add(squad.getStats());
+        }
+        response.put("stats", stats);
+
+        return response.toMap();
     }
+//    @GetMapping("list")
+//    public List<Match> getMatchAll(@RequestParam(required = false) String sort, @RequestParam(required = false) String keyword){
+//        if(keyword != null && !keyword.equals("")) {
+//            String pattern = "%" + keyword + "%";
+//            if(sort != null){
+//                if (sort.equals("title_asc")) {
+//                    return matchRepository.findAllByTitleLikeOrderByTitleAsc(pattern);
+//                }
+////                else if (sort.equals("title_desc")) {
+////                    return matchRepository.findByOrderByTitleDesc();
+////                }
+//                else if (sort.equals("date_asc")) {
+//                    return matchRepository.findAllByTitleLikeOrderByStartAtAsc(pattern);
+//                }
+////                else if (sort.equals("date_desc")) {
+////                    return matchRepository.findByOrderByStartAtDesc();
+////                }
+//                else if (sort.equals("overall_asc")) {
+//                    return matchRepository.findSquadMatchOrderByAscSquadStats(keyword);
+//                }
+//                else if (sort.equals("overall_desc")) {
+//                    return matchRepository.findSquadMatchOrderByDescSquadStats(keyword);
+//                }
+//            }else{
+//                return matchRepository.findAllByTitleLike(pattern);
+//            }
+//        }else{
+//            if (sort.equals("title_desc")) {
+//                return matchRepository.findByOrderByTitleDesc();
+//            } else if (sort.equals("title_asc")) {
+//                return matchRepository.findByOrderByTitleAsc();
+//            } else if (sort.equals("date_desc")) {
+//                return matchRepository.findByOrderByStartAtDesc();
+//            } else if (sort.equals("date_asc")) {
+//                return matchRepository.findByOrderByStartAtAsc();
+//            } else if (sort.equals("overall_asc")) {
+//                return matchRepository.findSquadMatchOrderByAscSquadStats();
+//            } else if (sort.equals("overall_desc")) {
+//                return matchRepository.findSquadMatchOrderByDescSquadStats();
+//            }
+//        }
+//        return matchRepository.findAll();
+//    }
 //    @GetMapping("list")
 //    public List<Match> getMatchAll(@RequestParam(required = false)String sort, @PageableDefault(size=3) Pageable pageable){
 ////    public Page<Match> getMatchAll(@RequestParam(required = false) String sort, @PageableDefault(size=2) Pageable pageable){
@@ -180,19 +275,21 @@ public class MatchController {
 
     // 매치 신청
     @PostMapping("{no}/partIn")
-    public Map partInMatch(@PathVariable long no, WebRequest request){
-        JSONObject response = new JSONObject();
+    public Map partInMatch(@PathVariable long no, WebRequest request, @RequestBody String name){
+        JSONObject response = new JSONObject(name);
         String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
+        String squadB = response.getString("name");
+        System.out.println(squadB);
+
         //String log = "neymar@gmail.com";
         try {
-            Squad squad = squadRepository.findByHost(log);
             Match match = matchRepository.getMatchByNo(no);
 
-            if (match.getSquadB() != null) {
+            if (match.getSquadB() != null || match.getSquadA().equals(squadB)) {
                 response.put("partIn", "fail");
             } else {
                 MatchRequestDto dto = new MatchRequestDto();
-                dto.setSquadB(squad.getName());
+                dto.setSquadB(squadB);
                 dto.setDeadline('F');
                 matchService.updateMatch(no, dto);
                 response.put("partIn", "success");
@@ -290,13 +387,17 @@ public class MatchController {
         List<String> mySquadList = new ArrayList<>();
         int idx = 1;
         for(Joining joining : list){
-            long cnt = joiningRepository.countBySquadNoAndStateNotAndStateNot(joining.getSquadNo(), "N", "H");
-
-            if(cnt == 2){
-                long no = joining.getSquadNo();
-                Squad squad = squadRepository.findByNo(no);
-                mySquadList.add(squad.getName());
-            }
+            long cnt = joiningRepository.countBySquadNoAndStateNotAndStateNotAndStateNot(joining.getSquadNo(), "N", "H","Y");
+            System.out.println(idx + "팀 포지션 정해진 인원 : " + cnt);
+            long no = joining.getSquadNo();
+            Squad squad = squadRepository.findByNo(no);
+            mySquadList.add(squad.getName());
+//            if(cnt == 2){
+//                long no = joining.getSquadNo();
+//                Squad squad = squadRepository.findByNo(no);
+//                mySquadList.add(squad.getName());
+//            }
+            idx++;
         }
 
 //        for(Joining joining : list){

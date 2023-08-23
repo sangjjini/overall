@@ -20,24 +20,11 @@
 <div class="shadow"></div>
 <div class="page_title">
     <h1>매치 생성</h1>
-    <p></p>
     <input type="hidden" id="log" value="${log}">
-<%--            <input type="hidden" id="log" value="neymar@gmail.com">--%>
-<%--            <input type="hidden" id="log" value="kevin@gmail.com">--%>
 </div>
 <div class="contents">
     <div class="content">
         <div class="contents_left">
-            <%--            <div id="select_team">--%>
-            <%--                <div class="popup_area">--%>
-            <%--                    <div>--%>
-            <%--                        <button onclick="close_select()" class="cancel_btn">X</button>--%>
-            <%--                    </div>--%>
-            <%--                    <div class="invite_title small_title">승리한 팀 선택</div>--%>
-            <%--                    <div id="squad_list" class="list_area"></div>--%>
-            <%--                    <button class="select_winner" id="win" onclick="resultMatch()">선택</button>--%>
-            <%--                </div>--%>
-            <%--            </div>--%>
             <div class="contents_list">
                 <label for="title" class="small_title">방제</label>
                 <input type="text" id="title" class="input_area">
@@ -74,18 +61,11 @@
                 <button class="squad_edit" id="b_win" value="B" onclick="resultMatch(this)">B팀 승리</button>
             </div>
         </div>
-
         <div class="center_line"></div>
-
-        <div class="contents_right">
-            <div class="preview">
-
-            </div>
-        </div>
+        <div class="contents_right"></div>
     </div>
-
 </div>
 <c:import url="footer.jsp"/>
-</body>
 <script src="/script/match.js"></script>
+</body>
 </html>

@@ -1,5 +1,12 @@
 let author;
 const log = $('#log').val();
+$(document).ready(function(){
+    $('#search_container').on('keyup', function(key){
+        if(key.keyCode === 13){
+            search();
+        }
+    })
+});
 
 if(log === ''){
     $(".division_line").hide();
@@ -15,6 +22,12 @@ $(window).on('load', function(){
     squads();
     all_match();
 });
+
+function search(){
+    let keyword = $('#search').val();
+    console.log(keyword);
+    all_match();
+}
 function show_make(){
     $('#show_make').show();
 }
@@ -87,15 +100,37 @@ function my_partIn_match(){
 }
 function all_match(){
     let sort = $('#sorts').val();
+    let keyword = $('#search').val();
+    let url = "/squad/match/list?";
+
+    if(sort !== '' && keyword !== ''){
+        url += "sort=" + sort + "&keyword=" + keyword;
+    }else if(keyword === ''){
+        url += "sort=" + sort;
+    }else if(sort === ''){
+        url += "keyword=" + keyword;
+    }else{
+        url = "/squad/match/list";
+    }
+
     let obj = {sort:sort};
     $.ajax({
-        url:"/squad/match/list?sort=" + sort,
+        url:url,
         type:"get"
     }).done(function (response) {
         let no = 1;
+        let list = response.list
+        let stats = response.stats;
+        let statArr = new Array(stats.length);
+        let i = 0;
+        stats.forEach(stat => {
+           statArr[i] = stats[i];
+           i++;
+        });
 
         $('#lines').empty();
-        response.forEach(match=>{
+        i = 0;
+        list.forEach(match=>{
             let dates = new Date();
             let currentYear = dates.getFullYear();
             let currentMonth = "0" + (dates.getMonth()+1);
@@ -128,12 +163,13 @@ function all_match(){
                 date += "(토)"
             }
 
-            if(now <= date && (deadline === 'R')) {
+            // if(now <= date && (deadline === 'R')) {
+            if(now <= date) {
                 $('#lines').append(
-                    `<div class="bar">   
+                    `<div class="bar">
                         <div class="bar_date" onclick="readMatch(this)">` + date + ` ` + startAt + ` ~ ` + endAt + `
                         <input type="hidden" id="bar_no" value="${match.no}"></div>
-                        <div class="bar_title">${match.title}</div>
+                        <div class="bar_title">${match.title}(${statArr[i]})</div>
                         <div class="bar_content">${match.contents}</div>
                         <div class="bar_join">
 <!--                            <button onclick="partIn(this.id)" id="${match.no}" class="join_btn">+</button>-->
@@ -141,7 +177,7 @@ function all_match(){
                         </div>
                     </div>`
                 );
-                no++;
+                i++;
             }
         });
     })
@@ -190,9 +226,14 @@ function mySquad(){
 }
 function partIn(){
     let no = $('#no_temp').val();
+    let squadB = $('#squadB').val();
+    let obj = {name:squadB}
     $.ajax({
         url:"/squad/match/"+no+"/partIn",
-        type:"post"
+        type:"post",
+        data: JSON.stringify(obj),
+        contentType: 'application/json',
+        dataType:'json'
     }).done(function(response){
        const result = Object.values(response)[0];
        if(result === "fail") {

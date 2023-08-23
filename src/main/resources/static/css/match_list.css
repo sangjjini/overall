@@ -22,7 +22,41 @@
     margin-bottom: 20px;
     font-family: "Tenada";
 }
-
+.search_menu{
+    display: flex;
+    padding: 0 300px;
+    gap:50px;
+    margin-bottom: 10px;
+    font-family:"Noto Sans KR";
+}
+#sorts{
+    height: 40%;
+}
+#search_container{
+    border: 1px solid #3e3d55;
+    width: 290px;
+    height: 40%;
+    box-sizing: border-box;
+    position: relative;
+}
+#search{
+    height: 100%;
+    /*line-height: 28px;*/
+    padding: 0 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+#search_btn{
+    background: #3e3d55;
+    width: 40px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#search_btn img{
+    width: 15px;
+}
 #lines{
     cursor: pointer;
     display:flex;
@@ -94,7 +128,7 @@
 .enter_btn{
     background: #25c4f2;
 }
-.cancel_btn{
+.cancel{
     background: #3e3d55;
 }
 #my_match, #apply_list{
@@ -115,15 +149,6 @@
     display:flex;
     flex-direction: column;
 }
-/*.contents_right{*/
-/*    width: 100%;*/
-/*    border-top: 10px solid #3e3d55;*/
-/*    !*margin-top: 70px;*!*/
-/*}*/
-/*.select_sort{*/
-/*    display: flex;*/
-/*    justify-content: flex-end;*/
-/*}*/
 #show_make, .hidden{
     display: none;
 }
@@ -138,13 +163,9 @@
     border-bottom: 1px solid lightgray;
     text-align: center;
 }
-.bar:first-child{
-    justify-content: flex-end;
-}
 
-#sorts{
-    height: 40%;
-}
+
+
 .bar_date{
     width: 37%;
 }
@@ -203,11 +224,16 @@
     height: 150px;
     padding: 15px;
 }
+#close_btn{
+    display: flex;
+    justify-content: flex-end;
+}
 .division_line{
     height: 1px;
     border-top: 1px solid lightgray;
     margin-top: 25px;
 }
+
 .list_title{
     margin: 20px 0 0 5px;
     font-size: 15pt;
