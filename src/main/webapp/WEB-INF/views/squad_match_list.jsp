@@ -129,7 +129,7 @@
                 </div>
                 <div class="squad_partIn_btn_container">
                     <input type="hidden" id="no_temp" value="">
-                    <button id="partIn_btn" onclick="partInMatch()">참가신청</button>
+                    <button id="partIn_btn" onclick="partInMatch()">참가</button>
                 </div>
             </div>
         </div>

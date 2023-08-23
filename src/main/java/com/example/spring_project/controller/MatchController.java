@@ -11,6 +11,7 @@ import com.example.spring_project.domain.overall.OverallRequestDto;
 import com.example.spring_project.domain.squad.*;
 import com.example.spring_project.payload.Response;
 import com.example.spring_project.service.MatchService;
+import com.example.spring_project.service.MemberService;
 import com.example.spring_project.service.OverallService;
 import com.example.spring_project.service.SquadService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,7 @@ public class MatchController {
     private final MatchService matchService;
     private final OverallService overallService;
     private final SquadService squadService;
+    private final MemberService memberService;
 
     private final MatchRepository matchRepository;
     private final MatchingRepository matchingRepository;
@@ -326,6 +328,7 @@ public class MatchController {
             if (match.getSquadB() != null || match.getSquadA().equals(squadB) || chk) {
                 response.put("partIn", "fail");
             } else {
+                // 알람 기능 추가(감이 안잡히네)
                 MatchRequestDto dto = new MatchRequestDto();
                 dto.setSquadB(squadB);
                 dto.setDeadline('F');
@@ -415,9 +418,9 @@ public class MatchController {
 
 
     @PostMapping("{no}/matchResult")
-    public Map matchResult(@PathVariable long no, @RequestBody String name){
+    public Map matchResult(@PathVariable long no, @RequestBody String name, WebRequest request){
         JSONObject response = new JSONObject(name);
-        //String log = (String)request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        String log = (String)request.getAttribute("log", WebRequest.SCOPE_SESSION);
         String squadName = response.getString("name");
 
         Match match = matchRepository.getMatchByNo(no);
@@ -450,18 +453,52 @@ public class MatchController {
 
         for (Joining joining : winnerList) {
             Overall ovr = overallRepository.findByEmail(joining.getEmail());
+            int sum = 0;
+            int speed =0;
+            int physical = 0;
+            int overall = 0;
 
             OverallRequestDto overallRequestDto = new OverallRequestDto(ovr);
+            physical += overallRequestDto.getHeight();
+            physical += overallRequestDto.getWeight();
+            sum = physical/(overallRequestDto.getAge()/10) + 30;
+            speed = 100 / (overallRequestDto.getSpeed()) * 9;
             overallRequestDto.setRating(ovr.getRating()+3);
+
+            overall = (sum + speed + overallRequestDto.getRating()) / 3;
+
             overallService.updateOverall(joining.getEmail(), overallRequestDto);
+
+            Member member = memberRepository.findByEmail(ovr.getEmail());
+            MemberRequestDto memberRequestDto = new MemberRequestDto(member);
+            memberRequestDto.setStats(overall);
+
+            memberService.updateOverall(member.getEmail(), memberRequestDto);
         }
 
         for (Joining joining : loserList) {
             Overall ovr = overallRepository.findByEmail(joining.getEmail());
+            int sum = 0;
+            int speed =0;
+            int physical = 0;
+            int overall = 0;
 
             OverallRequestDto overallRequestDto = new OverallRequestDto(ovr);
+            physical += overallRequestDto.getHeight();
+            physical += overallRequestDto.getWeight();
+            sum = physical/(overallRequestDto.getAge()/10) + 30;
+            speed = 100 / (overallRequestDto.getSpeed()) * 9;
             overallRequestDto.setRating(ovr.getRating()-1);
+
+            overall = (sum + speed + overallRequestDto.getRating()) / 3;
+
             overallService.updateOverall(joining.getEmail(), overallRequestDto);
+
+            Member member = memberRepository.findByEmail(ovr.getEmail());
+            MemberRequestDto memberRequestDto = new MemberRequestDto(member);
+            memberRequestDto.setStats(overall);
+
+            memberService.updateOverall(member.getEmail(), memberRequestDto);
         }
         Squad winSquad = squadRepository.findByName(winner);
         SquadRequestDto winSquadRequestDto = new SquadRequestDto(winSquad);
@@ -473,6 +510,10 @@ public class MatchController {
 
         squadService.updateSquad(winSquad.getNo(), winSquadRequestDto);
         squadService.updateSquad(loseSquad.getNo(), loseSquadRequestDto);
+
+        OverallRequestDto overallRequestDto = new OverallRequestDto();
+
+
 
         matchService.updateMatch(no, dto);
         response.put("matchResult", squadName);

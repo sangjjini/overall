@@ -192,6 +192,10 @@ function match(){
         match_title = response.title;
         match_contents = response.contents;
 
+        if(squadB === null){
+            squadB = "";
+        }
+
         $('.contents_right').append(
             `<div id="date">${startAt} ~ ${endAt}</div>
              <div id="squadA">${squadA}</div>
