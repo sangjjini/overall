@@ -15,6 +15,9 @@ public interface JoiningRepository extends JpaRepository<Joining, JoiningId> {
 
     int countBySquadNoAndStateNotAndStateNot(long no, String stateA, String stateB);
     int countBySquadNoAndStateNotAndStateNotAndStateNot(long no, String stateA, String stateB, String stateC);
+
+    List<Joining> findBySquadNoAndStateNotAndStateNot(long no, String stateA, String stateB);
+
     List<Joining> findByEmailAndState(String email, String state);
     List<Joining> findAllBySquadNoAndStateNotAndStateNot(long no, String state_a, String state_b);
 }
