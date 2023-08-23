@@ -72,7 +72,6 @@ textarea {
     padding: 40px;
     padding-bottom: 80px;
     width: 50%;
-    border-bottom: 1px solid #3e3d55;
     height: 100%;
 }
 .squad_edit{
@@ -141,6 +140,7 @@ textarea{
     width: 1px;
     border-left: 1px solid lightgray;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 .contents_right{
     display: flex;
