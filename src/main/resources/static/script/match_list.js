@@ -166,7 +166,7 @@ function all_match(){
             }
 
             // if(now <= date && (deadline === 'R')) {
-            if(now <= date) {
+            if(now <= date && (deadline === 'R' || deadline === 'F')) {
                 let res = date + " " + startAt + " ~ " + endAt
                 $('#lines').append(
                     `<div class="bar" onclick="readMatch(this)">
@@ -181,8 +181,8 @@ function all_match(){
                         </div>
                     </div>`
                 );
-                i++;
             }
+            i++;
         });
     })
 }

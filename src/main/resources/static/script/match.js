@@ -106,6 +106,7 @@ function resultMatch(button){
             const result = Object.values(response)[0];
             if(result !== "fail"){
                 alert("경기결과가 저장되었습니다.")
+                location.href = "/squad/matchList"
             }
         });
     }else{
@@ -220,7 +221,7 @@ function partInMatch(){
                 alert("이미 참가신청을 했거나 신청할 수 없는 매치입니다.")
             } else {
                 alert("신청이 완료되었습니다.")
-                // location.href = "/squad/match?no=" + no;
+                location.href = "/squad/match?no=" + no;
             }
         });
     }
