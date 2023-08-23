@@ -31,6 +31,7 @@ input {
 
 .join_container {
     display: flex;
+    justify-content: center;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
     width: 800px;
     background: #fff;
@@ -75,6 +76,11 @@ div[class^=input-control] input {
     padding: 0 15px;
 }
 
+div#div_code.input-control {
+    display: flex;
+    flex-direction: column;
+}
+
 div[class^=input-control] button {
 margin-top:10px;
 margin-bottom:10px;
@@ -89,10 +95,88 @@ color:#fff;
 cursor:pointer;
 }
 
+.input-control.success input {
+    border-color: #09c372;
+}
+
+.input-control.error input {
+    border-color: #ff3860;
+}
+
+.input-control .error {
+    color: #ff3860;
+    font-size: 9px;
+    height: 13px;
+}
+
+.input-control>.hint {
+    color: #ff3860;
+}
+
+#hint_email_validation {
+    color: #FA3E3E;
+    font-weight: bold;
+    font-size: 13px;
+}
+
 .input_and_button {
     display:flex;
     align-items: center;
     gap:10px;
+}
+
+#dup_btn {
+    width: 110px;
+    height:40px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    background:#fff;
+    padding:5px;
+    color: #000000;
+}
+
+#dup_btn:hover{
+    cursor:pointer;
+    color:#fff;
+    background:#d91950;
+}
+
+#checkEmail {
+    width: 110px;
+    height:40px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    background:#fff;
+    padding:5px;
+    color: #000000;
+}
+
+#checkEmail:hover{
+    cursor:pointer;
+    color:#fff;
+    background:#d91950;
+}
+
+#verify_btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: none;
+    width: 120px;
+    height: 40px;
+    font-weight: 700;
+    border-radius: 10px;
+    background: #92d5ff;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+
+}
+
+#verify_btn:hover{
+    cursor:pointer;
+    color:#fff;
+    background:#d91950;
+
 }
 
 #submit_btn {

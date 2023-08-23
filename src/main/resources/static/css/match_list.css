@@ -1,41 +1,88 @@
+@font-face {
+    font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .page_title{
-    height: 200px;
-    padding-left: 5%;
+    padding: 60px 300px;
     background: #92d5ff;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-bottom: 70px;
+    font-family: "Tenada";
 }
 
 .page_title>h1{
     font-size: 35px;
     font-weight: 800;
     margin-bottom: 20px;
+    font-family: "Tenada";
 }
-
+.search_menu{
+    display: flex;
+    padding: 0 300px;
+    gap:50px;
+    margin-bottom: 10px;
+    font-family:"Noto Sans KR";
+}
+#sorts{
+    height: 40%;
+}
+#search_container{
+    border: 1px solid #3e3d55;
+    width: 290px;
+    height: 40%;
+    box-sizing: border-box;
+    position: relative;
+}
+#search{
+    height: 100%;
+    /*line-height: 28px;*/
+    padding: 0 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+#search_btn{
+    background: #3e3d55;
+    width: 40px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#search_btn img{
+    width: 15px;
+}
 #lines{
     cursor: pointer;
+    display:flex;
+    flex-direction: column;
 }
 
-.contents{
+.contents {
     display: flex;
-    padding: 0 5%;
-    height: 100%;
+    padding: 0 180px;
+    gap:50px;
+    margin-bottom: 200px;
+    font-family:"Noto Sans KR";
 }
-
+.contents button {
+    font-family:"Noto Sans KR";
+}
 .contents_left{
     display: flex;
     flex-direction: column;
     /*padding: 70px 0;*/
-    width: 300px;
 }
 
 .left_menu{
+    width:210px;
     border-top: 10px solid #3e3d55;
-    border-bottom: 1px solid #3e3d55;
-    padding: 30px 20px 30px 0;
+    padding-top: 30px;
 }
 
 .make_btn{
@@ -46,6 +93,7 @@
     height: 50px;
     margin: 0 auto;
     cursor: pointer;
+    font-size:16px;
 }
 #show_make input, #squadA{
     border: 1px solid lightgray;
@@ -80,7 +128,7 @@
 .enter_btn{
     background: #25c4f2;
 }
-.cancel_btn{
+.cancel{
     background: #3e3d55;
 }
 #my_match, #apply_list{
@@ -88,43 +136,36 @@
     flex-direction: column;
 }
 #my_match>a, #apply_list>a{
-    margin-top: 30px;
-    padding-left: 20px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    padding:20px 10px;
+    border-bottom:1px solid lightgray;
 }
 #my_match>a:hover, #apply_list>a:hover{
-    color: blue;
+    background:#92d5ff;
+    color: white;
 }
 .contents_right{
     width: 100%;
     border-top: 10px solid #3e3d55;
-    /*margin-top: 70px;*/
+    display:flex;
+    flex-direction: column;
 }
-/*.select_sort{*/
-/*    display: flex;*/
-/*    justify-content: flex-end;*/
-/*}*/
 #show_make, .hidden{
     display: none;
 }
+
 .bar{
     display: flex;
     flex-direction: row;
-    /*height: 70px;*/
+    justify-content: space-between;
+    height: 70px;
     padding: 0 20px;
     line-height: 70px;
     border-bottom: 1px solid lightgray;
     text-align: center;
 }
-.bar:first-child{
-    justify-content: flex-end;
 
-}
-#sorts{
-    height: 40%;
-}
+
+
 .bar_date{
     width: 37%;
 }
@@ -159,6 +200,12 @@
     border-radius: 5px;
     cursor: pointer;
 }
+.join_btn:hover {
+    background: white;
+    color:black;
+    border:1px solid black;
+    box-sizing: border-box;
+}
 #applyContainer {
     width: 100%;
     height: 100%;
@@ -177,11 +224,16 @@
     height: 150px;
     padding: 15px;
 }
+#close_btn{
+    display: flex;
+    justify-content: flex-end;
+}
 .division_line{
     height: 1px;
     border-top: 1px solid lightgray;
     margin-top: 25px;
 }
+
 .list_title{
     margin: 20px 0 0 5px;
     font-size: 15pt;

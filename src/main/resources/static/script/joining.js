@@ -47,7 +47,6 @@ function join(){
     var phoneFirst = $('#phone-first').val();
     var phoneSecond = $('#phone-second').val();
     var phoneThird = $('#phone-third').val();
-    // var regPhone = /(01[0|1|6|9|7])[-](\d{3}|\d{4})[-](\d{4}$)/g;
     var getPhone = regExp = /^01(?:0|1|[6-9])-?([0-9]{3,4})-?([0-9]{4})$/;
     var phone = phoneFirst + '-' + phoneSecond + '-' + phoneThird;
 
@@ -66,6 +65,12 @@ function join(){
         $("#hint_email").text("이메일 형식에 맞지 않습니다");
         $("#hint_email").show();
         $("#email").val("");
+        return false;
+    }
+
+    if(!verified){
+        $("#hint_email").text("이메일이 인증되지 않았습니다.");
+        $("#hint_email").show();
         return false;
     }
 
@@ -122,15 +127,6 @@ function join(){
         return false;
     }
 
-    //스탯 공백 확인
-    if ($("#stats").val() == "") {
-        // alert("이메일 형식에 맞게 작성해 주세요");
-        $("#hint_stats").text("스탯을 입력해 주세요");
-        $("#hint_stats").show();
-        $("#stats").val("");
-        return false;
-    }
-
     // 휴대폰 번호 유효성
     if (!getPhone.test(phone)) {
         alert('잘못된 휴대폰 번호입니다');
@@ -151,67 +147,102 @@ function join(){
 
     // console.log("email:" + formData.email);
 
-    // $.ajax({
-    //     // 회원가입 수행 요청
-    //     type: "POST",
-    //     url: "api/v1/members/join",
-    //     data: JSON.stringify(data), // http body 데이터
-    //     contentType: "application/json; charset=utf-8", // body 데이터가 어떤 타입인지 (MIME)
-    //     dataType: "json" // 요청을 서버로 해서 응답이 왔을 때 기본적으로 모든 것이 String(문자열), 만약 생긴게 json이라면 javascript 오브젝트로 변경
-    // }).done(function (response) {
-    //     const result = Object.values(response)[0];
-    //     if(result === "success"){
-    //         alert("회원가입이 완료되었습니다.");
-    //         location.href = "/login";
-    //     }else{
-    //         $("#hint_email").text("중복된 이메일입니다.").css("color", "red");
-    //         $("#hint_email").show();
-    //     }
-    // });
+    $.ajax({
+        // 회원가입 수행 요청
+        type: "POST",
+        url: "api/v1/members/join",
+        data: JSON.stringify(data), // http body 데이터
+        contentType: "application/json; charset=utf-8", // body 데이터가 어떤 타입인지 (MIME)
+        dataType: "json" // 요청을 서버로 해서 응답이 왔을 때 기본적으로 모든 것이 String(문자열), 만약 생긴게 json이라면 javascript 오브젝트로 변경
+    }).done(function (response) {
+        const result = Object.values(response)[0];
+        if(result === "success"){
+            alert("회원가입이 완료되었습니다.");
+            location.href = "/login";
+        }else{
+            $("#hint_email").text("중복된 이메일입니다.").css("color", "red");
+            $("#hint_email").show();
+        }
+    });
 }
+
 
 // 이메일 인증번호
-$sendCode.click(function() {
+function checkEmail(){
+    const addr = $('#email').val();
     $.ajax({
         type : "POST",
-        url : "login/mailConfirm",
+        url : "login/mailConfirm?email=" + addr,
         data : {
-            "email" : $memail.val()
+            "email" : $("#email").val()
         },
         success : function(data){
-            alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
-            console.log("data : "+data);
-            chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt);
+            console.log("발송");
+            alert("해당 이메일로 인증번호 발송이 완료되었습니다.\n 확인부탁드립니다.")
+            // console.log("data : "+data);
+            $("#div_code").show();
         }
-    })
-})
+    });
+        // console.log(error);
+    //     error = function(error) {
+    //     console.error("실패:", error);
+    //     alert("오류");
+    // }
+}
 
 // 이메일 인증번호 체크 함수
-function chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt){
-    $memailconfirm.on("keyup", function(){
-        if (data != $memailconfirm.val()) { //
-            emconfirmchk = false;
-            $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
-            $("#emconfirmchk").css({
-                "color" : "#FA3E3E",
-                "font-weight" : "bold",
-                "font-size" : "10px"
+// 클라이언트 사이드 코드
+function chkEmailConfirm() {
+    var enteredCode = $("#code").val();
 
-            })
-            //console.log("중복아이디");
-        } else { // 아니면 중복아님
-            emconfirmchk = true;
-            $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
+    // 서버로 전송할 JSON 데이터 생성
+    var requestData = {
+        "code": enteredCode
+    };
 
-            $("#emconfirmchk").css({
-                "color" : "#0D6EFD",
-                "font-weight" : "bold",
-                "font-size" : "10px"
-
-            })
-        }
-    })
+    $.ajax({
+        type: "POST",
+        url: "login/checkEmailConfirm", // 서버의 맵핑 주소
+        data: JSON.stringify(requestData),
+        contentType: "application/json",
+        dataType: "json",
+        success: function(response) {
+            console.log("서버전송완료");
+            if (response.result === true) {
+                $("#verify_btn").prop("disabled", true);
+                console.log("인증 전송 완료");
+            } else {
+                console/log("인증 전송 실패");
+            }
+        },
+        // error: function(error) {
+        //     console.error("Error:", error);
+        // }
+    });
 }
+
+// function chkEmailConfirm(data, $verify_btn, $memailconfirmTxt){
+//     var code = $("#code").val(); // 사용자가 입력한 인증코드 가져오기
+//         if (data !== $verify_btn.val()) { //
+//             emconfirmchk = false;
+//             $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
+//             $("#emconfirmchk").css({
+//                 "color" : "#FA3E3E",
+//                 "font-weight" : "bold",
+//                 "font-size" : "10px"
+//             })
+//         } else {
+//             emconfirmchk = true;
+//             $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
+//
+//             $("#emconfirmchk").css({
+//                 "color" : "#0D6EFD",
+//                 "font-weight" : "bold",
+//                 "font-size" : "10px"
+//
+//             })
+//         }
+// }
 
 // 클라이언트에서 닉네임 중복 확인 버튼을 누를 때 실행되는 함수
 function nickDuplChk() {
@@ -233,29 +264,6 @@ function nickDuplChk() {
         error: function(error) {
             console.error("닉네임 중복 확인 실패:", error);
             alert("닉네임을 먼저 입력해 주세요.");
-        }
-    });
-}
-
-function emailDuplChk() {
-    var email = $('#email').val();
-
-    $.ajax({
-        type: "GET",
-        url: "/api/v1/members/checkEmail/" + email,
-        success: function(response) {
-            if (response === true) {
-                // 이메일 중복됨
-                $("#hint_email").text("이미 사용 중인 이메일입니다").css("color", "#ff3860");
-            } else {
-                // 이메일 사용 가능
-                $("#hint_email").text("사용 가능한 이메일입니다").css("color", "green");
-            }
-            $("#hint_email").show();
-        },
-        error: function(error) {
-            console.error("이메일 중복 확인 실패:", error);
-            alert("이메일을 먼저 입력해 주세요.");
         }
     });
 }

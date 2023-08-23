@@ -1,6 +1,6 @@
 package com.example.spring_project.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -12,16 +12,15 @@ import javax.mail.internet.MimeMessage.RecipientType;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
+@RequiredArgsConstructor
 @Service
 public class RegisterMail implements MailServiceInter {
 
-    @Autowired
-    JavaMailSender emailsender; // Bean 등록해둔 MailConfig 를 emailsender 라는 이름으로 autowired
+    private final JavaMailSender emailsender; // Bean 등록해둔 MailConfig 를 emailsender 라는 이름으로 autowired
 
     private String ePw; // 인증번호
 
     // 메일 내용 작성
-    @Override
     public MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException {
 //		System.out.println("보내는 대상 : " + to);
 //		System.out.println("인증 번호 : " + ePw);
@@ -34,7 +33,7 @@ public class RegisterMail implements MailServiceInter {
         String msgg = "";
         msgg += "<div style='margin:100px;'>";
         msgg += "<h1> 안녕하세요</h1>";
-        msgg += "<h1> 풋살 매치 사이트 OverAll 입니다</h1>";
+        msgg += "<h1> 풋살 매칭 사이트 OVERALL 입니다</h1>";
         msgg += "<br>";
         msgg += "<p>아래 코드를 회원가입 창으로 돌아가 입력해주세요<p>";
         msgg += "<br>";
