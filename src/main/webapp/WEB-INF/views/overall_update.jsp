@@ -23,7 +23,7 @@
     <div class="contents">
         <div class="contents_menu">
             <div class="menu"><a href="mypage"><h1>오버롤</h1></a></div>
-            <div class="menu"><a href="/profileUpdate"><h1>프로필 수정</h1></a></div>
+<%--            <div class="menu"><a href="/profileUpdate"><h1>프로필 수정</h1></a></div>--%>
             <div class="menu on"><a href="/overallUpdate"><h1>오버롤 설정</h1></a></div>
         </div>
         <div class="overall_contents">

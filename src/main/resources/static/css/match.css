@@ -12,6 +12,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'OKCHAN';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/OKCHAN.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .page_title{
     padding: 60px 300px;
     background: #92d5ff;
@@ -86,11 +93,16 @@ textarea {
 }
 .contents_list{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-top: 20px;
 }
+.date {
+    flex-direction: row;
+    align-items: center;
+    font-family: "Noto Sans KR";
+}
 .date .small_title{
-    width: 15%;
+    padding-right:10px;
 }
 .contents_list:last-child{
     flex-direction: row;
@@ -226,6 +238,11 @@ textarea{
 /*     background-size : 600px;*/
 /*     transform: rotate(90deg);*/
 /* }*/
+
+.contents_right #date {
+    font-size:30px;
+    font-family: 'OKCHAN';
+}
 
 .contents_right #squadA, .contents_right #squadB {
     font-size:80px;

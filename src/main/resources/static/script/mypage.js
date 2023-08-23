@@ -9,6 +9,7 @@ $(window).on('load', function () {
         url: "mypage/overallList",
         type: "get"
     }).done(function (response) {
+            if(typeof response.pos !=="undefined") {
             const age = response.age;
             const height = response.height;
             const weight = response.weight;
@@ -59,6 +60,11 @@ $(window).on('load', function () {
             $('.physical_data').css("width", pPercent + "%");
             $('.speed_data').css("width", sPercent + "%");
             $('.rating_data').css("width", rPercent + "%");
+
+            } else {
+                $('.overall').css("display", "none");
+                $('.mypage_contents').append(`<div class="alert_msg"><h1>좌측 오버롤 설정 메뉴를 통해 오버롤을 설정해 주세요</h1></div>`);
+            }
         });
 
         // 닉네임호출

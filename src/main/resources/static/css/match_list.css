@@ -23,6 +23,7 @@
 }
 .contents_filter{
     display: flex;
+    font-family: "Noto Sans KR";
 }
 .filter{
     display: flex;
