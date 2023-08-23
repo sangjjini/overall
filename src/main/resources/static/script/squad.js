@@ -5,7 +5,6 @@ $(window).on('load', function (){
     const urlParams = new URL(location.href).searchParams;
     squadNo = urlParams.get('no');
     squad();
-    // 실시간 적용 필요
     applying();
     chat();
     // read();
