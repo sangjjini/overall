@@ -1,12 +1,19 @@
+@font-face {
+    font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .page_title{
-    height: 200px;
-    padding-left: 5%;
+    padding: 60px 300px;
     background: #92d5ff;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-bottom: 70px;
+    font-family: "Tenada";
 }
 .page_title>h1{
     font-size: 35px;
@@ -16,25 +23,31 @@
 button{
     padding: 0;
 }
+
+.contents {
+    font-family: 'Noto Sans KR', sans-serif;
+    display: flex;
+    flex-direction: column;
+    padding: 0 180px;
+}
+.contents button, input, textarea {
+    font-family: 'Noto Sans KR', sans-serif;
+}
 .contents_top{
     display: flex;
     border-top: 10px solid #3e3d55;
-    padding-bottom: 70px;
+    padding-bottom: 20px;
     border-bottom: 1px solid #3e3d55;
-    max-width: 1400px;
-    margin: 100px auto;
     justify-content: space-between;
+    border-bottom: 2px solid #3e3d55;
 }
 
 /*스쿼드 정보*/
 .contents_left{
     display: flex;
+    width:100%;
     flex-direction: column;
-    padding: 40px 30px;
-    margin: 0 30px;
-    width: 300px;
-    border-bottom: 1px solid #3e3d55;
-    height: 100%;
+    padding: 100px;
 }
 .squad_edit{
     border: none;
@@ -77,7 +90,7 @@ button{
     height: 40px;
     line-height: 40px;
 }
-.small_title{
+.small_title {
     font-weight: 700;
     color: #3f3f3f;
 }
@@ -145,6 +158,7 @@ button{
     align-items: center;
     margin-top: 20px;
     border-bottom: 1px solid lightgray;
+    padding-left: 10px;
     padding-bottom: 5px;
     margin-bottom: 10px;
 }
@@ -162,34 +176,69 @@ button{
     flex-direction: row;
     height: 40px;
     align-items: center;
+    gap:10px;
 }
 .list_pos{
-    width: 75px;
+    width: 60px;
     text-align: center;
 }
 .pos_input{
     border: none;
     outline: none;
-    width: 70px;
+    width: 60px;
+    text-align: center;
+}
+
+.name {
+    width:100%;
     text-align: center;
 }
 .list_name{
+    width:100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
+
+.list_name.small_title {
+    width:100%;
+    justify-content: center;
+}
+.list_pos.small_title h1 {
+    width:60px;
+}
+
+.list_over.small_title h1 {
+    width:40px;
+}
 .list_over{
-    width: 40px;
+    width:40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.list_over h1 {
+    width:40px;
+    text-align: center;
 }
 .list_out{
     display: flex;
     width: 100%;
+    gap:10px;
+}
+
+.out_btn_wrap {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: flex-end;
 }
 .out_btn{
     width: 60px;
+    height: 30px;
     border: none;
     background: #3e3d55;
     color: white;
-    height: 30px;
     cursor: pointer;
 }
 .center_line{
@@ -200,11 +249,15 @@ button{
 
 /*포지션*/
 .right_area{
-    margin: 0 auto;
+width:100%;
+    display: flex;
+    flex-direction: column;
+    padding:100px;
 }
 .formation_top{
     display: flex;
     justify-content: center;
+    padding: 40px 0;
 }
 #ovr{
     border: none;
@@ -216,29 +269,32 @@ button{
     padding: 0 0 0 5px;
 }
 .formation{
-    width: 180px;
-    height: 40px;
-    line-height: 40px;
+    width: 100%;
     box-sizing: border-box;
     background: #161616;
     font-size: 15px;
     color: #fff;
     text-align: center;
-    margin: 40px 2px;
+    padding:10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .formation_ovr{
-    width: 180px;
-    height: 40px;
-    line-height: 40px;
+    width: 100%;
     box-sizing: border-box;
     background: #9b9aa6;
     font-size: 15px;
     color: #fff;
     text-align: center;
-    margin: 40px 2px;
     display: flex;
     justify-content: center;
+    padding:10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .contents_right{
     display: flex;
     flex-direction: column;
@@ -285,6 +341,11 @@ button{
     font-size: 50px;
     cursor: pointer;
     background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom:5px;
+
 }
 #select_box{
     display: none;
@@ -331,8 +392,8 @@ button{
 .contents_bottom{
     display: flex;
     flex-direction: column;
-    margin: 0 5%;
-    padding: 0 5%;
+    padding:100px;
+    padding-bottom:200px;
 }
 .chat_area{
     display: flex;
