@@ -166,23 +166,28 @@ function join(){
     });
 }
 
+
 // 이메일 인증번호
-$("#checkEmail").click(function() {
-    // const addr = $('#email').val();
-    // console.log();
+function checkEmail(){
+    const addr = $('#email').val();
     $.ajax({
         type : "POST",
-        url : "login/mailConfirm",
+        url : "login/mailConfirm?email=" + addr,
         data : {
             "email" : $("#email").val()
         },
         success : function(data){
             alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
-            console.log("data : "+data);
+            // console.log("data : "+data);
             chkEmailConfirm(data, $("#verify_btn"), $("#memailconfirmTxt"));
         }
-    })
-})
+    });
+        // console.log(error);
+    //     error = function(error) {
+    //     console.error("실패:", error);
+    //     alert("오류");
+    // }
+}
 
 // 이메일 인증번호 체크 함수
 function chkEmailConfirm(data, $verify_btn, $memailconfirmTxt){
@@ -195,7 +200,7 @@ function chkEmailConfirm(data, $verify_btn, $memailconfirmTxt){
                 "font-weight" : "bold",
                 "font-size" : "10px"
             })
-            console.log("중복아이디");
+            // console.log("중복아이디");
         } else { // 아니면 중복아님
             emconfirmchk = true;
             $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
