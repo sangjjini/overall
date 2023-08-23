@@ -40,6 +40,7 @@ function my_squad(){
         url: "/squad/my",
         type: "get"
     }).done(function (response){
+        $('#my_squad').empty();
         response.forEach(squad => {
             $('#my_squad').append(
                 `<a href="/squad?no=${squad.no}">- ${squad.name}</a>`
@@ -49,26 +50,32 @@ function my_squad(){
 }
 
 function all_squad(){
+    const option = $('input[name=filter_sel]:checked').val();
+    const keyword = $('#filter_keyword').val();
     $.ajax({
-        url: "/squad/all",
+        url: "/squad/"+option+"?keyword="+keyword,
         type: "get"
     }).done(function (response){
-        let num = 1;
+        $('#squad_list').empty();
         response.forEach(squad => {
             $('#squad_list').append(
                 `<div class="bar">
                     <div class="bar_name">${squad.name}</div>
                     <div class="bar_over">${squad.stats}</div>
                     <div class="bar_content">${squad.contents}</div>
+                    <div class="bar_date">${squad.createdAt}</div>
                     <div class="bar_join">
                         <button onclick="join(this.id)" id="${squad.no}" class="join_btn">+</button>
                     </div>
                 </div>`
             );
-            num++;
-        })
-    })
+        });
+    });
 }
+
+$('input[name=filter_sel]').click(function (){
+    all_squad();
+})
 
 function join(no){
     $.ajax({

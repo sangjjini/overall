@@ -9,5 +9,12 @@ public interface SquadRepository extends JpaRepository<Squad, Long> {
     Squad findByNo(Long no);
     Squad findByHost(String author);
     Squad findByName(String name);
-    List<Squad> findAllByOrderByNoDesc();
+    List<Squad> findAllByOrderByCreatedAtDesc();
+    List<Squad> findAllByOrderByCreatedAtAsc();
+    List<Squad> findAllByOrderByStatsAsc();
+    List<Squad> findAllByOrderByStatsDesc();
+    List<Squad> findAllByNameLikeOrderByCreatedAtDesc(String pattern);
+    List<Squad> findAllByNameLikeOrderByCreatedAtAsc(String pattern);
+    List<Squad> findAllByNameLikeOrderByStatsAsc(String pattern);
+    List<Squad> findAllByNameLikeOrderByStatsDesc(String pattern);
 }
