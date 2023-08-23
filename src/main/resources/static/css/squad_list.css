@@ -21,6 +21,11 @@
 }
 .contents_filter{
     display: flex;
+    font-family: "Noto Sans KR";
+}
+
+.contents_filter input {
+    font-family: "Noto Sans KR";
 }
 .filter{
     display: flex;
@@ -62,7 +67,6 @@
     gap:50px;
     margin-bottom: 200px;
     font-family:"Noto Sans KR";
-    padding: 0 50px;
 }
 .contents button {
     font-family:"Noto Sans KR";

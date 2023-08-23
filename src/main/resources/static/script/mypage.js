@@ -9,6 +9,7 @@ $(window).on('load', function () {
         url: "mypage/overallList",
         type: "get"
     }).done(function (response) {
+            if(typeof response.pos !=="undefined") {
             const age = response.age;
             const height = response.height;
             const weight = response.weight;
@@ -26,6 +27,7 @@ $(window).on('load', function () {
         $('.position').append(`${pos}`);
         $('.left_foot h3').append(`${leftfoot}`);
         $('.right_foot h3').append(`${rightfoot}`);
+        $('.style_wrap').append(`${response.playstyle}`);
         $('.stats_wrap').append(`<div id="stat" class="physical">
 <h1>피지컬</h1>
 <div class="physical_status">
@@ -59,6 +61,11 @@ $(window).on('load', function () {
             $('.physical_data').css("width", pPercent + "%");
             $('.speed_data').css("width", sPercent + "%");
             $('.rating_data').css("width", rPercent + "%");
+
+            } else {
+                $('.overall').css("display", "none");
+                $('.mypage_contents').append(`<div class="alert_msg"><h1>좌측 오버롤 설정 메뉴를 통해 오버롤을 설정해 주세요</h1></div>`);
+            }
         });
 
         // 닉네임호출

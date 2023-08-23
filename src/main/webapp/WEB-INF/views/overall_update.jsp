@@ -23,7 +23,7 @@
     <div class="contents">
         <div class="contents_menu">
             <div class="menu"><a href="mypage"><h1>오버롤</h1></a></div>
-            <div class="menu"><a href="/profileUpdate"><h1>프로필 수정</h1></a></div>
+<%--            <div class="menu"><a href="/profileUpdate"><h1>프로필 수정</h1></a></div>--%>
             <div class="menu on"><a href="/overallUpdate"><h1>오버롤 설정</h1></a></div>
         </div>
         <div class="overall_contents">
@@ -58,10 +58,16 @@
                         <div class="playstyle_wrap">
                         <label class="playstyle_label" for="playstyle">플레이스타일</label>
                         <select id ="playstyle">
-                            <option value="타겟터">타겟터</option>
+                            <option value="초보자">초보자</option>
+                            <option value="스트라이커">스트라이커</option>
+                            <option value="딥라잉플레이메이커">딥라잉플레이메이커</option>
                             <option value="플레이메이커">플레이메이커</option>
                             <option value="인버티드풀백">인버티드 풀백</option>
                             <option value="메짤라">메짤라</option>
+                            <option value="올라운더">올라운더</option>
+                            <option value="유리몸">유리몸</option>
+                            <option value="예리한감아차기">예리한 감아차기</option>
+                            <option value="트러블메이커">트러블메이커</option>
                         </select>
                         </div>
                     </div>
@@ -70,9 +76,21 @@
                         <div class="pos_wrap">
                             <label class="pos_label" for="pos">포지션</label>
                         <select id="pos">
-                            <option value="FW">FW</option>
-                            <option value="MF">MF</option>
-                            <option value="DF">DF</option>
+                            <option value="FW">FW(공격)</option>
+                            <option value="ST">ST(공격)</option>
+                            <option value="LW">LW(공격)</option>
+                            <option value="RW">RW(공격)</option>
+                            <option value="FIVO">FIVO(공격)</option>
+                            <option value="CAM">CAM(미드필더)</option>
+                            <option value="LM">LM(미드필더)</option>
+                            <option value="RM">RM(미드필더)</option>
+                            <option value="CM">CM(미드필더)</option>
+                            <option value="CDM">CDM(미드필더)</option>
+                            <option value="MF">MF(미드필더)</option>
+                            <option value="CB">CB(수비)</option>
+                            <option value="LB">LB(수비)</option>
+                            <option value="RB">RB(수비)</option>
+                            <option value="DF">DF(수비)</option>
                         </select>
                         </div>
 

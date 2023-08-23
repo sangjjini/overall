@@ -29,12 +29,10 @@ h1 {
     border-top:1px solid #a4a4b7;
     border-bottom:none;
 }
-.contents_menu .menu:nth-child(2) a {
+.contents_menu .menu:last-child(2) a {
     border-top:1px solid #a4a4b7;
     border-bottom:none;
 }
-
-
 
 .contents_menu .on a {
     border-color:black;

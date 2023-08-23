@@ -4,6 +4,7 @@ $(window).on('load', function (){
     const urlParams = new URL(location.href).searchParams;
     no = urlParams.get('no');
     match();
+    squads();
     ///squad_list();
 });
 
@@ -79,21 +80,6 @@ function leaveMatch(){
         });
     }
 }
-
-// function squad_list(){
-//     $.ajax({
-//         url: "/squad/match/" + no,
-//         type: "get"
-//     }).done(function(response){
-//         let select = $('#select_squad')
-//         select.empty();
-//         select.append(
-//              `<option value="${response.squadA}">${response.squadA}</option>
-//               <option value="${response.squadB}">${response.squadB}</option>`
-//
-//         );
-//     });
-// }
 
 function resultMatch(button){
     let result = $(button).val()
@@ -188,7 +174,7 @@ function match(){
                 $('.contents_list:last-child').hide();
                 if(response.squadB === null){
                     $('#leave_btn').text("매치 신청")
-                    $('#leave_btn').attr({onclick:"partInMatch()"})
+                    $('#leave_btn').attr({onclick:"modalAction()"})
                 }
             }
         }
@@ -199,13 +185,15 @@ function match(){
         $('#squadA').val(squadA);
         $('#squadB').val(squadB);
 
-        $('#time').val(startAt + " ~ " +endAt);
+        $('#time').text(startAt + " ~ " +endAt);
         $('#endAt').val(response.endAt);
         $('#host').val(response.author);
         match_title = response.title;
         match_contents = response.contents;
+
         $('.contents_right').append(
-            `<div id="squadA">${squadA}</div>
+            `<div id="date">${startAt} ~ ${endAt}</div>
+             <div id="squadA">${squadA}</div>
              <div id="vs">vs</div>
              <div id="squadB">${squadB}</div>
             `
@@ -214,50 +202,69 @@ function match(){
 }
 function partInMatch(){
     if(log === ''){
-        alert('로그인 후 ')
+        alert('로그인 후 이용해주세요.')
         window.location.href="/login";
     }else {
+        let squadB = $('#squads').val();
+        console.log(squadB);
+        let obj = {name: squadB}
         $.ajax({
             url: "/squad/match/" + no + "/partIn",
-            type: "post"
+            type: "post",
+            data: JSON.stringify(obj),
+            contentType: 'application/json',
+            dataType: 'json'
         }).done(function (response) {
             const result = Object.values(response)[0];
             if (result === "fail") {
                 alert("이미 참가신청을 했거나 신청할 수 없는 매치입니다.")
             } else {
                 alert("신청이 완료되었습니다.")
-                window.location.href = "/squad/match?no=" + no;
+                // location.href = "/squad/match?no=" + no;
             }
         });
     }
 }
-// function mySquad(){
-//     const author = document.getElementById("author").value.split(":")[1];
-//     let obj = {"email":author}
-//     $.ajax({
-//         url:"/squad/match/mysquad",
-//         method: "post",
-//         data: JSON.stringify(obj),
-//         contentType: 'application/json',
-//         dataType:'json',
-//         success : (response) => {
-//             let select = $('#squadA');
-//             select.empty();
-//             select.append(
-//                 '<option value="" selected>팀 선택</option>'
-//             );
-//             for(let i = 0; i < response.length; i++){
-//                 let data = response[i];
-//                 console.log(data)
-//
-//                 select.append(
-//                     '<option value="' + data + '">' + data + '</option>'
-//                 )
-//             }
-//         },
-//         error : function(errorThrown) {
-//             console.log("실패");
-//             console.log(errorThrown.statusText);
-//         }
-//     })
-// }
+function modalAction(){
+    if(log !== ''){
+        $('#applyContainer').show();
+    }else{
+        alert('로그인 후 이용해주세요.')
+        location.href="/login";
+    }
+}
+
+function modalClose(){
+    $('#applyContainer').hide();
+}
+
+function squads(){
+    let email = $('#log').val();
+    let obj = {"email":email}
+    $.ajax({
+        url:"/squad/match/mysquad",
+        method: "post",
+        data: JSON.stringify(obj),
+        contentType: 'application/json',
+        dataType:'json',
+        success : (response) => {
+            let select = $('#squads');
+            select.empty();
+            select.append(
+                '<option value="" selected>팀 선택</option>'
+            );
+            for(let i = 0; i < response.length; i++){
+                let data = response[i];
+                console.log("이게 출력이 : ", data)
+
+                select.append(
+                    '<option value="' + data + '">' + data + '</option>'
+                )
+            }
+        },
+        error : function(errorThrown) {
+            console.log("실패");
+            console.log(errorThrown.statusText);
+        }
+    })
+}

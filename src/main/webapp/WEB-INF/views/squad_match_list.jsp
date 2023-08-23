@@ -24,19 +24,42 @@
     <p>OVERALL에서 자신의 스쿼드로 풋살매치를 즐기세요</p>
     <input type="hidden" id="log" value="${log}">
 </div>
-<div class="search_menu">
-    <select id="sorts" onchange="all_match()">
-        <option value="" selected>정렬 선택</option>
-        <option value="title_asc">제목순</option>
-        <option value="date_asc">시간순</option>
-        <option value="overall_asc">오버롤 낮은순</option>
-        <option value="overall_desc">오버롤 높은순</option>
-    </select>
-    <div id="search_container">
-        <input type="text" id="search" placeholder="검색">
-        <button id="search_btn" onclick="search()">
-            <img src="/images/search_icon.png">
-        </button>
+<%--<div class="search_menu">--%>
+<%--    <select id="sorts" onchange="all_match()">--%>
+<%--        <option value="" selected>정렬 선택</option>--%>
+<%--        <option value="title_asc">제목순</option>--%>
+<%--        <option value="date_asc">시간순</option>--%>
+<%--        <option value="overall_asc">오버롤 낮은순</option>--%>
+<%--        <option value="overall_desc">오버롤 높은순</option>--%>
+<%--    </select>--%>
+<%--    <div id="search_container">--%>
+<%--        <input type="text" id="search" placeholder="검색">--%>
+<%--        <button id="search_btn" onclick="search()">--%>
+<%--            <img src="/images/search_icon.png">--%>
+<%--        </button>--%>
+<%--    </div>--%>
+<%--</div>--%>
+<div class="contents_filter">
+    <div class="filter">
+        <div class="filter_input">
+            <input type="text" id="search" placeholder="검색">
+            <button id="filter_btn" onclick="search()">검색</button>
+        </div>
+        <div class="filter_option" onchange="all_match()">
+            <div>
+                <input type="radio" name="filter_sel" id="date_asc" value="date_asc" checked>
+                <label for="date_asc" class="option_text">시간순</label>
+
+                <input type="radio" name="filter_sel" id="title_asc" value="title_asc">
+                <label for="title_asc" class="option_text">제목순</label>
+
+                <input type="radio" name="filter_sel" id="overall_asc" value="overall_asc">
+                <label for="overall_asc" class="option_text">OVR 낮은순</label>
+
+                <input type="radio" name="filter_sel" id="overall_desc" value="overall_desc">
+                <label for="overall_desc" class="option_text">OVR 높은순</label>
+            </div>
+        </div>
     </div>
 </div>
 <div class="contents">
@@ -64,7 +87,6 @@
                 </div>
                 <div id="my_match"></div>
             </div>
-            <div class="division_line"></div>
             <div class="apply_list">
                 <div class="list_title">
                     <h1>신청한 매치</h1>
@@ -87,7 +109,8 @@
 <%--        <input type="hidden" id="sort" value="">--%>
         <div class="bar">
             <div class="bar_date">일정</div>
-            <div class="bar_title">제목(팀평균)</div>
+            <div class="bar_squad">팀명(평균OVR)</div>
+            <div class="bar_title">제목</div>
             <div class="bar_content">소개</div>
             <div class="bar_join">참가 신청</div>
         </div>
@@ -96,17 +119,17 @@
     <div id="applyContainer" style="display: none">
         <div id="applyContent">
             <div id="close_btn">
-                <button id="modalCloseButton" onclick="modalClose()">X</button>
+                <button class="cancel_btn" id="modalCloseButton" onclick="modalClose()">X</button>
             </div>
-            <div>
-                <div id="squad_container">
+            <div id="squad_container">
+                <div id="squad_select_container">
                     <select name="squads" id="squadB" size="1">
 
                     </select>
                 </div>
-                <div>
+                <div class="squad_partIn_btn_container">
                     <input type="hidden" id="no_temp" value="">
-                    <button id="apply_btn" onclick="partIn()">참가신청</button>
+                    <button id="partIn_btn" onclick="partInMatch()">참가신청</button>
                 </div>
             </div>
         </div>
@@ -115,5 +138,4 @@
 <c:import url="footer.jsp"/>
 </body>
 <script src="/script/match_list.js"></script>
-<script src="/script/test.js"></script>
 </html>

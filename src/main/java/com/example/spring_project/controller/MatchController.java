@@ -388,7 +388,7 @@ public class MatchController {
         int idx = 1;
         for(Joining joining : list){
             long cnt = joiningRepository.countBySquadNoAndStateNotAndStateNotAndStateNot(joining.getSquadNo(), "N", "H","Y");
-            System.out.println(idx + "팀 포지션 정해진 인원 : " + cnt);
+            //System.out.println(idx + "팀 포지션 정해진 인원 : " + cnt);
             long no = joining.getSquadNo();
             Squad squad = squadRepository.findByNo(no);
             mySquadList.add(squad.getName());
@@ -397,7 +397,7 @@ public class MatchController {
 //                Squad squad = squadRepository.findByNo(no);
 //                mySquadList.add(squad.getName());
 //            }
-            idx++;
+            //idx++;
         }
 
 //        for(Joining joining : list){
