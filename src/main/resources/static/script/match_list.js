@@ -1,7 +1,7 @@
 let author;
 const log = $('#log').val();
 $(document).ready(function(){
-    $('#search_container').on('keyup', function(key){
+    $('.filter_input').on('keyup', function(key){
         if(key.keyCode === 13){
             search();
         }
@@ -12,7 +12,10 @@ if(log === ''){
     $(".division_line").hide();
     $(".list_title").hide();
 }
-
+function test(){
+    const option = $('input[name=filter_sel]:checked').val();
+    console.log(option);
+}
 $(window).on('load', function(){
     $('#applyContainer').hide();
 
@@ -25,7 +28,7 @@ $(window).on('load', function(){
 
 function search(){
     let keyword = $('#search').val();
-    console.log(keyword);
+    // console.log(keyword);
     all_match();
 }
 function show_make(){
@@ -99,21 +102,21 @@ function my_partIn_match(){
     });
 }
 function all_match(){
-    let sort = $('#sorts').val();
+    const option = $('input[name=filter_sel]:checked').val();
     let keyword = $('#search').val();
     let url = "/squad/match/list?";
 
-    if(sort !== '' && keyword !== ''){
-        url += "sort=" + sort + "&keyword=" + keyword;
+    if(option !== '' && keyword !== ''){
+        url += "sort=" + option + "&keyword=" + keyword;
     }else if(keyword === ''){
-        url += "sort=" + sort;
-    }else if(sort === ''){
+        url += "sort=" + option;
+    }else if(option === ''){
         url += "keyword=" + keyword;
     }else{
         url = "/squad/match/list";
     }
 
-    let obj = {sort:sort};
+    let obj = {sort:option};
     $.ajax({
         url:url,
         type:"get"
@@ -165,9 +168,10 @@ function all_match(){
 
             // if(now <= date && (deadline === 'R')) {
             if(now <= date) {
+                let res = date + " " + startAt + " ~ " + endAt
                 $('#lines').append(
                     `<div class="bar">
-                        <div class="bar_date" onclick="readMatch(this)">` + date + ` ` + startAt + ` ~ ` + endAt + `
+                        <div class="bar_date" onclick="readMatch(this)">${res}
                         <input type="hidden" id="bar_no" value="${match.no}"></div>
                         <div class="bar_title">${match.title}(${statArr[i]})</div>
                         <div class="bar_content">${match.contents}</div>
@@ -188,6 +192,7 @@ function all_match(){
 // }
 function readMatch(div){
     const no = $(div).find('input').val()
+    //const no = $('#bar_no').val();
     console.log(no);
 
     if(parseInt(no) >= 1){
