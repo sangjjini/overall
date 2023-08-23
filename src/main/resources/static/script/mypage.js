@@ -27,6 +27,7 @@ $(window).on('load', function () {
         $('.position').append(`${pos}`);
         $('.left_foot h3').append(`${leftfoot}`);
         $('.right_foot h3').append(`${rightfoot}`);
+        $('.style_wrap').append(`${response.playstyle}`);
         $('.stats_wrap').append(`<div id="stat" class="physical">
 <h1>피지컬</h1>
 <div class="physical_status">

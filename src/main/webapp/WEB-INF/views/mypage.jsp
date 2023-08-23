@@ -28,6 +28,11 @@ To change this template use File | Settings | File Templates.
 </div>
 <div class="mypage_contents">
     <div class="overall">
+        <div class="overall_top">
+        <div class="style_wrap">
+        </div>
+        </div>
+        <div class="overall_bottom">
         <div class="overall_left">
         <div class="nickname_wrap">
             <div class="nickname"></div>
@@ -44,9 +49,10 @@ To change this template use File | Settings | File Templates.
             <div class="right_foot"><h3></h3></div>
         </div>
 
+        </div>
+
     </div>
-    <div class="style_wrap">
-    </div>
+
 </div>
 
 </div>

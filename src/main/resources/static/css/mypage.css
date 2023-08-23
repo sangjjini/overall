@@ -12,6 +12,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Makgeolli';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/Makgeolli.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .contents {
     display:flex;
     justify-content: center;
@@ -72,8 +79,7 @@ h1 {
 
 .mypage_contents .overall {
     display:flex;
-    gap:40px;
-    font-family: "IAMAPLAYER" ,"Tenada";
+    flex-direction: column;
 }
 
 .mypage_contents .overall h1 {
@@ -83,6 +89,12 @@ h1 {
     font-family: "MBC1961GulimM";
     font-size:22px;
     width:30px;
+}
+
+.mypage_contents .overall_bottom {
+    display:flex;
+    gap:40px;
+    font-family: "IAMAPLAYER" ,"Tenada";
 }
 
 .overall .overall_left {
@@ -204,15 +216,20 @@ h1 {
 
 
 .style_wrap {
-    padding-top:100px;
     display:flex;
-    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding:50px;
+    padding-top:0;
+    font-size:60px;
+    font-family: "Makgeolli";
 }
 
 .style_wrap #style {
     border:1px solid black;
     border-radius:60px;
     padding:20px;
+    padding-top:0;
 }
 
 .alert_msg {
@@ -220,7 +237,7 @@ h1 {
     width:100%;
     justify-content: center;
     align-items: center;
-    padding-bottom:100px;
+    padding:100px 0;
 }
 
 .alert_msg h1 {
