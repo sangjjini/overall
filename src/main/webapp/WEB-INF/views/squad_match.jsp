@@ -17,7 +17,6 @@
 </head>
 <body>
 <c:import url="header.jsp"/>
-<div class="shadow"></div>
 <div class="page_title">
     <h1>매치 생성</h1>
     <input type="hidden" id="log" value="${log}">
@@ -49,8 +48,10 @@
                 </div>
             </div>
             <div class="contents_list date">
-                <label for="time" class="small_title">시간</label>
-                <input type="text" id="time" class="input_area" readonly>
+                <span class="small_title">시간: </span>
+                <span id="time"></span>
+<%--                <label for="time" class="small_title">시간</label>--%>
+<%--                <input type="text" id="time" class="input_area" readonly>--%>
             </div>
             <div class="contents_list">
                 <input type="hidden" id="host">
@@ -67,9 +68,27 @@
         </div>
         <div class="center_line"></div>
         <div class="contents_right"></div>
+        <div id="applyContainer" style="display: none">
+            <div id="applyContent">
+                <div id="close_btn">
+                    <button class="cancel_btn" id="modalCloseButton" onclick="modalClose()">X</button>
+                </div>
+                <div id="squad_container">
+                    <div id="squad_select_container">
+                        <select name="squads" id="squads" size="1">
+
+                        </select>
+                    </div>
+                    <div class="squad_partIn_btn_container">
+                        <input type="hidden" id="no_temp" value="">
+                        <button id="partIn_btn" onclick="partInMatch()">참가신청</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <c:import url="footer.jsp"/>
-<script src="/script/match.js"></script>
 </body>
+<script src="/script/match.js"></script>
 </html>

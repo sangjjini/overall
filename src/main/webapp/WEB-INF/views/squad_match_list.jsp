@@ -129,7 +129,7 @@
                 </div>
                 <div class="squad_partIn_btn_container">
                     <input type="hidden" id="no_temp" value="">
-                    <button id="partIn_btn" onclick="partIn()">참가신청</button>
+                    <button id="partIn_btn" onclick="partInMatch()">참가신청</button>
                 </div>
             </div>
         </div>
@@ -138,5 +138,4 @@
 <c:import url="footer.jsp"/>
 </body>
 <script src="/script/match_list.js"></script>
-<script src="/script/test.js"></script>
 </html>
