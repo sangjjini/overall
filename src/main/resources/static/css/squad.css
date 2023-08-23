@@ -18,18 +18,20 @@ button{
 }
 .contents_top{
     display: flex;
-    margin: 70px 150px 0 150px;
     border-top: 10px solid #3e3d55;
     padding-bottom: 70px;
     border-bottom: 1px solid #3e3d55;
+    max-width: 1400px;
+    margin: 100px auto;
+    justify-content: space-between;
 }
 
 /*스쿼드 정보*/
 .contents_left{
     display: flex;
     flex-direction: column;
-    padding: 40px 50px;
-    margin: 0 40px;
+    padding: 40px 30px;
+    margin: 0 30px;
     width: 300px;
     border-bottom: 1px solid #3e3d55;
     height: 100%;
@@ -55,14 +57,14 @@ button{
 #invite_list{
     display: none;
     position: absolute;
-    top: 830px;
-    left: 210px;
+    top: 820px;
     background-color: #f6f6f6;
     border: 1px solid lightgray;
     width: 350px;
     padding: 5px 5px 0 5px;
     font-size: 15px;
     z-index: 1;
+    margin-left: 30px;
 }
 .inviting_left{
     display: flex;
@@ -162,17 +164,18 @@ button{
     align-items: center;
 }
 .list_pos{
-    width: 20%;
+    width: 75px;
+    text-align: center;
 }
 .pos_input{
     border: none;
     outline: none;
+    width: 70px;
+    text-align: center;
 }
 .list_name{
     display: flex;
     align-items: center;
-    margin-left: 10px;
-    width: 80%;
 }
 .list_over{
     width: 40px;
@@ -201,22 +204,40 @@ button{
 }
 .formation_top{
     display: flex;
-    align-items: center;
+    justify-content: center;
 }
 #ovr{
     border: none;
+    outline: none;
+    width: 40px;
+    background: none;
+    color: white;
+    font-size: 15px;
+    padding: 0 0 0 5px;
 }
 .formation{
     width: 180px;
     height: 40px;
     line-height: 40px;
     box-sizing: border-box;
-    padding: 0 10px;
     background: #161616;
     font-size: 15px;
     color: #fff;
     text-align: center;
-    margin: 40px auto;
+    margin: 40px 2px;
+}
+.formation_ovr{
+    width: 180px;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    background: #9b9aa6;
+    font-size: 15px;
+    color: #fff;
+    text-align: center;
+    margin: 40px 2px;
+    display: flex;
+    justify-content: center;
 }
 .contents_right{
     display: flex;
@@ -225,7 +246,6 @@ button{
     background-repeat: no-repeat;
     height: 852px;
     width: 602px;
-    margin: 0 auto;
     justify-content: flex-end;
 }
 .position_area{
@@ -275,8 +295,8 @@ button{
     font-size: 15px;
     width: 300px;
     height: 300px;
-    top: 85%;
-    right: 30%;
+    top: 800px;
+    margin-left: 145px;
 }
 #A{
     color: #bc0f0f;
@@ -312,7 +332,7 @@ button{
     display: flex;
     flex-direction: column;
     margin: 0 5%;
-    padding: 70px 5% 0 5%;
+    padding: 0 5%;
 }
 .chat_area{
     display: flex;
@@ -343,7 +363,7 @@ button{
     margin: 20px;
 }
 #chatting{
-    width: 95%;
+    width: 90%;
     height: 50px;
     border: 1px solid lightgray;
     padding-left: 10px;
@@ -358,8 +378,6 @@ button{
     cursor: pointer;
     font-size: 15px;
     float: right;
-    position: absolute;
-    right: 10%;
 }
 .myChat{
     display: flex;

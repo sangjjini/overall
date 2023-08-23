@@ -26,6 +26,22 @@
     </div>
     <div class="contents">
         <div class="contents_top">
+            <div id="invite_list">
+                <div class="popup_area">
+                    <div>
+                        <button onclick="close_invite()" class="cancel_btn">X</button>
+                    </div>
+                    <div class="invite_title">
+                        <label for="email" class="small_title">초대할 이메일</label>
+                    </div>
+                    <div class="email_area">
+                        <input type="text" id="email">
+                        <button onclick="invite()" class="small_btn">초대</button>
+                    </div>
+                    <input type="text" class="error" id="error_invite" readonly>
+                    <div id="inviting" class="list_area"></div>
+                </div>
+            </div>
             <div class="contents_left">
                 <div class="contents_list">
                     <label for="name" class="small_title">스쿼드 이름</label>
@@ -42,22 +58,6 @@
                         <div class="small_title">스쿼드 멤버</div>
                         <button onclick="show_invite()" class="invited_btn">초대하기</button>
                     </div>
-                    <div id="invite_list">
-                        <div class="popup_area">
-                            <div>
-                                <button onclick="close_invite()" class="cancel_btn">X</button>
-                            </div>
-                            <div class="invite_title">
-                                <label for="email" class="small_title">초대할 이메일</label>
-                            </div>
-                            <div class="email_area">
-                                <input type="text" id="email">
-                                <button onclick="invite()" class="small_btn">초대</button>
-                            </div>
-                            <input type="text" class="error" id="error_invite" readonly>
-                            <div id="inviting" class="list_area"></div>
-                        </div>
-                    </div>
                 </div>
                 <div class="contents_member">
                     <div class="list_pos small_title">포지션</div>
@@ -73,8 +73,10 @@
 
             <div class="right_area">
                 <div class="formation_top">
-                    <div>평균 OVR : <input type="text" id="ovr" readonly></div>
                     <div class="formation">포메이션 1-2-1</div>
+                    <div class="formation_ovr">
+                        평균 OVR : <input type="text" id="ovr" readonly>
+                    </div>
                 </div>
                 <div class="contents_right">
                     <div id="select_box">

@@ -57,9 +57,8 @@ function all_squad(){
         response.forEach(squad => {
             $('#squad_list').append(
                 `<div class="bar">
-                    <div class="bar_num">${num}</div>
-                    <div class="bar_over">${squad.stats}</div>
                     <div class="bar_name">${squad.name}</div>
+                    <div class="bar_over">${squad.stats}</div>
                     <div class="bar_content">${squad.contents}</div>
                     <div class="bar_join">
                         <button onclick="join(this.id)" id="${squad.no}" class="join_btn">+</button>

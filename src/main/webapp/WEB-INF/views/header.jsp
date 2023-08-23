@@ -40,7 +40,7 @@
                         <button onclick="close_alarm()" class="cancel_btn">X</button>
                         <div class="invite_title">
                             새로운 알람 :
-                            <input type="text" class="alarm_num" id="popup_cnt">
+                            <input type="text" class="alarm_num" id="popup_cnt" readonly>
                         </div>
                         <div id="alarm_area"></div>
                     </div>

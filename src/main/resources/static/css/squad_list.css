@@ -23,7 +23,7 @@
 }
 .contents {
     display: flex;
-    padding: 0 300px;
+    /*padding: 0 300px;*/
     gap:50px;
     margin-bottom: 200px;
     font-family:"Noto Sans KR";
@@ -123,11 +123,10 @@
     border-bottom: 1px solid lightgray;
     text-align: center;
 }
-
-.bar_num{
-    width: 5%;
-}
 .bar_name{
+    width: 30%;
+}
+.bar_over{
     width: 30%;
 }
 .bar_content{
