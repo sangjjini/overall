@@ -280,18 +280,23 @@ function chat(){
         response.forEach(chat => {
             if(chat.email === log){
                 $('#chat').append(
-                    `<div class="myChat" id="${chat.no}">
-                        <div class="chat_name">${chat.nickname}</div>
+                    `<div class="chat_list" id="${chat.no}">
+                        <div class="chat_name">
+                            ${chat.nickname}
+                            <button class="chat_delete" id="${chat.no}">X</button>
+                        </div>
                         <div class="chat_contents">
-                            <div class="chat_date">${chat.createdAt}</div>
                             ${chat.contents}
+                            <div class="chat_date">${chat.createdAt}</div>
                         </div>
                     </div><br>`
                 );
             } else {
                 $('#chat').append(
-                    `<div class="otherChat" id="${chat.no}">
-                        <div class="chat_name">${chat.nickname}</div>
+                    `<div class="chat_list" id="${chat.no}">
+                        <div class="chat_name">
+                            ${chat.nickname}
+                        </div>
                         <div class="chat_contents">
                             ${chat.contents}
                             <div class="chat_date">${chat.createdAt}</div>
