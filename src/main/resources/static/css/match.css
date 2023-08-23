@@ -30,8 +30,12 @@ input{
 }
 .content{
     display: flex;
-    margin: 70px 5% 0;
     border-top: 10px solid #3e3d55;
+    padding-bottom: 70px;
+    border-bottom: 1px solid #3e3d55;
+    max-width: 1400px;
+    margin: 100px auto;
+    justify-content: space-between;
 }
 .contents_left{
     display: flex;
@@ -88,11 +92,12 @@ textarea{
 }
 .contents_right{
     display: flex;
-    flex-direction: column;
-    height: 852px;
-    width: 602px;
+    align-items: center;
+    /*flex-direction: column;*/
+    /*height: 852px;*/
+    width: 600px;
     margin: 0 auto;
-    justify-content: flex-end;
+    text-align: center;
 }
 #a_win, #draw, #b_win{
     width: 33%;

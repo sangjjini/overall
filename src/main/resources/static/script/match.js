@@ -4,7 +4,6 @@ $(window).on('load', function (){
     const urlParams = new URL(location.href).searchParams;
     no = urlParams.get('no');
     match();
-
     ///squad_list();
 });
 
@@ -138,6 +137,11 @@ function match(){
         type: "get"
     }).done(function (response){
         // let log = $('#log').val();
+        let title = response.title;
+        let author = response.author;
+        let contents = response.contents;
+        let squadA = response.squadA;
+        let squadB = response.squadB;
         let startAt = response.startAt.substring(0,16);
         let endAt = response.endAt;
         if(startAt.substring(0,10) === endAt.substring(0,10)){
@@ -189,36 +193,28 @@ function match(){
             }
         }
 
-        // if(response.squadB === null){
-        //     $('#leave_btn').hide();
-        //     $('.contents_list:last-child').hide();
-        //     update_btn.text("매치 참가");
-        //     update_btn.attr({onclick:"applyMatch()"})
-        // }
-        // else {
-        //     $('#delete_btn').hide();
-        //     update_btn.text("매치 신청");
-        // }
-
-        $('#title').val(response.title);
-        $('#contents').val(response.contents);
-        $('#author').val(response.author);
-        $('#squadA').val(response.squadA);
-        $('#squadB').val(response.squadB);
-        //
-        // if($('#squadB').val() !== ""){
-        //     $('#squadB').attr('readonly','readonly')
-        // }
+        $('#title').val(title);
+        $('#contents').val(contents);
+        $('#author').val(author);
+        $('#squadA').val(squadA);
+        $('#squadB').val(squadB);
 
         $('#time').val(startAt + " ~ " +endAt);
         $('#endAt').val(response.endAt);
         $('#host').val(response.author);
         match_title = response.title;
         match_contents = response.contents;
+        $('.contents_right').append(
+            `<div id="squadA">${squadA}</div>
+             <div id="vs">vs</div>
+             <div id="squadB">${squadB}</div>
+            `
+        )
     })
 }
 function partInMatch(){
     if(log === ''){
+        alert('로그인 후 ')
         window.location.href="/login";
     }else {
         $.ajax({
