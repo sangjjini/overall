@@ -80,7 +80,7 @@ public class SquadController {
     @GetMapping("squad/my")
     public List<SquadResponseDto> getMySquad(WebRequest request){
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        List<Joining> joiningList = joiningRepository.findByEmailAndStateNot(log, "N");
+        List<Joining> joiningList = joiningRepository.findAllByEmailAndStateNotAndStateNot(log, "N", "H");
         List<SquadResponseDto> squadResponseDtos = new ArrayList<>();
         for(int i=0; i<joiningList.size(); i++){
             Squad squad = squadRepository.findByNo(joiningList.get(i).getSquadNo());
@@ -90,9 +90,15 @@ public class SquadController {
         return squadResponseDtos;
     }
 
-    @GetMapping("squad/all")
-    public List<SquadResponseDto> getAllSquad(){
-        List<Squad> squads = squadRepository.findAllByOrderByNoDesc();
+    @GetMapping("squad/date_up")
+    public List<SquadResponseDto> getAllSquadDateUp(@RequestParam(required = false) String keyword){
+        List<Squad> squads;
+        if(keyword != null && !keyword.isEmpty()) {
+            String pattern = "%" + keyword + "%";
+            squads = squadRepository.findAllByNameLikeOrderByCreatedAtDesc(pattern);
+        }else{
+            squads = squadRepository.findAllByOrderByCreatedAtDesc();
+        }
         List<SquadResponseDto> squadResponseDtos = new ArrayList<>();
         for(int i=0; i<squads.size(); i++){
             SquadResponseDto squadResponseDto = new SquadResponseDto(squads.get(i));
@@ -101,15 +107,54 @@ public class SquadController {
         return squadResponseDtos;
     }
 
-    @GetMapping("squad/overall/{no}")
-    public int getOverall(@PathVariable long no){
-        List<Joining> joiningList = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(no, "N", "H");
-        int sum = 0;
-        for(int i=0; i<joiningList.size(); i++){
-            Member member = memberRepository.findByEmail(joiningList.get(i).getEmail());
-            sum += member.getStats();
+    @GetMapping("squad/date_down")
+    public List<SquadResponseDto> getAllSquadDateDown(@RequestParam(required = false) String keyword){
+        List<Squad> squads;
+        if(keyword != null && !keyword.isEmpty()) {
+            String pattern = "%" + keyword + "%";
+            squads = squadRepository.findAllByNameLikeOrderByCreatedAtAsc(pattern);
+        }else{
+            squads = squadRepository.findAllByOrderByCreatedAtAsc();
         }
-        sum = sum / joiningList.size();
-        return sum;
+        List<SquadResponseDto> squadResponseDtos = new ArrayList<>();
+        for(int i=0; i<squads.size(); i++){
+            SquadResponseDto squadResponseDto = new SquadResponseDto(squads.get(i));
+            squadResponseDtos.add(squadResponseDto);
+        }
+        return squadResponseDtos;
+    }
+
+    @GetMapping("squad/ovr_up")
+    public List<SquadResponseDto> getAllSquadOvrUp(@RequestParam(required = false) String keyword){
+        List<Squad> squads;
+        if(keyword != null && !keyword.isEmpty()) {
+            String pattern = "%" + keyword + "%";
+            squads = squadRepository.findAllByNameLikeOrderByStatsAsc(pattern);
+        }else{
+            squads = squadRepository.findAllByOrderByStatsDesc();
+        }
+        List<SquadResponseDto> squadResponseDtos = new ArrayList<>();
+        for(int i=0; i<squads.size(); i++){
+            SquadResponseDto squadResponseDto = new SquadResponseDto(squads.get(i));
+            squadResponseDtos.add(squadResponseDto);
+        }
+        return squadResponseDtos;
+    }
+
+    @GetMapping("squad/ovr_down")
+    public List<SquadResponseDto> getAllSquadOvrDown(@RequestParam(required = false) String keyword){
+        List<Squad> squads;
+        if(keyword != null && !keyword.isEmpty()) {
+            String pattern = "%" + keyword + "%";
+            squads = squadRepository.findAllByNameLikeOrderByStatsDesc(pattern);
+        }else{
+            squads = squadRepository.findAllByOrderByStatsAsc();
+        }
+        List<SquadResponseDto> squadResponseDtos = new ArrayList<>();
+        for(int i=0; i<squads.size(); i++){
+            SquadResponseDto squadResponseDto = new SquadResponseDto(squads.get(i));
+            squadResponseDtos.add(squadResponseDto);
+        }
+        return squadResponseDtos;
     }
 }

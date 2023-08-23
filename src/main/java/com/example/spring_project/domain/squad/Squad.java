@@ -1,5 +1,6 @@
 package com.example.spring_project.domain.squad;
 
+import com.example.spring_project.util.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "squad")
 @AllArgsConstructor
 @Getter
-public class Squad {
+public class Squad extends Timestamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long no;

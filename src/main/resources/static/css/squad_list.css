@@ -4,7 +4,6 @@
     font-weight: normal;
     font-style: normal;
 }
-
 .page_title {
     padding: 60px 300px;
     background: #92d5ff;
@@ -12,7 +11,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 70px;
     font-family: "Tenada";
 }
 .page_title>h1{
@@ -21,12 +19,50 @@
     margin-bottom: 20px;
     font-family: "Tenada";
 }
+.contents_filter{
+    display: flex;
+}
+.filter{
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+    margin: 0 auto;
+}
+.filter_input{
+    display: flex;
+}
+.filter_option{
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+.option_text{
+    font-size: 14px;
+}
+#filter_keyword{
+    height: 60px;
+    border: 3px solid #3e3d55;
+    padding: 0 0 0 10px;
+    width: 600px;
+    margin: 0;
+    font-size: 15px;
+}
+#filter_btn{
+    border: none;
+    background: #3e3d55;
+    color: white;
+    width: 100px;
+    height: 60px;
+    margin: 0 auto;
+    cursor: pointer;
+    font-size: 16px;
+}
 .contents {
     display: flex;
     /*padding: 0 300px;*/
     gap:50px;
     margin-bottom: 200px;
     font-family:"Noto Sans KR";
+    padding: 0 50px;
 }
 .contents button {
     font-family:"Noto Sans KR";
@@ -37,7 +73,7 @@
     /*padding: 70px 0;*/
 }
 .left_menu{
-    width:210px;
+    width:250px;
     border-top: 10px solid #3e3d55;
     padding-top: 30px;
 }
@@ -108,7 +144,6 @@
 #show_make{
     display: none;
 }
-
 #squad_list {
     display:flex;
     flex-direction: column;
@@ -131,6 +166,9 @@
 }
 .bar_content{
     width: 100%;
+}
+.bar_date{
+    width: 30%;
 }
 .bar_join{
     width: 10%;
