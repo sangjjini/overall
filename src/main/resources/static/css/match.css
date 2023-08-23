@@ -58,8 +58,11 @@ input{
 }
 .contents_list{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-top: 20px;
+}
+.date .small_title{
+    width: 15%;
 }
 .contents_list:last-child{
     flex-direction: row;
@@ -110,6 +113,44 @@ textarea{
     width: 100%;
     height: 100vh;
     display: none;
+}
+#applyContainer {
+     width: 100%;
+     height: 100%;
+     position: fixed;
+     top: 0;
+     left: 0;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     background: rgba(0, 0, 0, 0.5);
+ }
+#applyContent {
+    position: absolute;
+    background-color: #ffffff;
+    width: 300px;
+    height: 150px;
+    padding: 15px;
+}
+#close_btn{
+    display: flex;
+    justify-content: flex-end;
+}
+#squad_container{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-direction: row;
+}
+#squad_select_container{
+    width: 65%;
+}
+#squad_partIn_btn_container{
+    width: 30%;
+}
+#squad_select_container > #squads, #partIn_btn{
+    width: 100%;
+    height: 100%;
 }
 .preview{
     display: flex;

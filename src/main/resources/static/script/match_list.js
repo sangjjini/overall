@@ -17,8 +17,7 @@ function test(){
     console.log(option);
 }
 $(window).on('load', function(){
-    $('#applyContainer').hide();
-
+    // $('#applyContainer').hide();
     my_match();
     my_partIn_match();
     mySquad();
@@ -170,14 +169,15 @@ function all_match(){
             if(now <= date) {
                 let res = date + " " + startAt + " ~ " + endAt
                 $('#lines').append(
-                    `<div class="bar">
-                        <div class="bar_date" onclick="readMatch(this)">${res}
-                        <input type="hidden" id="bar_no" value="${match.no}"></div>
-                        <div class="bar_title">${match.title}(${statArr[i]})</div>
+                    `<div class="bar" onclick="readMatch(this)">
+                        <input type="hidden" id="bar_no" value="${match.no}">
+                        <div class="bar_date">${res}</div>
+                        <div class="bar_squad">${match.squadA}(${statArr[i]})</div>
+                        <div class="bar_title">${match.title}</div>
                         <div class="bar_content">${match.contents}</div>
                         <div class="bar_join">
 <!--                            <button onclick="partIn(this.id)" id="${match.no}" class="join_btn">+</button>-->
-                            <button onclick="modalAction(this.id)" id="${match.no}" class="join_btn">+</button>
+                            <button onclick="event.stopPropagation(); modalAction(this.id)" id="${match.no}" class="join_btn">+</button>
                         </div>
                     </div>`
                 );
@@ -193,11 +193,8 @@ function all_match(){
 function readMatch(div){
     const no = $(div).find('input').val()
     //const no = $('#bar_no').val();
-    console.log(no);
+    window.location.href= '/squad/match?no=' + no;
 
-    if(parseInt(no) >= 1){
-        location.href = `/squad/match?no=` + no;
-    }
 }
 function mySquad(){
     let email = $('#log').val();
@@ -229,32 +226,73 @@ function mySquad(){
         }
     })
 }
-function partIn(){
+function partInMatch(){
     let no = $('#no_temp').val();
     let squadB = $('#squadB').val();
-    let obj = {name:squadB}
-    $.ajax({
-        url:"/squad/match/"+no+"/partIn",
-        type:"post",
-        data: JSON.stringify(obj),
-        contentType: 'application/json',
-        dataType:'json'
-    }).done(function(response){
-       const result = Object.values(response)[0];
-       if(result === "fail") {
-           alert("이미 참가신청을 했거나 신청할 수 없는 매치입니다.")
-       }else {
-           alert("신청이 완료되었습니다.")
-           window.location.href = "/squad/match?no=" + no;
-       }
-    });
+    console.log("chk : ", squadB)
+    if(squadB !== '') {
+        let obj = {name: squadB}
+        $.ajax({
+            url: "/squad/match/" + no + "/partIn",
+            type: "post",
+            data: JSON.stringify(obj),
+            contentType: 'application/json',
+            dataType: 'json'
+        }).done(function (response) {
+            const result = Object.values(response)[0];
+            if (result === "fail") {
+                alert("이미 참가신청을 했거나 신청할 수 없는 매치입니다.")
+            } else {
+                alert("신청이 완료되었습니다.")
+                window.location.href = "/squad/match?no=" + no;
+            }
+        });
+    }else{
+        alert('팀을 선택해주세요.')
+    }
 }
 function modalAction(no){
-    $('#applyContainer').show();
-    $('#no_temp').val(no);
+    if(log !== ''){
+        $('#applyContainer').show();
+        $('#no_temp').val(no);
+    }else{
+        alert('로그인 후 이용해주세요.')
+        location.href="/login";
+    }
 }
 
 function modalClose(){
     $('#applyContainer').hide();
     $('#no_temp').val("");
+}
+
+function squads(){
+    let email = $('#log').val();
+    let obj = {"email":email}
+    $.ajax({
+        url:"/squad/match/mysquad",
+        method: "post",
+        data: JSON.stringify(obj),
+        contentType: 'application/json',
+        dataType:'json',
+        success : (response) => {
+            let select = $('#squadB');
+            select.empty();
+            select.append(
+                '<option value="" selected>팀 선택</option>'
+            );
+            for(let i = 0; i < response.length; i++){
+                let data = response[i];
+                console.log("이게 출력이 : ", data)
+
+                select.append(
+                    '<option value="' + data + '">' + data + '</option>'
+                )
+            }
+        },
+        error : function(errorThrown) {
+            console.log("실패");
+            console.log(errorThrown.statusText);
+        }
+    })
 }
