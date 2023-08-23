@@ -50,9 +50,10 @@ function invited(){
                         <div class="list_pos">
                             <input type="text" class="pos_input" id="pos_${members.code}" readonly>
                         </div>
+                            <div class="list_over"><h1>${members.stats}</h1></div>
                         <div class="list_name">
-                            <div class="list_over">${members.stats}</div>
-                            <div>${members.nickname}(방장)</div>
+                            <div class="name">${members.nickname}(방장)</div>
+                            <div class="out_btn_wrap"></div>
                         </div>
                     </div>`
                 );
@@ -64,11 +65,11 @@ function invited(){
                                 <input type="text" class="pos_input" id="pos_${members.code}" readonly>
                             </div>
                             <div class="list_out">
+                                    <div class="list_over"><h1>${members.stats}</h1></div>
                                 <div class="list_name">
-                                    <div class="list_over">${members.stats}</div>
-                                    <div>${members.nickname}</div>
+                                    <div class="name">${members.nickname}</div>
+                                <div class="out_btn_wrap"><button onclick="out(this.id)" id="${members.code}" class="out_btn">방출</button></div>
                                 </div>
-                                <button onclick="out(this.id)" id="${members.code}" class="out_btn">방출</button>
                             </div>
                         </div>`
                     );
@@ -78,9 +79,10 @@ function invited(){
                             <div class="list_pos">
                                 <input type="text" class="pos_input" id="pos_${members.code}" readonly>
                             </div>
+                                <div class="list_over"><h1>${members.stats}</h1></div>
                             <div class="list_name">
-                                <div class="list_over">${members.stats}</div>
-                                <div>${members.nickname}</div>
+                                <div class="name">${members.nickname}</div>
+                                <div class="out_btn_wrap"></div>
                             </div>
                         </div>`
                     );

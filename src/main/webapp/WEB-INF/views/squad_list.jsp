@@ -33,7 +33,7 @@
                     <input class="error_name" readonly>
                     <div class="sub_section">
                         <button onclick="squadMake()" class="enter_btn make_sub">만들기</button>
-                        <button onclick="close_make()" class="cancel_btn make_sub">취소</button>
+                        <button onclick="close_make()" class="section_cancel_btn make_sub">취소</button>
                     </div>
                 </div>
                 <div id="my_squad"></div>

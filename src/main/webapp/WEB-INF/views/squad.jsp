@@ -14,6 +14,7 @@
     <%-- 제이쿼리--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <c:import url="header.jsp" />
@@ -60,8 +61,13 @@
                     </div>
                 </div>
                 <div class="contents_member">
-                    <div class="list_pos small_title">포지션</div>
-                    <div class="list_name small_title">이름</div>
+                    <div class="list_pos small_title"><h1>포지션</h1></div>
+                    <div class="list_over small_title"><h1>OVR</h1></div>
+                    <div class="list_name small_title">
+                        <div class="name">이름</div>
+                        <div class="out_btn_wrap"></div>
+                    </div>
+
                 </div>
                 <div id="invited"></div>
                 <div class="contents_list">
@@ -75,7 +81,8 @@
                 <div class="formation_top">
                     <div class="formation">포메이션 1-2-1</div>
                     <div class="formation_ovr">
-                        평균 OVR : <input type="text" id="ovr" readonly>
+                        <div class="formation_txt">평균 OVR : </div>
+                        <input type="text" id="ovr" readonly>
                     </div>
                 </div>
                 <div class="contents_right">
