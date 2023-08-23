@@ -1,14 +1,14 @@
 let squadNo;
 const log = $('#log').val();
-let apply_cnt = 0;
+let apply_cnt;
 $(window).on('load', function (){
     const urlParams = new URL(location.href).searchParams;
     squadNo = urlParams.get('no');
     squad();
-    // 실시간 적용 필요
     applying();
     chat();
     // read();
+    $('#invite_cnt').hide();
 });
 
 let name_squad;
@@ -132,6 +132,7 @@ function applying(){
         type: "get"
     }).done(function (response){
         $('#inviting').empty();
+        apply_cnt = 0;
         response.forEach(members => {
             $('#inviting').append(
                 `<div id="${members.code}" class="inviting_list">
@@ -149,6 +150,13 @@ function applying(){
             );
             apply_cnt++;
         });
+        const cnt = $('#invite_cnt');
+        if(apply_cnt === 0){
+            cnt.hide();
+        }else{
+            cnt.val(apply_cnt);
+            cnt.show();
+        }
         inviting();
     });
 }
@@ -198,6 +206,7 @@ function accept(id){
     }).done(function (){
         $("div").remove('#' + id);
         invited();
+        applying();
     });
 }
 
@@ -207,6 +216,7 @@ function refuse(id){
         type: "delete"
     }).done(function (){
         $("div").remove('#' + id);
+        applying();
     });
 }
 
@@ -270,18 +280,23 @@ function chat(){
         response.forEach(chat => {
             if(chat.email === log){
                 $('#chat').append(
-                    `<div class="myChat" id="${chat.no}">
-                        <div class="chat_name">${chat.nickname}</div>
+                    `<div class="chat_list" id="${chat.no}">
+                        <div class="chat_name">
+                            ${chat.nickname}
+                            <button class="chat_delete" id="${chat.no}">X</button>
+                        </div>
                         <div class="chat_contents">
-                            <div class="chat_date">${chat.createdAt}</div>
                             ${chat.contents}
+                            <div class="chat_date">${chat.createdAt}</div>
                         </div>
                     </div><br>`
                 );
             } else {
                 $('#chat').append(
-                    `<div class="otherChat" id="${chat.no}">
-                        <div class="chat_name">${chat.nickname}</div>
+                    `<div class="chat_list" id="${chat.no}">
+                        <div class="chat_name">
+                            ${chat.nickname}
+                        </div>
                         <div class="chat_contents">
                             ${chat.contents}
                             <div class="chat_date">${chat.createdAt}</div>

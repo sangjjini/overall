@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>스쿼드</title>
@@ -23,7 +24,7 @@
     <div class="shadow"></div>
     <div class="page_title">
         <h1>스쿼드 메이커</h1>
-        <p>스쿼드를 만들어보세요.</p>
+        <p>함께할 팀을 만들어보세요.</p>
     </div>
     <div class="contents">
         <div class="contents_top">
@@ -57,7 +58,10 @@
                 <div class="contents_list">
                     <div class="squad_member">
                         <div class="small_title">스쿼드 멤버</div>
-                        <button onclick="show_invite()" class="invited_btn">초대하기</button>
+                        <button onclick="show_invite()" class="invited_btn">
+                            초대/신청
+                            <input type="text" id="invite_cnt" readonly>
+                        </button>
                     </div>
                 </div>
                 <div class="contents_member">
@@ -137,13 +141,14 @@
         </div>
 
         <div class="contents_bottom">
-            <div class="chat_title">스쿼드 대화</div>
+            <div class="chat_title">스쿼드 공지</div>
+            <div class="send_area">
+                <input type="text" id="chatting" placeholder="내용을 입력하세요">
+                <button onclick="send()" class="send_btn">작성</button>
+            </div>
             <div class="chat_area">
                 <div id="chat"></div>
-                <div class="send_area">
-                    <input type="text" id="chatting" placeholder="내용을 입력하세요">
-                    <button onclick="send()" class="send_btn">전송</button>
-                </div>
+
             </div>
         </div>
     </div>

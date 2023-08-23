@@ -124,7 +124,20 @@ button{
     height: 35px;
     cursor: pointer;
 }
-
+#invite_cnt{
+    display: none;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    background: red;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    font-size: 11px;
+    margin: -15px -5px 0 0;
+    float: right;
+    outline: none;
+}
 .input_area{
     border-radius: 5px;
     border: 3px solid #3e3d55;
@@ -142,7 +155,6 @@ button{
     border: 1px solid gray;
     padding-left: 10px;
 }
-
 .small_btn{
     width: 20%;
     border: none;
@@ -386,14 +398,14 @@ width:100%;
 
 /*채팅*/
 .chat_title{
-    margin-bottom: 20px;
     font-size: 28px;
 }
 .contents_bottom{
     display: flex;
     flex-direction: column;
-    padding:100px;
-    padding-bottom:200px;
+    padding: 100px 0;
+    min-width: 1050px;
+    margin: 0 auto;
 }
 .chat_area{
     display: flex;
@@ -404,10 +416,8 @@ width:100%;
     width: 94%;
     height: 300px;
     background-color: #f6f6f6;
-    overflow: auto;
     border: 1px solid lightgray;
     padding: 35px 3% 0 3%;
-    overflow-y: scroll;
 }
 #chat::-webkit-scrollbar {
     width: 10px;
@@ -421,31 +431,28 @@ width:100%;
 }
 .send_area{
     width: 100%;
-    margin: 20px;
+    margin: 20px 0;
 }
 #chatting{
-    width: 90%;
-    height: 50px;
+    width: 85%;
+    height: 60px;
     border: 1px solid lightgray;
     padding-left: 10px;
+    font-size: 15px;
+    outline: none;
 }
 .send_btn{
     border: none;
     background: #25c7f5;
     color: white;
-    width: 10%;
-    height: 50px;
+    width: 15%;
+    height: 60px;
     margin: 0 auto;
     cursor: pointer;
     font-size: 15px;
     float: right;
 }
-.myChat{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-.otherChat{
+.chat_list{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
