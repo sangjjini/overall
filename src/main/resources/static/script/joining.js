@@ -177,9 +177,10 @@ function checkEmail(){
             "email" : $("#email").val()
         },
         success : function(data){
-            alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+            console.log("발송");
+            alert("해당 이메일로 인증번호 발송이 완료되었습니다.\n 확인부탁드립니다.")
             // console.log("data : "+data);
-            chkEmailConfirm(data, $("#verify_btn"), $("#memailconfirmTxt"));
+            $("#div_code").show();
         }
     });
         // console.log(error);
@@ -190,30 +191,58 @@ function checkEmail(){
 }
 
 // 이메일 인증번호 체크 함수
-function chkEmailConfirm(data, $verify_btn, $memailconfirmTxt){
-    $verify_btn.on("keyup", function(){
-        if (data !== $verify_btn.val()) { //
-            emconfirmchk = false;
-            $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
-            $("#emconfirmchk").css({
-                "color" : "#FA3E3E",
-                "font-weight" : "bold",
-                "font-size" : "10px"
-            })
-            // console.log("중복아이디");
-        } else { // 아니면 중복아님
-            emconfirmchk = true;
-            $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
+// 클라이언트 사이드 코드
+function chkEmailConfirm() {
+    var enteredCode = $("#code").val();
 
-            $("#emconfirmchk").css({
-                "color" : "#0D6EFD",
-                "font-weight" : "bold",
-                "font-size" : "10px"
+    // 서버로 전송할 JSON 데이터 생성
+    var requestData = {
+        "code": enteredCode
+    };
 
-            })
-        }
-    })
+    $.ajax({
+        type: "POST",
+        url: "login/checkEmailConfirm", // 서버의 맵핑 주소
+        data: JSON.stringify(requestData),
+        contentType: "application/json",
+        dataType: "json",
+        success: function(response) {
+            console.log("서버전송완료");
+            if (response.result === true) {
+                $("#verify_btn").prop("disabled", true);
+                console.log("인증 전송 완료");
+            } else {
+                console/log("인증 전송 실패");
+            }
+        },
+        // error: function(error) {
+        //     console.error("Error:", error);
+        // }
+    });
 }
+
+// function chkEmailConfirm(data, $verify_btn, $memailconfirmTxt){
+//     var code = $("#code").val(); // 사용자가 입력한 인증코드 가져오기
+//         if (data !== $verify_btn.val()) { //
+//             emconfirmchk = false;
+//             $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
+//             $("#emconfirmchk").css({
+//                 "color" : "#FA3E3E",
+//                 "font-weight" : "bold",
+//                 "font-size" : "10px"
+//             })
+//         } else {
+//             emconfirmchk = true;
+//             $memailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
+//
+//             $("#emconfirmchk").css({
+//                 "color" : "#0D6EFD",
+//                 "font-weight" : "bold",
+//                 "font-size" : "10px"
+//
+//             })
+//         }
+// }
 
 // 클라이언트에서 닉네임 중복 확인 버튼을 누를 때 실행되는 함수
 function nickDuplChk() {

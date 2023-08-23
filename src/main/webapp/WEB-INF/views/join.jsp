@@ -35,9 +35,12 @@
                             <small class="small hint" id="hint_email">이메일이 인증되지 않았습니다</small>
                         </div>
                         <div id="div_code" class="input-control">
-                            <label class="label" id="memailconfirmTxt" for="verify_btn">인증번호 입력</label>
-                            <input id="code" name="code" type="number" maxlength="6">
-                            <button id="verify_btn" type="button" class="veriaaafy">인증하기</button>
+                            <label class="label" id="memailconfirmTxt" for="code">인증번호 입력</label>
+                            <div class="input_and_button">
+                                <input id="code" name="code" type="text" maxlength="8">
+                                <button id="verify_btn" type="button" class="veriaaafy" onclick="chkEmailConfirm()">인증하기</button>
+                            </div>
+<%--                            <small class="small hint" id="hint_email">잘못된 인증 코드입니다</small>--%>
                         </div>
                         <div class="input-control_password">
                             <label class="label" for="password">비밀번호</label>
@@ -58,7 +61,7 @@
                         <div class="input-control_nickname">
                             <label class="label" for="nickName">닉네임</label>
                             <div class="input_and_button">
-                                <input id="nickName" name="nickname" type="text" maxlength="8" placeholder="    ">
+                                <input id="nickName" name="nickname" type="text" maxlength="8" placeholder="">
                                 <button id="dup_btn" type="button" value="중복확인" class="dup" onclick="nickDuplChk()">중복 확인</button>
                             </div>
                             <small class="small hint" id="hint_nickName">최소 2자리 이상 8자리 이하 한글, 영문, 숫자만 입력해야 합니다</small>
