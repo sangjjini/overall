@@ -72,7 +72,7 @@
 }
 
 .squad_maker {
-    background: url("../images/background_ground_img.png") no-repeat;
+    background: url("../images/background_ground_img.jpg") no-repeat;
     background-size: cover;
     padding-top:580px;
     padding-bottom:580px;
@@ -92,7 +92,8 @@
 
 
 .squad_match {
-    background-image: url("../images/background_football_img.png");
+    background-image: url("../images/background_football_img.jpg");
+    background-position-x: center;
     background-size: cover;
     padding-top:580px;
     padding-bottom:580px;
