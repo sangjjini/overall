@@ -257,7 +257,6 @@ public class MatchController {
         String log = (String)request.getAttribute("log",WebRequest.SCOPE_SESSION);
         String squadB = response.getString("name");
 
-        //String log = "neymar@gmail.com";
         try {
             Match match = matchRepository.getMatchByNo(no);
             Squad aTeam = squadRepository.findByName(match.getSquadA());
@@ -265,13 +264,6 @@ public class MatchController {
 
             List<Joining> ajoiningList = joiningRepository.findAllBySquadNoAndStateNotAndStateNotAndStateNot(aTeam.getNo(),"N","H", "Y");
             List<Joining> bjoiningList = joiningRepository.findAllBySquadNoAndStateNotAndStateNotAndStateNot(bTeam.getNo(),"N","H", "Y");
-
-            for(Joining joining : ajoiningList){
-                System.out.println("A : " + joining.getEmail());
-            }
-            for(Joining joining : bjoiningList){
-                System.out.println("B : " + joining.getEmail());
-            }
 
             boolean chk = false;
             for(int i = 0; i < 5; i++){
@@ -294,7 +286,6 @@ public class MatchController {
             if (match.getSquadB() != null || match.getSquadA().equals(squadB) || chk) {
                 response.put("partIn", "fail");
             } else {
-                // 알람 기능 추가(감이 안잡히네)
                 MatchRequestDto dto = new MatchRequestDto();
                 dto.setSquadB(squadB);
                 dto.setDeadline('F');
@@ -316,7 +307,6 @@ public class MatchController {
         MatchRequestDto dto = new MatchRequestDto();
         // log
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String squadName = response.getString("name");
 
         response.put("leave", "fail");
 

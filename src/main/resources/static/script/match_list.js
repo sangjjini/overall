@@ -302,7 +302,7 @@ function partInMatch(){
             const result = Object.values(response)[0];
             if (result === "fail") {
                 alert("이미 참가신청을 했거나 참가할 수 없는 매치입니다.")
-                modalClose();A
+                modalClose();
             } else {
                 alert("신청이 완료되었습니다.")
                 window.location.href = "/squad/match?no=" + no;
