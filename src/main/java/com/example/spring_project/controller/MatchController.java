@@ -82,18 +82,15 @@ public class MatchController {
         JSONObject response = new JSONObject();
         String email = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
 
-        List<Joining> list = joiningRepository.findAllByEmailAndStateNotAndStateNot(email,"N","H");
+        List<Joining> list = joiningRepository.findAllByEmailAndStateNotAndStateNotAndStateNot(email,"N","H", "Y");
         List<String> mySquadList = new ArrayList<>();
         List<Integer> overallList = new ArrayList<>();
+
         int idx = 0;
-        long cnt = 0;
+
         for(Joining joining : list){
-            cnt = joiningRepository.countBySquadNoAndStateNotAndStateNotAndStateNot(joining.getSquadNo(), "N", "H","Y");
-            System.out.println(idx + "팀 포지션 정해진 인원 : " + cnt);
-//            long no = joining.getSquadNo();
-//            Squad squad = squadRepository.findByNo(no);
-//            overallList.add(squad.getStats());
-//            mySquadList.add(squad.getName());
+            long cnt = joiningRepository.countBySquadNoAndStateNotAndStateNotAndStateNot(joining.getSquadNo(), "N", "H","Y");
+
             if(cnt > 0){
                 long no = joining.getSquadNo();
                 Squad squad = squadRepository.findByNo(no);
