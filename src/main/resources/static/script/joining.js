@@ -202,7 +202,7 @@ function checkEmail(){
             $("#div_code").show();
         }
     });
-        // console.log(error);
+    // console.log(error);
     //     error = function(error) {
     //     console.error("실패:", error);
     //     alert("오류");

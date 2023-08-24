@@ -24,7 +24,7 @@ import java.util.Map;
 @RequestMapping("api/v1/members")
 public class MemberController {
     private final MemberService memberService;
-//    private final EmailService emailService;
+    //    private final EmailService emailService;
     private final MemberRepository memberRepository;
 
     @GetMapping("test")                                               // size=3 : 한 페이지 당 3항목씩 보여줌.      //이름을 기준으로 내림차순 정렬
