@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -26,7 +27,7 @@ public class Member {
 
     @Column(unique = true) //  중복된 값을 가지는 레코드가 삽입되거나 수정되지 않도록 보장됨.
     private String phone;
-
+    @ColumnDefault("0")
     private int stats;
 
     public Member(String email){

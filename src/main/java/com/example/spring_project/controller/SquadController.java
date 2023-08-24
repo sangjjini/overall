@@ -31,17 +31,27 @@ public class SquadController {
     public Map makeSquad(WebRequest request, @RequestParam String name) {
         JSONObject response = new JSONObject();
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        // 스쿼드 이름 중복 검사
-        if(squadRepository.findByName(name) == null){
+        // 로그인 확인
+        if(log == null){
+            response.put("save", "login");
+        }else{
+            // ovr 확인
             Member member = memberRepository.findByEmail(log);
-            Squad squad = new Squad(log, name, "안녕하세요! "+name+" 입니다.", member.getStats());
-            squadRepository.save(squad);
-            // join 생성
-            Joining joining = new Joining(log, squad.getNo(), "Y", 0);
-            joiningRepository.save(joining);
-            response.put("save", squad.getNo());
-        } else {
-            response.put("save", "fail");
+            if(member.getStats() == 0){
+                response.put("save", "stats");
+            }else{
+                // 스쿼드 이름 중복 검사
+                if(squadRepository.findByName(name) == null){
+                    Squad squad = new Squad(log, name, "안녕하세요! "+name+" 입니다.", member.getStats());
+                    squadRepository.save(squad);
+                    // join 생성
+                    Joining joining = new Joining(log, squad.getNo(), "Y", 0);
+                    joiningRepository.save(joining);
+                    response.put("save", squad.getNo());
+                } else {
+                    response.put("save", "fail");
+                }
+            }
         }
         return response.toMap();
     }
@@ -61,6 +71,7 @@ public class SquadController {
         JSONObject response = new JSONObject();
         Squad squad = squadRepository.findByNo(squadRequestDto.getNo());
         squadRequestDto.setHost(squad.getHost());
+        squadRequestDto.setStats(squad.getStats());
         // 스쿼드의 내용만 바꿨을 경우
         if((squad.getName()).equals(squadRequestDto.getName())){
             squadService.updateSquad(no, squadRequestDto);

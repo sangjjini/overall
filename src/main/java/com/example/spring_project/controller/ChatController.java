@@ -6,6 +6,7 @@ import com.example.spring_project.domain.chat.ChatRequestDto;
 import com.example.spring_project.domain.chat.ChatResponseDto;
 import com.example.spring_project.domain.member.Member;
 import com.example.spring_project.domain.member.MemberRepository;
+import com.example.spring_project.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class ChatController {
 
     private final ChatRepository chatRepository;
     private final MemberRepository memberRepository;
+    private final ChatService chatService;
 
     @PostMapping("chat/{no}/send")
     public Map sendChat(WebRequest request, @PathVariable long no, @RequestBody ChatRequestDto chatRequestDto){
@@ -44,5 +46,10 @@ public class ChatController {
             list.add(chatResponseDto);
         }
         return list;
+    }
+
+    @DeleteMapping("chat/{no}/delete")
+    public void deleteChat(@PathVariable long no){
+        chatService.deleteChat(no);
     }
 }

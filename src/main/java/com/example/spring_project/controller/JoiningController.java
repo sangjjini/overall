@@ -58,20 +58,27 @@ public class JoiningController {
     public Map applyJoining(WebRequest request, @PathVariable long no) {
         JSONObject response = new JSONObject();
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        // 유저 조회
-        Member member = memberRepository.findByEmail(log);
-        Joining joinCheck = joiningRepository.findByEmailAndSquadNo(log, no);
-        // 이미 초대되었는지 확인
-        if(joinCheck != null){
-            response.put("apply", "already");
+        if(log == null){
+            response.put("apply", "login");
         }else{
-            JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
-            joiningRequestDto.setEmail(log);
-            joiningRequestDto.setSquadNo(no);
-            joiningRequestDto.setState("N");
-            Joining joining = new Joining(joiningRequestDto);
-            joiningRepository.save(joining);
-            response.put("apply", "success");
+            Member member = memberRepository.findByEmail(log);
+            if(member.getStats() == 0){
+                response.put("apply", "stats");
+            }else{
+                Joining joinCheck = joiningRepository.findByEmailAndSquadNo(log, no);
+                // 이미 초대되었는지 확인
+                if(joinCheck != null){
+                    response.put("apply", "already");
+                }else{
+                    JoiningRequestDto joiningRequestDto = new JoiningRequestDto();
+                    joiningRequestDto.setEmail(log);
+                    joiningRequestDto.setSquadNo(no);
+                    joiningRequestDto.setState("N");
+                    Joining joining = new Joining(joiningRequestDto);
+                    joiningRepository.save(joining);
+                    response.put("apply", "success");
+                }
+            }
         }
         return response.toMap();
     }
@@ -89,12 +96,16 @@ public class JoiningController {
             if(joinCheck != null){
                 response.put("invite", "already");
             }else{
-                joiningRequestDto.setEmail(email);
-                joiningRequestDto.setSquadNo(no);
-                joiningRequestDto.setState("H");
-                Joining joining = new Joining(joiningRequestDto);
-                joiningRepository.save(joining);
-                response.put("invite", "success");
+                if(member.getStats() == 0){
+                    response.put("invite", "stats");
+                }else{
+                    joiningRequestDto.setEmail(email);
+                    joiningRequestDto.setSquadNo(no);
+                    joiningRequestDto.setState("H");
+                    Joining joining = new Joining(joiningRequestDto);
+                    joiningRepository.save(joining);
+                    response.put("invite", "success");
+                }
             }
         } else{
             response.put("invite", "fail");
