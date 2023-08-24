@@ -132,7 +132,7 @@
     cursor: pointer;
     font-size:16px;
 }
-#show_make input, #squadA{
+#match_title, #squadA, #startAt, #endAt{
     border: 1px solid lightgray;
     border-radius: 5px;
     width: 100%;
@@ -140,7 +140,7 @@
     padding-left: 10px;
     margin-top: 20px;
 }
-.error_title, .error_squadA{
+.error_title, .error_squadA, .error_startAt, .error_endAt{
     display: none;
     color: red;
     border: none;

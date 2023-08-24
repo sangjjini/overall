@@ -75,8 +75,13 @@ function leaveMatch(){
             contentType : "application/json",
             data: JSON.stringify(obj)
         }).done(function (response){
-            alert("퇴장하셨습니다.")
-            window.location.href = "/squad/matchList"
+            if(response.leave === "fail"){
+                alert("퇴장할 권한이 없습니다.");
+                window.location.href = "/squad/matchList"
+            }else {
+                alert("퇴장하셨습니다.")
+                window.location.href = "/squad/matchList"
+            }
         });
     }
 }
@@ -123,18 +128,21 @@ function match(){
         url:"/squad/match/"+ no,
         type: "get"
     }).done(function (response){
+        let match = response.match;
+        let nickname = response.nickname;
+        let squadAOvr = response.squadAOvr;
+        let squadBOvr = response.squadBOvr;
         // let log = $('#log').val();
-        let title = response.title;
-        let author = response.author;
-        let contents = response.contents;
-        let squadA = response.squadA;
-        let squadB = response.squadB;
-        let startAt = response.startAt.substring(0,16);
-        let endAt = response.endAt;
+        let title = match.title;
+        let author = match.author;
+        let contents = match.contents;
+        let startAt = match.startAt.substring(0,16);
+        let endAt = match.endAt;
+
         if(startAt.substring(0,10) === endAt.substring(0,10)){
-            endAt = response.endAt.substring(11,16);
+            endAt = match.endAt.substring(11,16);
         }else{
-            endAt = response.endAt.substring(0,16);
+            endAt = match.endAt.substring(0,16);
         }
 
         if(startAt.substring(11,13) < 12){
@@ -158,10 +166,10 @@ function match(){
             update_btn.text("매치 참가");
             update_btn.attr({onclick: "partInMatch()"})
         }else {
-            if (log === response.author) {
+            if (log === match.author) {
                 update_btn.text("정보 변경");
                 update_btn.attr({onclick: "updateMatch()"})
-                if(response.squadB === null){
+                if(match.squadB === null){
                     $('.contents_list:last-child').hide();
                 }
                 // if(response.squadB === null){
@@ -173,8 +181,8 @@ function match(){
             } else{
                 update_btn.hide()
                 $('.contents_list:last-child').hide();
-                if(response.squadB === null){
-                    $('#leave_btn').text("매치 신청")
+                if(match.squadB === null){
+                    $('#leave_btn').text("매치 참가")
                     $('#leave_btn').attr({onclick:"modalAction()"})
                 }
             }
@@ -182,15 +190,23 @@ function match(){
 
         $('#title').val(title);
         $('#contents').val(contents);
-        $('#author').val(author);
-        $('#squadA').val(squadA);
-        $('#squadB').val(squadB);
+        $('#author').val(nickname);
+        $('#squadA').val(match.squadA + `(${squadAOvr})`);
+
+        if(match.squadB !== null){
+            $('#squadB').val(match.squadB + `(${squadBOvr})`);
+        }else {
+            $('#squadB').val(match.squadB);
+        }
 
         $('#time').text(startAt + " ~ " +endAt);
-        $('#endAt').val(response.endAt);
-        $('#host').val(response.author);
-        match_title = response.title;
-        match_contents = response.contents;
+        $('#endAt').val(match.endAt);
+        $('#host').val(match.author);
+        match_title = match.title;
+        match_contents = match.contents;
+
+        let squadA = $('#squadA').val();
+        let squadB = $('#squadB').val();
 
         if(squadB === null){
             squadB = "";
@@ -223,9 +239,11 @@ function partInMatch(){
             const result = Object.values(response)[0];
             if (result === "fail") {
                 alert("이미 참가신청을 했거나 신청할 수 없는 매치입니다.")
+                modalClose();
             } else {
                 alert("신청이 완료되었습니다.")
-                location.href = "/squad/match?no=" + no;
+                $('#squadB').val(squadB);
+                // location.href = "/squad/match?no=" + no;
             }
         });
     }
@@ -253,13 +271,14 @@ function squads(){
         contentType: 'application/json',
         dataType:'json',
         success : (response) => {
+            let list = response.list;
             let select = $('#squads');
             select.empty();
             select.append(
                 '<option value="" selected>팀 선택</option>'
             );
-            for(let i = 0; i < response.length; i++){
-                let data = response[i];
+            for(let i = 0; i < list.length; i++){
+                let data = list[i];
                 console.log("이게 출력이 : ", data)
 
                 select.append(

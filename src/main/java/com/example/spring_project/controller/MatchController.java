@@ -77,7 +77,38 @@ public class MatchController {
         return response.toMap();
     }
 
-    @GetMapping("my")
+    @PostMapping("mysquad")
+    public Map mySquad(@RequestBody MemberRequestDto dto, WebRequest request){
+        JSONObject response = new JSONObject();
+        String email = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        List<Joining> list = joiningRepository.findAllByEmailAndStateNotAndStateNot(email,"N","H");
+        List<String> mySquadList = new ArrayList<>();
+        List<Integer> overallList = new ArrayList<>();
+        int idx = 0;
+        long cnt = 0;
+        for(Joining joining : list){
+            cnt = joiningRepository.countBySquadNoAndStateNotAndStateNotAndStateNot(joining.getSquadNo(), "N", "H","Y");
+            System.out.println(idx + "팀 포지션 정해진 인원 : " + cnt);
+            long no = joining.getSquadNo();
+            Squad squad = squadRepository.findByNo(no);
+            overallList.add(squad.getStats());
+            mySquadList.add(squad.getName());
+//            if(cnt == 2){
+//                long no = joining.getSquadNo();
+//                Squad squad = squadRepository.findByNo(no);
+//                mySquadList.add(squad.getName());
+//            }
+            idx++;
+        }
+        response.put("list", mySquadList);
+        response.put("squadCnt", idx);
+        response.put("overallList", overallList);
+
+        return response.toMap();
+    }
+
+    @GetMapping("myMakingList")
     public List<Match> getMyMatch(WebRequest request){
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
 
@@ -107,6 +138,7 @@ public class MatchController {
 
         return matchList;
     }
+
     @GetMapping("list")
     public Map getMatchAll(@RequestParam(required = false) String sort, @RequestParam(required = false) String keyword){
         JSONObject response = new JSONObject();
@@ -176,70 +208,21 @@ public class MatchController {
 
         return response.toMap();
     }
-//    @GetMapping("list")
-//    public List<Match> getMatchAll(@RequestParam(required = false) String sort, @RequestParam(required = false) String keyword){
-//        if(keyword != null && !keyword.equals("")) {
-//            String pattern = "%" + keyword + "%";
-//            if(sort != null){
-//                if (sort.equals("title_asc")) {
-//                    return matchRepository.findAllByTitleLikeOrderByTitleAsc(pattern);
-//                }
-////                else if (sort.equals("title_desc")) {
-////                    return matchRepository.findByOrderByTitleDesc();
-////                }
-//                else if (sort.equals("date_asc")) {
-//                    return matchRepository.findAllByTitleLikeOrderByStartAtAsc(pattern);
-//                }
-////                else if (sort.equals("date_desc")) {
-////                    return matchRepository.findByOrderByStartAtDesc();
-////                }
-//                else if (sort.equals("overall_asc")) {
-//                    return matchRepository.findSquadMatchOrderByAscSquadStats(keyword);
-//                }
-//                else if (sort.equals("overall_desc")) {
-//                    return matchRepository.findSquadMatchOrderByDescSquadStats(keyword);
-//                }
-//            }else{
-//                return matchRepository.findAllByTitleLike(pattern);
-//            }
-//        }else{
-//            if (sort.equals("title_desc")) {
-//                return matchRepository.findByOrderByTitleDesc();
-//            } else if (sort.equals("title_asc")) {
-//                return matchRepository.findByOrderByTitleAsc();
-//            } else if (sort.equals("date_desc")) {
-//                return matchRepository.findByOrderByStartAtDesc();
-//            } else if (sort.equals("date_asc")) {
-//                return matchRepository.findByOrderByStartAtAsc();
-//            } else if (sort.equals("overall_asc")) {
-//                return matchRepository.findSquadMatchOrderByAscSquadStats();
-//            } else if (sort.equals("overall_desc")) {
-//                return matchRepository.findSquadMatchOrderByDescSquadStats();
-//            }
-//        }
-//        return matchRepository.findAll();
-//    }
-//    @GetMapping("list")
-//    public List<Match> getMatchAll(@RequestParam(required = false)String sort, @PageableDefault(size=3) Pageable pageable){
-////    public Page<Match> getMatchAll(@RequestParam(required = false) String sort, @PageableDefault(size=2) Pageable pageable){
-//        Page<Match> page = matchRepository.findByOrderByStartAtDesc(pageable);
-//        System.out.println(page.getTotalPages());
-//
-//        return matchRepository.findAll();
-//    }
-
-//    @GetMapping("list")
-//    public List<Match> getMatchAll(@RequestParam(required = false)String sort, @PageableDefault(size=3) Pageable pageable){
-//        if(sort.equals("title")){
-//            return matchRepository.findByOrderByTitleDesc();
-//        }else{
-//            return matchRepository.findAll();
-//        }
-//    }
 
     @GetMapping("{no}")
-    public Match getMatchByNo(@PathVariable long no){
-        return matchRepository.getMatchByNo(no);
+    public Map getMatchByNo(@PathVariable long no){
+        JSONObject response = new JSONObject();
+        Match match = matchRepository.getMatchByNo(no);
+        Member member = memberRepository.findByEmail(match.getAuthor());
+        Squad squadA = squadRepository.findByName(match.getSquadA());
+        Squad squadB = squadRepository.findByName(match.getSquadB());
+        response.put("match", match);
+        response.put("nickname",member.getNickname());
+        response.put("squadAOvr",squadA.getStats());
+        if(squadB != null) {
+            response.put("squadBOvr",squadB.getStats());
+        }
+        return response.toMap();
     }
 
     @PutMapping(value = "{no}/update")
@@ -297,10 +280,8 @@ public class MatchController {
             Squad aTeam = squadRepository.findByName(match.getSquadA());
             Squad bTeam = squadRepository.findByName(squadB);
 
-            List<Joining> ajoiningList = joiningRepository.findBySquadNoAndStateNotAndStateNot(aTeam.getNo(),"N","H");
-            List<Joining> bjoiningList = joiningRepository.findBySquadNoAndStateNotAndStateNot(bTeam.getNo(),"N","H");
-
-
+            List<Joining> ajoiningList = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(aTeam.getNo(),"N","H");
+            List<Joining> bjoiningList = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(bTeam.getNo(),"N","H");
 
             for(Joining joining : ajoiningList){
                 System.out.println("A : " + joining.getEmail());
@@ -308,6 +289,7 @@ public class MatchController {
             for(Joining joining : bjoiningList){
                 System.out.println("B : " + joining.getEmail());
             }
+
             boolean chk = false;
             for(int i = 0; i < 2; i++){
                 int cnt = 0;
@@ -323,6 +305,7 @@ public class MatchController {
                     break;
                 }
             }
+
             System.out.println("스파이 검거 : " + chk);
 
             if (match.getSquadB() != null || match.getSquadA().equals(squadB) || chk) {
@@ -352,6 +335,7 @@ public class MatchController {
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         String squadName = response.getString("name");
 
+        response.put("leave", "fail");
 
         if(match.getAuthor().equals(log)){
             if(match.getSquadB() == null) {
@@ -367,41 +351,18 @@ public class MatchController {
                 response.put("leave", "success");
             }
         }else {
-            if (match.getSquadB().equals(squadName)) {
+            Squad squad = squadRepository.findByName(match.getSquadB());
+            Joining joining = joiningRepository.findByEmailAndSquadNoAndStateNotAndStateNot(log, squad.getNo(), "N", "H");
+            if(joining != null) {
                 dto.setSquadB("");
                 dto.setDeadline('R');
                 matchService.updateMatch(no, dto);
                 response.put("leave", "success");
-            } else {
+            }else{
                 response.put("leave", "fail");
             }
         }
         return response.toMap();
-    }
-
-    @PostMapping("mysquad")
-    public List<String> mySquad(@RequestBody MemberRequestDto dto, WebRequest request){
-        //String email = dto.getEmail();
-        String email = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-//        String email = "kevin@gmail.com";
-        List<Joining> list = joiningRepository.findAllByEmailAndStateNotAndStateNot(email,"N","H");
-        List<String> mySquadList = new ArrayList<>();
-        int idx = 1;
-        for(Joining joining : list){
-            long cnt = joiningRepository.countBySquadNoAndStateNotAndStateNotAndStateNot(joining.getSquadNo(), "N", "H","Y");
-            //System.out.println(idx + "팀 포지션 정해진 인원 : " + cnt);
-            long no = joining.getSquadNo();
-            Squad squad = squadRepository.findByNo(no);
-            mySquadList.add(squad.getName());
-//            if(cnt == 2){
-//                long no = joining.getSquadNo();
-//                Squad squad = squadRepository.findByNo(no);
-//                mySquadList.add(squad.getName());
-//            }
-//            idx++;
-        }
-
-        return mySquadList;
     }
 
     @PostMapping ("test")
@@ -436,18 +397,24 @@ public class MatchController {
         String loser = "";
 
         if (squadName.equals(match.getSquadA())) {
+            String title = match.getTitle() + "(A팀승)";
+            dto.setTitle(title);
             dto.setDeadline('A');
             winner = squadA.getName();
             loser = squadB.getName();
-            winnerList = joiningRepository.findBySquadNoAndStateNotAndStateNot(squadA.getNo(),"N","H");
-            loserList = joiningRepository.findBySquadNoAndStateNotAndStateNot(squadB.getNo(),"N","H");
+            winnerList = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(squadA.getNo(),"N","H");
+            loserList = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(squadB.getNo(),"N","H");
         } else if(squadName.equals(match.getSquadB())){
+            String title = match.getTitle() + "(B팀승)";
+            dto.setTitle(title);
             dto.setDeadline('B');
             winner = squadB.getName();
             loser = squadA.getName();
-            winnerList = joiningRepository.findBySquadNoAndStateNotAndStateNot(squadB.getNo(),"N","H");
-            loserList = joiningRepository.findBySquadNoAndStateNotAndStateNot(squadA.getNo(),"N","H");
+            winnerList = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(squadB.getNo(),"N","H");
+            loserList = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(squadA.getNo(),"N","H");
         } else {
+            String title = match.getTitle() + "(무승부)";
+            dto.setTitle(title);
             dto.setDeadline('D');
         }
 
@@ -500,20 +467,19 @@ public class MatchController {
 
             memberService.updateOverall(member.getEmail(), memberRequestDto);
         }
-        Squad winSquad = squadRepository.findByName(winner);
-        SquadRequestDto winSquadRequestDto = new SquadRequestDto(winSquad);
-        winSquadRequestDto.setStats(winSquadRequestDto.getStats() + 3);
 
-        Squad loseSquad = squadRepository.findByName(loser);
-        SquadRequestDto loseSquadRequestDto = new SquadRequestDto(loseSquad);
-        loseSquadRequestDto.setStats(loseSquadRequestDto.getStats() - 1);
+        if(!winner.equals("") && !loser.equals("")){
+            Squad winSquad = squadRepository.findByName(winner);
+            SquadRequestDto winSquadRequestDto = new SquadRequestDto(winSquad);
+            winSquadRequestDto.setStats(winSquadRequestDto.getStats() + 3);
 
-        squadService.updateSquad(winSquad.getNo(), winSquadRequestDto);
-        squadService.updateSquad(loseSquad.getNo(), loseSquadRequestDto);
+            Squad loseSquad = squadRepository.findByName(loser);
+            SquadRequestDto loseSquadRequestDto = new SquadRequestDto(loseSquad);
+            loseSquadRequestDto.setStats(loseSquadRequestDto.getStats() - 1);
 
-        OverallRequestDto overallRequestDto = new OverallRequestDto();
-
-
+            squadService.updateSquad(winSquad.getNo(), winSquadRequestDto);
+            squadService.updateSquad(loseSquad.getNo(), loseSquadRequestDto);
+        }
 
         matchService.updateMatch(no, dto);
         response.put("matchResult", squadName);
