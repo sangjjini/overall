@@ -1,3 +1,11 @@
+$(document).ready(function(){
+    $('#login').on('keyup', function(key){
+        if(key.keyCode === 13){
+            loginChk();
+        }
+    })
+});
+
 $(document).ready(function () {
     $('#div_code').hide();
     $('.small_hint').hide();
