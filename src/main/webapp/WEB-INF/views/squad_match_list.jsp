@@ -24,21 +24,6 @@
     <p>OVERALL에서 자신의 스쿼드로 풋살매치를 즐기세요</p>
     <input type="hidden" id="log" value="${log}">
 </div>
-<%--<div class="search_menu">--%>
-<%--    <select id="sorts" onchange="all_match()">--%>
-<%--        <option value="" selected>정렬 선택</option>--%>
-<%--        <option value="title_asc">제목순</option>--%>
-<%--        <option value="date_asc">시간순</option>--%>
-<%--        <option value="overall_asc">오버롤 낮은순</option>--%>
-<%--        <option value="overall_desc">오버롤 높은순</option>--%>
-<%--    </select>--%>
-<%--    <div id="search_container">--%>
-<%--        <input type="text" id="search" placeholder="검색">--%>
-<%--        <button id="search_btn" onclick="search()">--%>
-<%--            <img src="/images/search_icon.png">--%>
-<%--        </button>--%>
-<%--    </div>--%>
-<%--</div>--%>
 <div class="contents_filter">
     <div class="filter">
         <div class="filter_input">
@@ -73,8 +58,9 @@
                 </select>
                 <input class="error_squadA" readonly>
                 <input type="datetime-local" id="startAt">
+                <input class="error_startAt" readonly>
                 <input type="datetime-local" id="endAt">
-                <input class="error_squadA" readonly>
+                <input class="error_endAt" readonly>
                 <div class="sub_section">
                     <input type="hidden" id="author">
                     <button onclick="matchMake()" class="enter_btn make_sub">만들기</button>
@@ -89,7 +75,7 @@
             </div>
             <div class="apply_list">
                 <div class="list_title">
-                    <h1>신청한 매치</h1>
+                    <h1>참가 매치</h1>
                 </div>
                 <div id="apply_list"></div>
             </div>
@@ -129,7 +115,7 @@
                 </div>
                 <div class="squad_partIn_btn_container">
                     <input type="hidden" id="no_temp" value="">
-                    <button id="partIn_btn" onclick="partInMatch()">참가신청</button>
+                    <button id="partIn_btn" onclick="partInMatch()">참가</button>
                 </div>
             </div>
         </div>

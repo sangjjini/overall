@@ -1,5 +1,29 @@
 let author;
 const log = $('#log').val();
+$('#match_title').on('change', e => {
+    if($('#match_title').val() !== "") {
+        $('.error_title').hide();
+    }
+});
+
+$('#squadA').on('change', e => {
+    if($('#squadA').val() !== "") {
+        $('.error_squadA').hide();
+    }
+});
+
+$('#startAt').on('change', e => {
+    if($('#startAt').val() !== "") {
+        $('.error_startAt').hide();
+    }
+});
+
+$('#endAt').on('change', e => {
+    if($('#endAt').val() !== "") {
+        $('.error_endAt').hide();
+    }
+});
+
 $(document).ready(function(){
     $('.filter_input').on('keyup', function(key){
         if(key.keyCode === 13){
@@ -20,8 +44,6 @@ $(window).on('load', function(){
     // $('#applyContainer').hide();
     my_match();
     my_partIn_match();
-    mySquad();
-    squads();
     all_match();
 });
 
@@ -31,7 +53,13 @@ function search(){
     all_match();
 }
 function show_make(){
-    $('#show_make').show();
+    if(log !== '') {
+        mySquad();
+        $('#show_make').show();
+    }else{
+        alert("로그인 후 이용해주세요.")
+        location.href = "/login";
+    }
 }
 
 function close_make(){
@@ -45,16 +73,35 @@ function matchMake(){
         alert("로그인 후 이용해주세요.")
         window.location.href="/login";
     }else {
-        const title = $('#match_title').val();
-        const squadA = $('#squadA').val();
-        const startAt = $('#startAt').val();
-        const endAt = $('#endAt').val();
-        const error = $('.error_title');
+        let title = $('#match_title').val();
+        let squadA = $('#squadA').val().split("(")[0];
+        let startAt = $('#startAt').val();
+        let endAt = $('#endAt').val();
+        let error_title = $('.error_title');
+        let error_squad = $('.error_squadA');
+        let error_startAt = $('.error_startAt');
+        let error_endAt = $('.error_endAt');
 
+        let chk = true;
         if (title === "") {
-            error.show();
-            error.val("이름을 입력해주세요.");
-        } else {
+            error_title.show();
+            error_title.val("이름을 입력해주세요.");
+            chk = false;
+        }else if(squadA === ""){
+            error_squad.show();
+            error_squad.val("팀을 선택해주세요.");
+            chk = false;
+        }else if(startAt === ""){
+            error_startAt.show();
+            error_startAt.val("시작시간을 입력해주세요.")
+            chk = false;
+        }else if(endAt === ""){
+            error_endAt.show();
+            error_endAt.val("종료시간을 입력해주세요.")
+            chk = false;
+        }
+
+        if(chk){
             $.ajax({
                 url: "/squad/match/make?title=" + title + "&squadA=" + squadA + "&startAt=" + startAt + "&endAt=" + endAt,
                 type: "post"
@@ -73,7 +120,7 @@ function matchMake(){
 
 function my_match(){
     $.ajax({
-        url:"/squad/match/my",
+        url:"/squad/match/myMakingList",
         type:"get"
     }).done(function(response) {
        response.forEach(match => {
@@ -206,18 +253,34 @@ function mySquad(){
         contentType: 'application/json',
         dataType:'json',
         success : (response) => {
-            let select = $('#squadA');
-            select.empty();
-            select.append(
-                '<option value="" selected>팀 선택</option>'
-            );
-            for(let i = 0; i < response.length; i++){
-                let data = response[i];
-                console.log(data)
-
+            let list = response.list;
+            let ovr_list = response.overallList;
+            let ovrArr = new Array(ovr_list.length);
+            let cnt = response.squadCnt;
+            let i = 0;
+            ovr_list.forEach(stat => {
+                ovrArr[i] = ovr_list[i];
+                i++;
+            });
+            console.log("1. 스쿼드 수 : ", cnt);
+            if(cnt > 0) {
+                let select = $('#squadA');
+                select.empty();
                 select.append(
-                    '<option value="' + data + '">' + data + '</option>'
-                )
+                    '<option value="" selected>팀 선택</option>'
+                );
+                for (let i = 0; i < list.length; i++) {
+                    let name = list[i];
+                    let ovr = ovrArr[i];
+                    let data = name+`(${ovr})`;
+                    console.log(data);
+                    select.append(
+                        '<option value="' + data + '">' + data + '</option>'
+                    )
+                }
+            }else if(log !== '' && cnt === 0){
+                alert('스쿼드 생성 또는 가입 후에 이용해주세요.')
+                location.href = "/squad/list";
             }
         },
         error : function(errorThrown) {
@@ -228,8 +291,8 @@ function mySquad(){
 }
 function partInMatch(){
     let no = $('#no_temp').val();
-    let squadB = $('#squadB').val();
-    console.log("chk : ", squadB)
+    let squadB = $('#squadB').val().split("(")[0];
+
     if(squadB !== '') {
         let obj = {name: squadB}
         $.ajax({
@@ -241,7 +304,7 @@ function partInMatch(){
         }).done(function (response) {
             const result = Object.values(response)[0];
             if (result === "fail") {
-                alert("이미 참가신청을 했거나 신청할 수 없는 매치입니다.")
+                alert("이미 참가신청을 했거나 참가할 수 없는 매치입니다.")
             } else {
                 alert("신청이 완료되었습니다.")
                 window.location.href = "/squad/match?no=" + no;
@@ -252,6 +315,7 @@ function partInMatch(){
     }
 }
 function modalAction(no){
+    squads();
     if(log !== ''){
         $('#applyContainer').show();
         $('#no_temp').val(no);
@@ -276,18 +340,35 @@ function squads(){
         contentType: 'application/json',
         dataType:'json',
         success : (response) => {
-            let select = $('#squadB');
-            select.empty();
-            select.append(
-                '<option value="" selected>팀 선택</option>'
-            );
-            for(let i = 0; i < response.length; i++){
-                let data = response[i];
-                console.log("이게 출력이 : ", data)
-
+            let list = response.list;
+            let ovr_list = response.overallList;
+            let ovrArr = new Array(ovr_list.length);
+            let squadCnt = response.squadCnt;
+            let i = 0;
+            ovr_list.forEach(stat => {
+                ovrArr[i] = ovr_list[i];
+                i++;
+            });
+            console.log("2. 스쿼드 수 : ", squadCnt);
+            if(squadCnt > 0) {
+                let select = $('#squadB');
+                select.empty();
                 select.append(
-                    '<option value="' + data + '">' + data + '</option>'
-                )
+                    '<option value="" selected>팀 선택</option>'
+                );
+                for (let i = 0; i < list.length; i++) {
+                    let name = list[i];
+                    let ovr = ovrArr[i];
+                    let data = name+`(${ovr})`;
+                    console.log("이게 출력이 : ", data)
+
+                    select.append(
+                        '<option value="' + data + '">' + data + '</option>'
+                    )
+                }
+            }else if(log !== '' && squadCnt === 0){
+                alert('스쿼드 생성 또는 가입 후에 이용해주세요.')
+                location.href = "/squad/list";
             }
         },
         error : function(errorThrown) {
