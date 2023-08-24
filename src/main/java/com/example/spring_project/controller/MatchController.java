@@ -90,15 +90,16 @@ public class MatchController {
         for(Joining joining : list){
             cnt = joiningRepository.countBySquadNoAndStateNotAndStateNotAndStateNot(joining.getSquadNo(), "N", "H","Y");
             System.out.println(idx + "팀 포지션 정해진 인원 : " + cnt);
-            long no = joining.getSquadNo();
-            Squad squad = squadRepository.findByNo(no);
-            overallList.add(squad.getStats());
-            mySquadList.add(squad.getName());
-//            if(cnt == 2){
-//                long no = joining.getSquadNo();
-//                Squad squad = squadRepository.findByNo(no);
-//                mySquadList.add(squad.getName());
-//            }
+//            long no = joining.getSquadNo();
+//            Squad squad = squadRepository.findByNo(no);
+//            overallList.add(squad.getStats());
+//            mySquadList.add(squad.getName());
+            if(cnt > 0){
+                long no = joining.getSquadNo();
+                Squad squad = squadRepository.findByNo(no);
+                overallList.add(squad.getStats());
+                mySquadList.add(squad.getName());
+            }
             idx++;
         }
         response.put("list", mySquadList);
@@ -119,7 +120,7 @@ public class MatchController {
     @GetMapping("partInList")
     public List<List<Match>> getMyPartInMatch(WebRequest request){
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        List<Joining> joiningList = joiningRepository.findAllByEmail(log);
+        List<Joining> joiningList = joiningRepository.findAllByEmailAndStateNotAndStateNotAndStateNot(log, "N", "H", "Y");
 
         List<Squad> squadList = new ArrayList<>();
         for(Joining joining : joiningList){
@@ -135,7 +136,6 @@ public class MatchController {
             String name = squad.getName();
             matchList.add(matchRepository.findAllBySquadB(name));
         }
-
         return matchList;
     }
 
@@ -151,16 +151,10 @@ public class MatchController {
                     list = matchRepository.findAllByTitleLikeOrderByTitleAsc(pattern);
                     response.put("list", list);
                 }
-//                else if (sort.equals("title_desc")) {
-//                    return matchRepository.findByOrderByTitleDesc();
-//                }
                 else if (sort.equals("date_asc")) {
                     list = matchRepository.findAllByTitleLikeOrderByStartAtAsc(pattern);
                     response.put("list", list);
                 }
-//                else if (sort.equals("date_desc")) {
-//                    return matchRepository.findByOrderByStartAtDesc();
-//                }
                 else if (sort.equals("overall_asc")) {
                     list = matchRepository.findSquadMatchOrderByAscSquadStats(keyword);
                     response.put("list", list);
@@ -214,14 +208,8 @@ public class MatchController {
         JSONObject response = new JSONObject();
         Match match = matchRepository.getMatchByNo(no);
         Member member = memberRepository.findByEmail(match.getAuthor());
-        Squad squadA = squadRepository.findByName(match.getSquadA());
-        Squad squadB = squadRepository.findByName(match.getSquadB());
         response.put("match", match);
         response.put("nickname",member.getNickname());
-        response.put("squadAOvr",squadA.getStats());
-        if(squadB != null) {
-            response.put("squadBOvr",squadB.getStats());
-        }
         return response.toMap();
     }
 
@@ -280,8 +268,8 @@ public class MatchController {
             Squad aTeam = squadRepository.findByName(match.getSquadA());
             Squad bTeam = squadRepository.findByName(squadB);
 
-            List<Joining> ajoiningList = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(aTeam.getNo(),"N","H");
-            List<Joining> bjoiningList = joiningRepository.findAllBySquadNoAndStateNotAndStateNot(bTeam.getNo(),"N","H");
+            List<Joining> ajoiningList = joiningRepository.findAllBySquadNoAndStateNotAndStateNotAndStateNot(aTeam.getNo(),"N","H", "Y");
+            List<Joining> bjoiningList = joiningRepository.findAllBySquadNoAndStateNotAndStateNotAndStateNot(bTeam.getNo(),"N","H", "Y");
 
             for(Joining joining : ajoiningList){
                 System.out.println("A : " + joining.getEmail());
@@ -291,7 +279,7 @@ public class MatchController {
             }
 
             boolean chk = false;
-            for(int i = 0; i < 2; i++){
+            for(int i = 0; i < 1; i++){
                 int cnt = 0;
                 String aEmail = ajoiningList.get(i).getEmail();
                 for(int j = 0; j < 1; j++) {

@@ -74,7 +74,7 @@ function matchMake(){
         window.location.href="/login";
     }else {
         let title = $('#match_title').val();
-        let squadA = $('#squadA').val();
+        let squadA = $('#squadA').val().split("(")[0];
         let startAt = $('#startAt').val();
         let endAt = $('#endAt').val();
         let error_title = $('.error_title');
@@ -291,8 +291,8 @@ function mySquad(){
 }
 function partInMatch(){
     let no = $('#no_temp').val();
-    let squadB = $('#squadB').val();
-    console.log("chk : ", squadB)
+    let squadB = $('#squadB').val().split("(")[0];
+
     if(squadB !== '') {
         let obj = {name: squadB}
         $.ajax({

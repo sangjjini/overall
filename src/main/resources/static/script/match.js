@@ -238,7 +238,7 @@ function partInMatch(){
             } else {
                 alert("신청이 완료되었습니다.")
                 $('#squadB').val(squadB);
-                // location.href = "/squad/match?no=" + no;
+                location.href = "/squad/match?no=" + no;
             }
         });
     }
