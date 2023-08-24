@@ -176,6 +176,9 @@ function invite(){
             }else if(result === "already"){
                 error.val("이미 가입신청이 완료된 회원입니다.");
                 error.show();
+            }else if(result === "stats"){
+                error.val("OVERALL 입력이 필요한 회원입니다.");
+                error.show();
             }else{
                 error.hide();
                 $('#email').val("");
@@ -280,10 +283,10 @@ function chat(){
         response.forEach(chat => {
             if(chat.email === log){
                 $('#chat').append(
-                    `<div class="chat_list" id="${chat.no}">
+                    `<div class="chat_list" id="chat${chat.no}">
                         <div class="chat_name">
                             ${chat.nickname}
-                            <button class="chat_delete" id="${chat.no}">X</button>
+                            <button class="chat_delete refuse_btn" id="${chat.no}" onclick="chat_del(this.id)">X</button>
                         </div>
                         <div class="chat_contents">
                             ${chat.contents}
@@ -293,7 +296,7 @@ function chat(){
                 );
             } else {
                 $('#chat').append(
-                    `<div class="chat_list" id="${chat.no}">
+                    `<div class="chat_list" id="chat${chat.no}">
                         <div class="chat_name">
                             ${chat.nickname}
                         </div>
@@ -307,6 +310,15 @@ function chat(){
         });
         $('#chat').scrollTop($('#chat')[0].scrollHeight)
     });
+}
+
+function chat_del(id){
+    $.ajax({
+        url:"chat/"+id+"/delete",
+        type:"delete"
+    }).done(function (){
+        $("div").remove('#chat' + id);
+    })
 }
 
 function send(){

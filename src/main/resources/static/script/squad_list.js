@@ -26,8 +26,14 @@ function squadMake(){
         }).done(function (response){
             const result = Object.values(response)[0];
             if(result === "fail"){
-                error.show();
                 error.val("중복된 스쿼드 이름입니다.");
+                error.show();
+            }else if(result === "login") {
+                alert("로그인 후 이용 가능합니다.");
+                location.href="/login";
+            }else if(result === "stats"){
+                alert("마이페이지에서 OVERALL 설정 후 이용 가능합니다.");
+                location.href="/overallUpdate"
             }else{
                 location.href="/squad?no="+result;
             }
@@ -81,10 +87,16 @@ function join(no){
     $.ajax({
         url: "/joining/" + no + "/apply",
         type: "post",
-    }).done(function (response){
+    }).done(function (response) {
         const result = Object.values(response)[0];
-        if(result === "already") {
+        if (result === "already") {
             alert("가입/신청이 완료된 스쿼드입니다.");
+        } else if (result === "login") {
+            alert("로그인 후 이용 가능합니다.");
+            location.href = "/login";
+        } else if (result === "stats") {
+            alert("마이페이지에서 OVERALL 설정 후 이용 가능합니다.");
+            location.href = "/overallUpdate"
         }else{
             alert("신청이 완료되었습니다.");
         }

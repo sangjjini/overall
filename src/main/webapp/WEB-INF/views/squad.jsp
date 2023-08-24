@@ -141,7 +141,7 @@
         </div>
 
         <div class="contents_bottom">
-            <div class="chat_title">스쿼드 공지</div>
+            <div class="chat_title">스쿼드 댓글</div>
             <div class="send_area">
                 <input type="text" id="chatting" placeholder="내용을 입력하세요">
                 <button onclick="send()" class="send_btn">작성</button>
