@@ -158,36 +158,6 @@ function match(){
         }
 
         let update_btn = $('#update_btn');
-
-        // if(log === "" || response.squadB === null){
-        if(log === "") {
-            $('#leave_btn').hide();
-            $('.contents_list:last-child').hide();
-            update_btn.text("매치 참가");
-            update_btn.attr({onclick: "partInMatch()"})
-        }else {
-            if (log === match.author) {
-                update_btn.text("정보 변경");
-                update_btn.attr({onclick: "updateMatch()"})
-                if(match.squadB === null){
-                    $('.contents_list:last-child').hide();
-                }
-                // if(response.squadB === null){
-                //     update_btn.hide();
-                //     $('#leave_btn').text("매치 신청")
-                //     $('#leave_btn').attr({onclick:"applyMatch()"})
-                //     $('.contents_list:last-child').hide();
-                // }
-            } else{
-                update_btn.hide()
-                $('.contents_list:last-child').hide();
-                if(match.squadB === null){
-                    $('#leave_btn').text("매치 참가")
-                    $('#leave_btn').attr({onclick:"modalAction()"})
-                }
-            }
-        }
-
         $('#title').val(title);
         $('#contents').val(contents);
         $('#author').val(nickname);
@@ -214,6 +184,29 @@ function match(){
              <div id="squadB">${squadB}</div>
             `
         )
+
+        // if(log === "" || response.squadB === null){
+        if(log === "") {
+            $('#leave_btn').hide();
+            $('.contents_list:last-child').hide();
+            update_btn.text("매치 참가");
+            update_btn.attr({onclick: "partInMatch()"})
+        }else {
+            if (log === match.author) {
+                update_btn.text("정보 변경");
+                update_btn.attr({onclick: "updateMatch()"})
+                if(match.squadB === null){
+                    $('.contents_list:last-child').hide();
+                }
+            }else{
+                update_btn.hide()
+                $('.contents_list:last-child').hide();
+                if(match.squadB === null){
+                    $('#leave_btn').text("매치 참가")
+                    $('#leave_btn').attr({onclick:"modalAction()"})
+                }
+            }
+        }
     })
 }
 function partInMatch(){

@@ -90,8 +90,7 @@ public class MatchController {
 
         for(Joining joining : list){
             long cnt = joiningRepository.countBySquadNoAndStateNotAndStateNotAndStateNot(joining.getSquadNo(), "N", "H","Y");
-
-            if(cnt > 0){
+            if(cnt == 5){
                 long no = joining.getSquadNo();
                 Squad squad = squadRepository.findByNo(no);
                 overallList.add(squad.getStats());
@@ -102,7 +101,6 @@ public class MatchController {
         response.put("list", mySquadList);
         response.put("squadCnt", idx);
         response.put("overallList", overallList);
-
         return response.toMap();
     }
 
@@ -276,10 +274,10 @@ public class MatchController {
             }
 
             boolean chk = false;
-            for(int i = 0; i < 1; i++){
+            for(int i = 0; i < 5; i++){
                 int cnt = 0;
                 String aEmail = ajoiningList.get(i).getEmail();
-                for(int j = 0; j < 1; j++) {
+                for(int j = 0; j < 5; j++) {
                     String bEmail = bjoiningList.get(j).getEmail();
                     if (aEmail.equals(bEmail)) {
                         cnt++;

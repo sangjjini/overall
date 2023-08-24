@@ -82,17 +82,6 @@
         </div>
     </div>
     <div class="contents_right">
-<%--        <div class="bar">--%>
-<%--            <select id="sorts" onchange="all_match()">--%>
-<%--                <option value="" selected>정렬 선택</option>--%>
-<%--                <option value="title_desc">제목 내림차순</option>--%>
-<%--                <option value="title_asc">제목 오름차순</option>--%>
-<%--                <option value="date_desc">시간 내림차순</option>--%>
-<%--                <option value="date_asc">시간 오름차순</option>--%>
-<%--            </select>--%>
-
-<%--        </div>--%>
-<%--        <input type="hidden" id="sort" value="">--%>
         <div class="bar">
             <div class="bar_date">일정</div>
             <div class="bar_squad">팀명(평균OVR)</div>

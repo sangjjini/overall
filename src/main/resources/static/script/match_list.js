@@ -150,14 +150,12 @@ function my_partIn_match(){
 function all_match(){
     const option = $('input[name=filter_sel]:checked').val();
     let keyword = $('#search').val();
-    let url = "/squad/match/list?";
 
+    let url = "/squad/match/list?";
     if(option !== '' && keyword !== ''){
         url += "sort=" + option + "&keyword=" + keyword;
     }else if(keyword === ''){
         url += "sort=" + option;
-    }else if(option === ''){
-        url += "keyword=" + keyword;
     }else{
         url = "/squad/match/list";
     }
@@ -240,7 +238,7 @@ function all_match(){
 function readMatch(div){
     const no = $(div).find('input').val()
     //const no = $('#bar_no').val();
-    window.location.href= '/squad/match?no=' + no;
+    window.location.href= '/squad/match?no=' + no;A
 
 }
 function mySquad(){
@@ -292,7 +290,6 @@ function mySquad(){
 function partInMatch(){
     let no = $('#no_temp').val();
     let squadB = $('#squadB').val().split("(")[0];
-
     if(squadB !== '') {
         let obj = {name: squadB}
         $.ajax({
@@ -305,6 +302,7 @@ function partInMatch(){
             const result = Object.values(response)[0];
             if (result === "fail") {
                 alert("이미 참가신청을 했거나 참가할 수 없는 매치입니다.")
+                modalClose();A
             } else {
                 alert("신청이 완료되었습니다.")
                 window.location.href = "/squad/match?no=" + no;

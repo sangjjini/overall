@@ -53,14 +53,14 @@
 <%--                <label for="time" class="small_title">시간</label>--%>
 <%--                <input type="text" id="time" class="input_area" readonly>--%>
             </div>
-            <div class="contents_list">
+            <div class="contents_list" id="update">
                 <input type="hidden" id="host">
                 <button class="squad_edit" id="update_btn" onclick="updateMatch()"></button>
             </div>
-            <div class="contents_list">
+            <div class="contents_list" id="leave">
                 <button class="squad_edit" id="leave_btn" onclick="leaveMatch()">매치 퇴장</button>
             </div>
-            <div class="contents_list">
+            <div class="contents_list" id="result">
                 <button class="squad_edit" id="a_win" value="A" onclick="resultMatch(this)">A팀 승리</button>
                 <button class="squad_edit" id="draw" value="D" onclick="resultMatch(this)">무승부</button>
                 <button class="squad_edit" id="b_win" value="B" onclick="resultMatch(this)">B팀 승리</button>
