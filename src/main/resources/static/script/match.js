@@ -1,5 +1,7 @@
 let title;
 const log = $('#log').val();
+let author;
+
 $(window).on('load', function (){
     const urlParams = new URL(location.href).searchParams;
     no = urlParams.get('no');
@@ -98,7 +100,7 @@ function resultMatch(button){
         winner = "Draw"
     }
 
-    const author = $('#author').val();
+    // const author = $('#author').val();
     let obj = {name:winner};
     if(log === author){
         $.ajax({
@@ -130,11 +132,9 @@ function match(){
     }).done(function (response){
         let match = response.match;
         let nickname = response.nickname;
-        let squadAOvr = response.squadAOvr;
-        let squadBOvr = response.squadBOvr;
         // let log = $('#log').val();
         let title = match.title;
-        let author = match.author;
+        author = match.author;
         let contents = match.contents;
         let startAt = match.startAt.substring(0,16);
         let endAt = match.endAt;
@@ -191,13 +191,8 @@ function match(){
         $('#title').val(title);
         $('#contents').val(contents);
         $('#author').val(nickname);
-        $('#squadA').val(match.squadA + `(${squadAOvr})`);
-
-        if(match.squadB !== null){
-            $('#squadB').val(match.squadB + `(${squadBOvr})`);
-        }else {
-            $('#squadB').val(match.squadB);
-        }
+        $('#squadA').val(match.squadA);
+        $('#squadB').val(match.squadB);
 
         $('#time').text(startAt + " ~ " +endAt);
         $('#endAt').val(match.endAt);

@@ -468,6 +468,8 @@ public class MatchController {
             memberService.updateOverall(member.getEmail(), memberRequestDto);
         }
 
+        System.out.println("승 : " + winner);
+        System.out.println("패 : " + loser);
         if(!winner.equals("") && !loser.equals("")){
             Squad winSquad = squadRepository.findByName(winner);
             SquadRequestDto winSquadRequestDto = new SquadRequestDto(winSquad);
